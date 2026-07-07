@@ -51,6 +51,7 @@
         formData.append('maintenance_enabled', $('#maintenance-enabled').checked ? 1 : 0);
         formData.append('maintenance_msg', ($('#maintenance-msg').value || '').trim());
         formData.append('feat_img_enabled', $('#feat-img-enabled').checked ? 1 : 0);
+        formData.append('feat_img_col_enabled', $('#feat-img-col-enabled').checked ? 1 : 0);
         var defaultImgId = $('#default-feat-img-id');
         formData.append('default_feat_img_id', defaultImgId ? defaultImgId.value : 0);
         formData.append('quickedit_excerpt_enabled', $('#quickedit-excerpt-enabled').checked ? 1 : 0);
@@ -103,6 +104,7 @@
             { checkbox: '#btt-enabled', body: 'btt-settings' },
             { checkbox: '#maintenance-enabled', body: 'maintenance-settings' },
             { checkbox: '#feat-img-enabled', body: 'feat-img-settings' },
+            { checkbox: '#feat-img-col-enabled', body: 'feat-img-col-settings' },
             { checkbox: '#smtp-enabled', body: 'smtp-settings' },
         ];
 

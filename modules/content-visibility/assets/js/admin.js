@@ -105,9 +105,47 @@
             });
     }
 
+    /**
+     * 切换文章可见性（行操作）
+     */
+    function togglePost(link) {
+        if (!link) return;
+        var postId = link.dataset.postId;
+        var hidden = link.dataset.hidden;
+
+        var formData = new FormData();
+        formData.append('action', 'drea_cv_toggle_post');
+        formData.append('nonce', nonce);
+        formData.append('post_id', postId);
+        formData.append('hidden', hidden);
+
+        fetch(ajaxUrl, { method: 'POST', body: formData, credentials: 'same-origin' })
+            .then(function (r) { return r.json(); })
+            .then(function (res) {
+                if (res.success) {
+                    // 刷新列表以反映状态变化
+                    window.location.reload();
+                } else {
+                    showToast(res.data && res.data.message ? res.data.message : i18n.error, 'error');
+                }
+            })
+            .catch(function () {
+                showToast(i18n.error, 'error');
+            });
+    }
+
     function init() {
         var saveBtn = $('#drea-cv-save-btn');
         if (saveBtn) saveBtn.addEventListener('click', saveRules);
+
+        // 行操作：隐藏/显示链接
+        document.addEventListener('click', function (e) {
+            var link = e.target.closest('.drea-cv-toggle-link');
+            if (link) {
+                e.preventDefault();
+                togglePost(link);
+            }
+        });
     }
 
     if (document.readyState === 'loading') {

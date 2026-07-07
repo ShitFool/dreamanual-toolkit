@@ -14,6 +14,7 @@ $settings = [
     'maintenance_enabled' => (bool) get_option( 'drea_site_enhance_maintenance_enabled', false ),
     'maintenance_msg'     => get_option( 'drea_site_enhance_maintenance_msg', '' ),
     'feat_img_enabled'    => (bool) get_option( 'drea_site_enhance_feat_img_enabled', false ),
+    'feat_img_col_enabled' => (bool) get_option( 'drea_site_enhance_feat_img_col_enabled', false ),
     'default_feat_img_id' => (int) get_option( 'drea_site_enhance_default_feat_img_id', 0 ),
     'quickedit_excerpt_enabled' => (bool) get_option( 'drea_site_enhance_quickedit_excerpt_enabled', false ),
     'smtp_enabled'        => (bool) get_option( 'drea_site_enhance_smtp_enabled', false ),
@@ -99,6 +100,20 @@ $default_feat_img_url = $settings['default_feat_img_id'] ? wp_get_attachment_url
         </div>
         <div class="drea-se-section__body" id="feat-img-settings">
             <p class="description"><?php echo esc_html__( '启用后，在文章列表页添加「缺失特色图/有特色图」筛选下拉框，方便快速找到未设置特色图片的文章。', 'dreamanual-toolkit' ); ?></p>
+        </div>
+    </div>
+
+    <!-- 特色图片列 -->
+    <div class="drea-se-section">
+        <div class="drea-se-section__header">
+            <h2><?php echo esc_html__( '特色图片列', 'dreamanual-toolkit' ); ?></h2>
+            <label class="drea-se-toggle">
+                <input type="checkbox" id="feat-img-col-enabled" <?php checked( $settings['feat_img_col_enabled'] ); ?>>
+                <span class="drea-se-toggle__slider"></span>
+            </label>
+        </div>
+        <div class="drea-se-section__body" id="feat-img-col-settings">
+            <p class="description"><?php echo esc_html__( '启用后，在文章列表的复选框后添加特色图片缩略图列，直观查看每篇文章的特色图片设置情况。', 'dreamanual-toolkit' ); ?></p>
         </div>
     </div>
 

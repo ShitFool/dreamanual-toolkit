@@ -433,6 +433,7 @@ class Content_Visibility extends Module_Base {
                 'saved'  => __( '规则已保存。', 'dreamanual-toolkit' ),
                 'failed' => __( '保存失败，请重试。', 'dreamanual-toolkit' ),
                 'error'  => __( '操作失败。', 'dreamanual-toolkit' ),
+                'toggleError' => __( '切换可见性失败，请重试。', 'dreamanual-toolkit' ),
             ],
         ] );
     }
@@ -584,12 +585,8 @@ class Content_Visibility extends Module_Base {
 
         $is_hidden = get_post_meta( $post->ID, self::POST_HIDDEN_META, true );
         $label     = $is_hidden ? __( '显示', 'dreamanual-toolkit' ) : __( '隐藏', 'dreamanual-toolkit' );
-        $url       = wp_nonce_url(
-            admin_url( 'admin-ajax.php?action=drea_cv_toggle_post&post_id=' . $post->ID . '&hidden=' . ( $is_hidden ? 0 : 1 ) ),
-            'drea_cv_nonce'
-        );
 
-        $actions['drea_cv_toggle'] = '<a href="' . esc_url( $url ) . '">' . esc_html( $label ) . '</a>';
+        $actions['drea_cv_toggle'] = '<a href="#" class="drea-cv-toggle-link" data-post-id="' . esc_attr( $post->ID ) . '" data-hidden="' . esc_attr( $is_hidden ? 0 : 1 ) . '">' . esc_html( $label ) . '</a>';
         return $actions;
     }
 

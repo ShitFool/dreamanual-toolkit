@@ -67,10 +67,14 @@ class Site_Enhance extends Module_Base {
             add_action( 'template_redirect', [ $this, 'maintenance_mode' ] );
         }
 
-        // ─── 特色图片 ───
+        // ─── 特色图片筛选器 ───
         if ( $this->get_option( 'feat_img_enabled', false ) ) {
             add_action( 'restrict_manage_posts', [ $this, 'add_feat_img_filter' ] );
             add_filter( 'parse_query', [ $this, 'parse_feat_img_filter' ] );
+        }
+
+        // ─── 特色图片列 ───
+        if ( $this->get_option( 'feat_img_col_enabled', false ) ) {
             add_filter( 'manage_posts_columns', [ $this, 'add_feat_img_column' ] );
             add_action( 'manage_posts_custom_column', [ $this, 'render_feat_img_column' ], 10, 2 );
         }
@@ -146,6 +150,7 @@ class Site_Enhance extends Module_Base {
             'drea_site_enhance_maintenance_enabled',
             'drea_site_enhance_maintenance_msg',
             'drea_site_enhance_feat_img_enabled',
+            'drea_site_enhance_feat_img_col_enabled',
             'drea_site_enhance_default_feat_img_id',
             'drea_site_enhance_quickedit_excerpt_enabled',
             'drea_site_enhance_smtp_enabled',
@@ -195,8 +200,8 @@ class Site_Enhance extends Module_Base {
         $module_url  = DREA_URL . 'modules/site-enhance';
         $module_path = DREA_PATH . 'modules/site-enhance';
 
-        // 文章列表页：仅加载特色图片列样式
-        if ( 'edit.php' === $hook && $this->get_option( 'feat_img_enabled', false ) ) {
+        // 文章列表页：特色图片列或筛选器启用时加载样式
+        if ( 'edit.php' === $hook && ( $this->get_option( 'feat_img_enabled', false ) || $this->get_option( 'feat_img_col_enabled', false ) ) ) {
             wp_enqueue_style(
                 'drea-se-admin',
                 $module_url . '/assets/css/admin.css',
@@ -256,6 +261,7 @@ class Site_Enhance extends Module_Base {
         $maintenance_enabled = isset( $_POST['maintenance_enabled'] ) ? boolval( $_POST['maintenance_enabled'] ) : false;
         $maintenance_msg    = isset( $_POST['maintenance_msg'] ) ? sanitize_textarea_field( wp_unslash( $_POST['maintenance_msg'] ) ) : '';
         $feat_img_enabled      = isset( $_POST['feat_img_enabled'] ) ? boolval( $_POST['feat_img_enabled'] ) : false;
+        $feat_img_col_enabled  = isset( $_POST['feat_img_col_enabled'] ) ? boolval( $_POST['feat_img_col_enabled'] ) : false;
         $default_feat_img_id   = isset( $_POST['default_feat_img_id'] ) ? absint( $_POST['default_feat_img_id'] ) : 0;
         $quickedit_excerpt_enabled = isset( $_POST['quickedit_excerpt_enabled'] ) ? boolval( $_POST['quickedit_excerpt_enabled'] ) : false;
 
@@ -275,6 +281,7 @@ class Site_Enhance extends Module_Base {
         update_option( 'drea_site_enhance_maintenance_enabled', $maintenance_enabled );
         update_option( 'drea_site_enhance_maintenance_msg', $maintenance_msg );
         update_option( 'drea_site_enhance_feat_img_enabled', $feat_img_enabled );
+        update_option( 'drea_site_enhance_feat_img_col_enabled', $feat_img_col_enabled );
         update_option( 'drea_site_enhance_default_feat_img_id', $default_feat_img_id );
         update_option( 'drea_site_enhance_quickedit_excerpt_enabled', $quickedit_excerpt_enabled );
 
@@ -309,6 +316,7 @@ class Site_Enhance extends Module_Base {
             'maintenance_enabled' => (bool) $this->get_option( 'maintenance_enabled', false ),
             'maintenance_msg'     => $this->get_option( 'maintenance_msg', '' ),
             'feat_img_enabled'    => (bool) $this->get_option( 'feat_img_enabled', false ),
+            'feat_img_col_enabled' => (bool) $this->get_option( 'feat_img_col_enabled', false ),
             'default_feat_img_id' => (int) $this->get_option( 'default_feat_img_id', 0 ),
             'quickedit_excerpt_enabled' => (bool) $this->get_option( 'quickedit_excerpt_enabled', false ),
             'smtp_enabled'        => (bool) $this->get_option( 'smtp_enabled', false ),
@@ -382,12 +390,33 @@ JS;
         }
 
         $msg  = $this->get_option( 'maintenance_msg', '' );
-        $html = '<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' . esc_html__( '维护中', 'dreamanual-toolkit' ) . '</title>';
-        $html .= '<style>body{display:flex;justify-content:center;align-items:center;min-height:100vh;margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#f0f0f1;color:#3c434a;}.maintenance-msg{text-align:center;padding:40px;max-width:500px;}.maintenance-msg h1{font-size:28px;margin-bottom:16px;}.maintenance-msg p{font-size:16px;line-height:1.6;color:#646970;}</style>';
-        $html .= '</head><body><div class="maintenance-msg"><h1>' . esc_html__( '维护中', 'dreamanual-toolkit' ) . '</h1><p>' . esc_html( $msg ?: __( '网站正在维护，请稍后访问。', 'dreamanual-toolkit' ) ) . '</p></div></body></html>';
+        $site_name = get_bloginfo( 'name' );
+        $default_msg = __( '网站正在维护，请稍后访问。', 'dreamanual-toolkit' );
 
+        $html = '<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' . esc_html__( '维护中', 'dreamanual-toolkit' ) . ' — ' . esc_html( $site_name ) . '</title>';
+        $html .= '<style>';
+        $html .= '*{margin:0;padding:0;box-sizing:border-box;}';
+        $html .= 'body{display:flex;justify-content:center;align-items:center;min-height:100vh;background:#f8fafc;font-family:"Noto Sans SC","Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;}';
+        $html .= '.maintenance-card{background:#ffffff;border:2px solid #0f172a;border-radius:24px;padding:48px 40px;max-width:480px;width:90%;text-align:center;box-shadow:4px 4px 0 0 #0f172a;}';
+        $html .= '.maintenance-card__title{font-size:24px;font-weight:700;line-height:1.333;color:#0f172a;margin-bottom:12px;}';
+        $html .= '.maintenance-card__divider{width:48px;height:2px;background:#0f172a;margin:0 auto 16px;}';
+        $html .= '.maintenance-card__msg{font-size:15px;line-height:1.733;color:#64748b;margin-bottom:24px;}';
+        $html .= '.maintenance-card__footer{font-size:13px;font-weight:500;color:#94a3b8;}';
+        $html .= '@media(max-width:480px){.maintenance-card{padding:32px 24px;border-radius:16px;}}';
+        $html .= '</style>';
+        $html .= '</head><body>';
+        $html .= '<div class="maintenance-card">';
+        $html .= '<div class="maintenance-card__title">' . esc_html__( '维护中', 'dreamanual-toolkit' ) . '</div>';
+        $html .= '<div class="maintenance-card__divider"></div>';
+        $html .= '<div class="maintenance-card__msg">' . esc_html( $msg ?: $default_msg ) . '</div>';
+        $html .= '<div class="maintenance-card__footer">' . esc_html( $site_name ) . '</div>';
+        $html .= '</div></body></html>';
+
+        status_header( 503 );
+        nocache_headers();
         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $html is built with esc_html() above
-        wp_die( $html, esc_html__( '维护中', 'dreamanual-toolkit' ), [ 'response' => 503 ] );
+        echo $html;
+        exit;
     }
 
     // ─── 特色图片筛选 ─────────────────────────────────
