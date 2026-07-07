@@ -1,0 +1,404 @@
+/**
+ * AI 优化模块 — 管理样式
+ * BEM 命名前缀: drea-ai-
+ */
+
+/* ─── 页面容器 ─── */
+.drea-ai-wrap {
+    max-width: 1400px;
+}
+
+.drea-ai-wrap h1 {
+    margin-bottom: 10px;
+}
+
+.drea-ai-wrap > .description {
+    color: #646970;
+    margin-bottom: 20px;
+}
+
+/* ─── Toast 通知 ─── */
+.drea-ai-toast-container {
+    position: fixed;
+    top: 32px;
+    right: 20px;
+    z-index: 999999;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 400px;
+}
+
+.drea-ai-toast {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .15);
+    border-left: 4px solid #2271b1;
+    font-size: 13px;
+    line-height: 1.5;
+    opacity: 0;
+    transform: translateX(100px);
+    transition: all .3s ease;
+    pointer-events: none;
+}
+
+.drea-ai-toast--show {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+}
+
+.drea-ai-toast--success {
+    border-left-color: #008a20;
+    background: #edfaef;
+}
+
+.drea-ai-toast--error {
+    border-left-color: #d63638;
+    background: #fcf0f1;
+}
+
+.drea-ai-toast__icon {
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.drea-ai-toast__message {
+    color: #1d2327;
+    word-break: break-word;
+}
+
+/* ─── 设置面板 ─── */
+.drea-ai-settings-panel {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.drea-ai-settings-panel h2 {
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f0f0f1;
+}
+
+/* ─── 文章列表面板 ─── */
+.drea-ai-posts-panel {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.drea-ai-posts-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.drea-ai-posts-header h2 {
+    margin: 0;
+}
+
+.drea-ai-posts-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.drea-ai-posts-actions label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.drea-ai-posts-table-wrap {
+    overflow-x: auto;
+}
+
+.drea-ai-posts-table th,
+.drea-ai-posts-table td {
+    vertical-align: top;
+}
+
+.drea-ai-posts-table .column-cb {
+    width: 30px;
+    text-align: center;
+}
+
+.drea-ai-posts-table td:nth-child(2) {
+    min-width: 200px;
+    font-weight: 500;
+}
+
+.drea-ai-posts-table td:nth-child(3),
+.drea-ai-posts-table td:nth-child(5) {
+    min-width: 150px;
+}
+
+.drea-ai-posts-table td:nth-child(4),
+.drea-ai-posts-table td:nth-child(6) {
+    min-width: 120px;
+    font-family: monospace;
+    font-size: 12px;
+}
+
+.drea-ai-posts-table td:nth-child(7) {
+    min-width: 200px;
+}
+
+.drea-ai-posts-table td:nth-child(8) {
+    min-width: 150px;
+    color: #646970;
+    font-size: 12px;
+}
+
+/* ─── 标签徽章 ─── */
+.drea-ai-tag-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    margin: 2px;
+    background: #f0f0f1;
+    border-radius: 12px;
+    font-size: 12px;
+    color: #3c434a;
+}
+
+.drea-ai-tag-badge--new {
+    background: #c6e1c6;
+    color: #5b841b;
+}
+
+.drea-ai-tag-badge--removed {
+    background: #eba3a3;
+    color: #761919;
+    text-decoration: line-through;
+}
+
+/* ─── 分页 ─── */
+.drea-ai-pagination {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.drea-ai-pagination-top {
+    margin-bottom: 12px;
+    margin-top: 0;
+}
+
+.drea-ai-pagination button {
+    min-width: 32px;
+    height: 32px;
+    padding: 0 8px;
+}
+
+.drea-ai-pagination button.active {
+    background: #2271b1;
+    color: #fff;
+    border-color: #2271b1;
+}
+
+.drea-ai-pagination .page-info {
+    margin: 0 10px;
+    color: #646970;
+}
+
+/* ─── 待应用面板 ─── */
+.drea-ai-apply-panel {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.drea-ai-apply-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.drea-ai-apply-header h3 {
+    margin: 0;
+}
+
+/* ─── 进度面板 ─── */
+.drea-ai-progress-panel {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.drea-ai-progress-bar {
+    width: 100%;
+    height: 20px;
+    background: #f0f0f1;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.drea-ai-progress-fill {
+    height: 100%;
+    background: #2271b1;
+    transition: width .3s ease;
+}
+
+/* ─── 其他 ─── */
+.drea-ai-no-posts {
+    text-align: center;
+    padding: 40px;
+    color: #646970;
+}
+
+.drea-ai-post-excerpt {
+    color: #646970;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.drea-ai-current-slug,
+.drea-ai-new-slug {
+    font-family: monospace;
+    font-size: 12px;
+    word-break: break-all;
+}
+
+.drea-ai-new-slug {
+    color: #2271b1;
+    font-weight: 500;
+}
+
+.drea-ai-excerpt-edit {
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    padding: 4px 6px;
+    resize: vertical;
+    font-family: inherit;
+    line-height: 1.5;
+    background: #fff;
+    width: 100%;
+    font-size: 12px;
+}
+
+.drea-ai-excerpt-edit:focus {
+    border-color: #2271b1;
+    box-shadow: 0 0 0 1px #2271b1;
+    outline: none;
+}
+
+.drea-ai-excerpt-cell {
+    max-width: 250px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #3c434a;
+}
+
+.drea-ai-excerpt-cell--new {
+    color: #008a20;
+    font-weight: 500;
+}
+
+/* ─── Meta Box ─── */
+.drea-ai-meta-box-wrap {
+    padding: 0;
+}
+
+.drea-ai-meta-section {
+    margin-bottom: 15px;
+}
+
+.drea-ai-meta-section .description {
+    color: #646970;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.drea-ai-meta-section .spinner {
+    display: block;
+    margin: 10px auto 0;
+    float: none;
+}
+
+.drea-ai-meta-suggestion {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #f0f0f1;
+}
+
+.drea-ai-meta-field {
+    margin-bottom: 12px;
+}
+
+.drea-ai-meta-field label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 12px;
+    color: #3c434a;
+}
+
+.drea-ai-meta-tags {
+    margin-bottom: 5px;
+}
+
+.drea-ai-meta-tags .drea-ai-tag-badge {
+    font-size: 11px;
+    padding: 2px 6px;
+}
+
+.drea-ai-meta-actions {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #f0f0f1;
+}
+
+.drea-ai-meta-actions .button {
+    text-align: center;
+}
+
+#drea-ai-meta-slug[readonly] {
+    background: #f6f7f7;
+    color: #3c434a;
+}
+
+/* ─── 响应式 ─── */
+@media screen and (max-width: 782px) {
+    .drea-ai-posts-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .drea-ai-posts-actions {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .drea-ai-apply-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .drea-ai-toast-container {
+        left: 10px;
+        right: 10px;
+        max-width: none;
+    }
+}

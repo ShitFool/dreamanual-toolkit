@@ -1,0 +1,163 @@
+/**
+ * 站点优化模块 — 管理样式
+ * BEM 命名前缀: drea-so-
+ */
+
+/* ─── 页面容器 ─── */
+.drea-so-wrap {
+    max-width: 800px;
+}
+
+.drea-so-wrap h1 {
+    margin-bottom: 20px;
+}
+
+/* ─── Toast ─── */
+.drea-so-toast-container {
+    position: fixed;
+    top: 32px;
+    right: 20px;
+    z-index: 999999;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 400px;
+}
+
+.drea-so-toast {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .15);
+    border-left: 4px solid #2271b1;
+    font-size: 13px;
+    line-height: 1.5;
+    opacity: 0;
+    transform: translateX(100px);
+    transition: all .3s ease;
+    pointer-events: none;
+}
+
+.drea-so-toast--show {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+}
+
+.drea-so-toast--success {
+    border-left-color: #008a20;
+    background: #edfaef;
+}
+
+.drea-so-toast--error {
+    border-left-color: #d63638;
+    background: #fcf0f1;
+}
+
+/* ─── 分区块 ─── */
+.drea-so-section {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    overflow: hidden;
+}
+
+.drea-so-section__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid #f0f0f1;
+    background: #f6f7f7;
+}
+
+.drea-so-section__header h2 {
+    margin: 0;
+    font-size: 15px;
+}
+
+.drea-so-section__body {
+    padding: 0;
+}
+
+.drea-so-section__body .form-table {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.drea-so-section__body .form-table th {
+    width: auto;
+    font-size: 13px;
+    font-weight: 400;
+    padding: 12px 20px;
+}
+
+.drea-so-section__body .form-table td {
+    width: 60px;
+    padding: 12px 20px 12px 0;
+    text-align: center;
+}
+
+.drea-so-section__body .form-table tr {
+    border-bottom: 1px solid #f0f0f1;
+}
+
+.drea-so-section__body .form-table tr:last-child {
+    border-bottom: none;
+}
+
+/* ─── Toggle 开关 ─── */
+.drea-so-toggle {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 22px;
+    cursor: pointer;
+}
+
+.drea-so-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.drea-so-toggle__slider {
+    position: absolute;
+    inset: 0;
+    background: #ccc;
+    border-radius: 22px;
+    transition: background .2s;
+}
+
+.drea-so-toggle__slider::before {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    left: 3px;
+    bottom: 3px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform .2s;
+}
+
+.drea-so-toggle input:checked + .drea-so-toggle__slider {
+    background: #00a0d2;
+}
+
+.drea-so-toggle input:checked + .drea-so-toggle__slider::before {
+    transform: translateX(18px);
+}
+
+/* ─── 保存提示 ─── */
+.drea-so-save-hint {
+    display: inline-block;
+    margin-left: 12px;
+    font-size: 12px;
+    color: #646970;
+    vertical-align: middle;
+}

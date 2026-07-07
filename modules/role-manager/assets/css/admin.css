@@ -1,0 +1,199 @@
+/**
+ * 角色管理模块 — 管理样式
+ * BEM 命名前缀: drea-rm-
+ */
+
+/* ─── 页面容器 ─── */
+.drea-rm-wrap {
+    max-width: 1200px;
+}
+
+.drea-rm-wrap h1 {
+    margin-bottom: 10px;
+}
+
+/* ─── Toast ─── */
+.drea-rm-toast-container {
+    position: fixed;
+    top: 32px;
+    right: 20px;
+    z-index: 999999;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 400px;
+}
+
+.drea-rm-toast {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .15);
+    border-left: 4px solid #2271b1;
+    font-size: 13px;
+    line-height: 1.5;
+    opacity: 0;
+    transform: translateX(100px);
+    transition: all .3s ease;
+    pointer-events: none;
+}
+
+.drea-rm-toast--show {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+}
+
+.drea-rm-toast--success {
+    border-left-color: #008a20;
+    background: #edfaef;
+}
+
+.drea-rm-toast--error {
+    border-left-color: #d63638;
+    background: #fcf0f1;
+}
+
+/* ─── 操作栏 ─── */
+.drea-rm-actions {
+    margin: 15px 0;
+}
+
+/* ─── 角色列表 ─── */
+.drea-rm-roles-panel {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    padding: 20px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+/* ─── 对话框 ─── */
+.drea-rm-dialog-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .5);
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.drea-rm-dialog {
+    background: #fff;
+    border-radius: 6px;
+    padding: 24px;
+    width: 420px;
+    max-width: 90vw;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, .2);
+}
+
+.drea-rm-dialog h2 {
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f0f0f1;
+}
+
+.drea-rm-dialog-body {
+    margin: 16px 0;
+}
+
+.drea-rm-dialog-footer {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    padding-top: 16px;
+    border-top: 1px solid #f0f0f1;
+}
+
+/* ─── 表单 ─── */
+.drea-rm-form-group {
+    margin-bottom: 16px;
+}
+
+.drea-rm-form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 4px;
+    font-size: 13px;
+}
+
+.drea-rm-form-group input {
+    width: 100%;
+}
+
+/* ─── 角色详情面板 ─── */
+.drea-rm-detail-panel {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    padding: 20px;
+    border-radius: 4px;
+    margin-top: 20px;
+}
+
+.drea-rm-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f0f0f1;
+}
+
+.drea-rm-detail-header h2 {
+    margin: 0;
+}
+
+/* ─── 能力矩阵网格 ─── */
+.drea-rm-caps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 6px;
+    margin: 10px 0 20px;
+}
+
+.drea-rm-cap-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-family: monospace;
+}
+
+.drea-rm-cap-item:hover {
+    background: #f6f7f7;
+}
+
+.drea-rm-cap-item input[type="checkbox"] {
+    margin: 0;
+}
+
+/* ─── 角色标签 ─── */
+.drea-rm-role-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.drea-rm-role-badge--protected {
+    background: #fcf0f1;
+    color: #d63638;
+}
+
+/* ─── 响应式 ─── */
+@media screen and (max-width: 782px) {
+    .drea-rm-caps-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .drea-rm-dialog {
+        width: 95vw;
+    }
+}
