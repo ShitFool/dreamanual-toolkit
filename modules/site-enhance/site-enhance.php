@@ -397,23 +397,26 @@ JS;
         $site_name = get_bloginfo( 'name' );
         $default_msg = __( '网站正在维护，请稍后访问。', 'dreamanual-toolkit' );
 
+        // 引入当前主题样式，使维护页跟随主题风格
+        $theme_style_url = get_stylesheet_directory_uri() . '/style.css';
+        $body_classes    = implode( ' ', get_body_class( [ 'drea-maintenance' ] ) );
+
         $html = '<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' . esc_html__( '维护中', 'dreamanual-toolkit' ) . ' — ' . esc_html( $site_name ) . '</title>';
+        $html .= '<link rel="stylesheet" href="' . esc_url( $theme_style_url ) . '">';
         $html .= '<style>';
-        $html .= '*{margin:0;padding:0;box-sizing:border-box;}';
-        $html .= 'body{display:flex;justify-content:center;align-items:center;min-height:100vh;background:#f8fafc;font-family:"Noto Sans SC","Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;}';
-        $html .= '.maintenance-card{background:#ffffff;border:2px solid #0f172a;border-radius:24px;padding:48px 40px;max-width:480px;width:90%;text-align:center;box-shadow:4px 4px 0 0 #0f172a;}';
-        $html .= '.maintenance-card__title{font-size:24px;font-weight:700;line-height:1.333;color:#0f172a;margin-bottom:12px;}';
-        $html .= '.maintenance-card__divider{width:48px;height:2px;background:#0f172a;margin:0 auto 16px;}';
-        $html .= '.maintenance-card__msg{font-size:15px;line-height:1.733;color:#64748b;margin-bottom:24px;}';
-        $html .= '.maintenance-card__footer{font-size:13px;font-weight:500;color:#94a3b8;}';
-        $html .= '@media(max-width:480px){.maintenance-card{padding:32px 24px;border-radius:16px;}}';
+        $html .= '.drea-maintenance{display:flex;justify-content:center;align-items:center;min-height:100vh;padding:24px;}';
+        $html .= '.drea-maintenance__card{text-align:center;max-width:480px;width:100%;}';
+        $html .= '.drea-maintenance__title{font-size:1.75rem;font-weight:700;margin-bottom:.5rem;}';
+        $html .= '.drea-maintenance__divider{width:48px;height:2px;margin:0 auto 1rem;}';
+        $html .= '.drea-maintenance__msg{font-size:1rem;line-height:1.75;margin-bottom:1.5rem;}';
+        $html .= '.drea-maintenance__footer{font-size:.875rem;opacity:.6;}';
         $html .= '</style>';
-        $html .= '</head><body>';
-        $html .= '<div class="maintenance-card">';
-        $html .= '<div class="maintenance-card__title">' . esc_html__( '维护中', 'dreamanual-toolkit' ) . '</div>';
-        $html .= '<div class="maintenance-card__divider"></div>';
-        $html .= '<div class="maintenance-card__msg">' . esc_html( $msg ?: $default_msg ) . '</div>';
-        $html .= '<div class="maintenance-card__footer">' . esc_html( $site_name ) . '</div>';
+        $html .= '</head><body class="' . esc_attr( $body_classes ) . '">';
+        $html .= '<div class="drea-maintenance__card">';
+        $html .= '<div class="drea-maintenance__title">' . esc_html__( '维护中', 'dreamanual-toolkit' ) . '</div>';
+        $html .= '<div class="drea-maintenance__divider"></div>';
+        $html .= '<div class="drea-maintenance__msg">' . esc_html( $msg ?: $default_msg ) . '</div>';
+        $html .= '<div class="drea-maintenance__footer">' . esc_html( $site_name ) . '</div>';
         $html .= '</div></body></html>';
 
         status_header( 503 );
