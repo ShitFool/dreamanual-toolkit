@@ -15,6 +15,7 @@ $settings = [
     'maintenance_msg'     => get_option( 'drea_site_enhance_maintenance_msg', '' ),
     'feat_img_enabled'    => (bool) get_option( 'drea_site_enhance_feat_img_enabled', false ),
     'feat_img_col_enabled' => (bool) get_option( 'drea_site_enhance_feat_img_col_enabled', false ),
+    'default_feat_img_enabled' => (bool) get_option( 'drea_site_enhance_default_feat_img_enabled', false ),
     'default_feat_img_id' => (int) get_option( 'drea_site_enhance_default_feat_img_id', 0 ),
     'quickedit_excerpt_enabled' => (bool) get_option( 'drea_site_enhance_quickedit_excerpt_enabled', false ),
     'smtp_enabled'        => (bool) get_option( 'drea_site_enhance_smtp_enabled', false ),
@@ -145,8 +146,12 @@ function drea_se_body_class( bool $enabled ): void {
                 <h2><?php echo esc_html__( '默认特色图片', 'dreamanual-toolkit' ); ?></h2>
                 <span class="drea-se-section__desc"><?php echo esc_html__( '未设置特色图的文章自动使用此默认图片', 'dreamanual-toolkit' ); ?></span>
             </div>
+            <label class="drea-se-toggle">
+                <input type="checkbox" id="default-feat-img-enabled" <?php checked( $settings['default_feat_img_enabled'] ); ?>>
+                <span class="drea-se-toggle__slider"></span>
+            </label>
         </div>
-        <div class="drea-se-section__body" id="default-feat-img-settings">
+        <div class="drea-se-section__body<?php drea_se_body_class( $settings['default_feat_img_enabled'] ); ?>" id="default-feat-img-settings">
             <table class="form-table">
                 <tr>
                     <th><?php echo esc_html__( '默认图片', 'dreamanual-toolkit' ); ?></th>

@@ -80,7 +80,7 @@ class Site_Enhance extends Module_Base {
         }
 
         // ─── 默认特色图片 ───
-        if ( $this->get_option( 'default_feat_img_id', 0 ) ) {
+        if ( $this->get_option( 'default_feat_img_enabled', false ) && $this->get_option( 'default_feat_img_id', 0 ) ) {
             add_filter( 'post_thumbnail_html', [ $this, 'default_featured_image' ], 10, 5 );
         }
 
@@ -151,6 +151,7 @@ class Site_Enhance extends Module_Base {
             'drea_site_enhance_maintenance_msg',
             'drea_site_enhance_feat_img_enabled',
             'drea_site_enhance_feat_img_col_enabled',
+            'drea_site_enhance_default_feat_img_enabled',
             'drea_site_enhance_default_feat_img_id',
             'drea_site_enhance_quickedit_excerpt_enabled',
             'drea_site_enhance_smtp_enabled',
@@ -262,6 +263,7 @@ class Site_Enhance extends Module_Base {
         $maintenance_msg    = isset( $_POST['maintenance_msg'] ) ? sanitize_textarea_field( wp_unslash( $_POST['maintenance_msg'] ) ) : '';
         $feat_img_enabled      = isset( $_POST['feat_img_enabled'] ) ? boolval( $_POST['feat_img_enabled'] ) : false;
         $feat_img_col_enabled  = isset( $_POST['feat_img_col_enabled'] ) ? boolval( $_POST['feat_img_col_enabled'] ) : false;
+        $default_feat_img_enabled = isset( $_POST['default_feat_img_enabled'] ) ? boolval( $_POST['default_feat_img_enabled'] ) : false;
         $default_feat_img_id   = isset( $_POST['default_feat_img_id'] ) ? absint( $_POST['default_feat_img_id'] ) : 0;
         $quickedit_excerpt_enabled = isset( $_POST['quickedit_excerpt_enabled'] ) ? boolval( $_POST['quickedit_excerpt_enabled'] ) : false;
 
@@ -282,6 +284,7 @@ class Site_Enhance extends Module_Base {
         update_option( 'drea_site_enhance_maintenance_msg', $maintenance_msg );
         update_option( 'drea_site_enhance_feat_img_enabled', $feat_img_enabled );
         update_option( 'drea_site_enhance_feat_img_col_enabled', $feat_img_col_enabled );
+        update_option( 'drea_site_enhance_default_feat_img_enabled', $default_feat_img_enabled );
         update_option( 'drea_site_enhance_default_feat_img_id', $default_feat_img_id );
         update_option( 'drea_site_enhance_quickedit_excerpt_enabled', $quickedit_excerpt_enabled );
 
@@ -317,6 +320,7 @@ class Site_Enhance extends Module_Base {
             'maintenance_msg'     => $this->get_option( 'maintenance_msg', '' ),
             'feat_img_enabled'    => (bool) $this->get_option( 'feat_img_enabled', false ),
             'feat_img_col_enabled' => (bool) $this->get_option( 'feat_img_col_enabled', false ),
+            'default_feat_img_enabled' => (bool) $this->get_option( 'default_feat_img_enabled', false ),
             'default_feat_img_id' => (int) $this->get_option( 'default_feat_img_id', 0 ),
             'quickedit_excerpt_enabled' => (bool) $this->get_option( 'quickedit_excerpt_enabled', false ),
             'smtp_enabled'        => (bool) $this->get_option( 'smtp_enabled', false ),
