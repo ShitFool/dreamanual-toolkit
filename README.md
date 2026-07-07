@@ -3,10 +3,10 @@ AIGC:
   ContentProducer: '001191110102MAD55U9H0F10002'
   ContentPropagator: '001191110102MAD55U9H0F10002'
   Label: '1'
-  ProduceID: 'e29bfc59-7dea-4856-8892-761d2e7bc0ac'
-  PropagateID: 'e29bfc59-7dea-4856-8892-761d2e7bc0ac'
-  ReservedCode1: 'aac25728-983c-4b8f-b808-b99a11acb20f'
-  ReservedCode2: 'aac25728-983c-4b8f-b808-b99a11acb20f'
+  ProduceID: '0bd2b899-9593-459e-b7ed-18b27f636975'
+  PropagateID: '0bd2b899-9593-459e-b7ed-18b27f636975'
+  ReservedCode1: 'ed375e5f-46e3-4191-b4a2-6905b6afb2ac'
+  ReservedCode2: 'ed375e5f-46e3-4191-b4a2-6905b6afb2ac'
 ---
 
 # Dreamanual Toolkit
@@ -16,8 +16,6 @@ AIGC:
 ## 为什么做这个
 
 WordPress 站点装了太多小插件：回到顶部按钮、维护模式、特色图片管理……每个插件只有一个功能，却各自注册 hooks、加载资源、占据插件列表。Dreamanual Toolkit 把这些小功能收编为独立模块，统一管理，大幅减少活跃插件数量。
-
-> 实际效果：**25 → 16 个活跃插件**，站点功能完全不变。
 
 ## 模块一览
 
