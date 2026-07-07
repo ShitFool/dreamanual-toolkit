@@ -85,13 +85,22 @@
     function toggleSectionBody(checkbox, bodyId) {
         var body = document.getElementById(bodyId);
         if (!body) return;
-        var tables = body.querySelectorAll('.form-table');
         if (checkbox.checked) {
-            body.style.opacity = '1';
-            tables.forEach(function (t) { t.style.pointerEvents = ''; });
+            body.classList.remove('drea-se-section__body--collapsed');
         } else {
-            body.style.opacity = '0.5';
-            tables.forEach(function (t) { t.style.pointerEvents = 'none'; });
+            body.classList.add('drea-se-section__body--collapsed');
+        }
+        // 更新 header 底部边框
+        var section = body.closest('.drea-se-section');
+        if (section) {
+            var header = section.querySelector('.drea-se-section__header');
+            if (header) {
+                if (checkbox.checked) {
+                    header.style.borderBottom = '1px solid #f0f0f1';
+                } else {
+                    header.style.borderBottom = 'none';
+                }
+            }
         }
     }
 
@@ -105,6 +114,7 @@
             { checkbox: '#maintenance-enabled', body: 'maintenance-settings' },
             { checkbox: '#feat-img-enabled', body: 'feat-img-settings' },
             { checkbox: '#feat-img-col-enabled', body: 'feat-img-col-settings' },
+            { checkbox: '#quickedit-excerpt-enabled', body: 'quickedit-excerpt-settings' },
             { checkbox: '#smtp-enabled', body: 'smtp-settings' },
         ];
 
@@ -115,6 +125,17 @@
                 cb.addEventListener('change', function () {
                     toggleSectionBody(cb, t.body);
                 });
+            }
+        });
+
+        // 无开关的 section（如默认特色图片）始终显示 header 边框
+        document.querySelectorAll('.drea-se-section__body:not(.drea-se-section__body--collapsed)').forEach(function (body) {
+            var section = body.closest('.drea-se-section');
+            if (section) {
+                var header = section.querySelector('.drea-se-section__header');
+                if (header && !header.style.borderBottom) {
+                    header.style.borderBottom = '1px solid #f0f0f1';
+                }
             }
         });
 

@@ -71,7 +71,16 @@
     justify-content: space-between;
     align-items: center;
     padding: 16px 20px;
+}
+
+.drea-se-section:not(:has(.drea-se-section__body--collapsed)) .drea-se-section__header {
     border-bottom: 1px solid #f0f0f1;
+}
+
+.drea-se-section__title {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
 }
 
 .drea-se-section__header h2 {
@@ -79,8 +88,18 @@
     font-size: 15px;
 }
 
+.drea-se-section__desc {
+    font-size: 13px;
+    color: #646970;
+    line-height: 1.4;
+}
+
 .drea-se-section__body {
     padding: 16px 20px;
+}
+
+.drea-se-section__body--collapsed {
+    display: none;
 }
 
 .drea-se-section__body .form-table {
