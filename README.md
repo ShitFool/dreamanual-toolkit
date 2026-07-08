@@ -117,5 +117,3 @@ dreamanual-toolkit/
 └── languages/                # 翻译文件
 ```
 GPL-2.0+
-
-> AI生成
