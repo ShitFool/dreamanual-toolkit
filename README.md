@@ -1,14 +1,3 @@
----
-AIGC:
-  ContentProducer: '001191110102MAD55U9H0F10002'
-  ContentPropagator: '001191110102MAD55U9H0F10002'
-  Label: '1'
-  ProduceID: '6e6371c0-f36d-4cc0-801f-240a55154f3d'
-  PropagateID: '6e6371c0-f36d-4cc0-801f-240a55154f3d'
-  ReservedCode1: 'f910d5e8-2160-4792-bf66-594b2f460148'
-  ReservedCode2: 'f910d5e8-2160-4792-bf66-594b2f460148'
----
-
 # Dreamanual Toolkit
 
 模块化 WordPress 工具箱——将多个零散小插件合并为一个，每个功能独立开关，关掉即零开销。
@@ -127,9 +116,6 @@ dreamanual-toolkit/
 ├── assets/                   # 全局资源
 └── languages/                # 翻译文件
 ```
-
-## 许可证
-
 GPL-2.0+
 
 > AI生成
