@@ -47,6 +47,7 @@
         formData.append('nonce', nonce);
         formData.append('baidu_enabled', $('#baidu-enabled').checked ? 1 : 0);
         formData.append('baidu_token', ($('#baidu-token').value || '').trim());
+        formData.append('baidu_site', ($('#baidu-site').value || '').trim());
         formData.append('bing_enabled', $('#bing-enabled').checked ? 1 : 0);
         formData.append('bing_key', ($('#bing-key').value || '').trim());
         formData.append('indexnow_enabled', $('#indexnow-enabled').checked ? 1 : 0);

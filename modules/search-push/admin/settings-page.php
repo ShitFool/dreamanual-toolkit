@@ -10,6 +10,7 @@ defined( 'ABSPATH' ) || exit;
 $settings = [
     'baidu_enabled'    => (bool) get_option( 'drea_search_push_baidu_enabled', false ),
     'baidu_token'      => get_option( 'drea_search_push_baidu_token', '' ),
+    'baidu_site'       => get_option( 'drea_search_push_baidu_site', '' ),
     'bing_enabled'     => (bool) get_option( 'drea_search_push_bing_enabled', false ),
     'bing_key'         => get_option( 'drea_search_push_bing_key', '' ),
     'indexnow_enabled' => (bool) get_option( 'drea_search_push_indexnow_enabled', false ),
@@ -43,6 +44,13 @@ function drea_sp_body_class( bool $enabled ): void {
         </div>
         <div class="drea-sp-section__body<?php drea_sp_body_class( $settings['baidu_enabled'] ); ?>" id="baidu-settings">
             <table class="form-table">
+                <tr>
+                    <th><?php echo esc_html__( '站点域名', 'dreamanual-toolkit' ); ?></th>
+                    <td>
+                        <input type="text" id="baidu-site" value="<?php echo esc_attr( $settings['baidu_site'] ); ?>" class="regular-text" placeholder="<?php echo esc_attr__( '如 www.example.com', 'dreamanual-toolkit' ); ?>">
+                        <p class="description"><?php echo esc_html__( '百度搜索资源平台验证的站点域名。若与当前站点域名不同请手动填写。', 'dreamanual-toolkit' ); ?></p>
+                    </td>
+                </tr>
                 <tr>
                     <th><?php echo esc_html__( '推送 Token', 'dreamanual-toolkit' ); ?></th>
                     <td>

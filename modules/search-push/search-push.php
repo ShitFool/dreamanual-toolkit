@@ -87,16 +87,23 @@ class Search_Push extends Module_Base {
                 update_option( 'drea_search_push_baidu_enabled', true );
                 // token 可能是完整 URL 或纯 token
                 if ( 0 === strpos( $baidu_token, 'http' ) ) {
-                    // 提取 token 参数
+                    // 从完整 URL 提取 site 和 token 参数
                     $parts = wp_parse_url( $baidu_token );
                     if ( ! empty( $parts['query'] ) ) {
                         wp_parse_str( $parts['query'], $q );
                         if ( ! empty( $q['token'] ) ) {
                             update_option( 'drea_search_push_baidu_token', sanitize_text_field( $q['token'] ) );
                         }
+                        if ( ! empty( $q['site'] ) ) {
+                            // 百度 site 参数可能包含协议，如 https://www.example.com
+                            $site_host = wp_parse_url( $q['site'], PHP_URL_HOST );
+                            update_option( 'drea_search_push_baidu_site', sanitize_text_field( $site_host ?: $q['site'] ) );
+                        }
                     }
                 } else {
                     update_option( 'drea_search_push_baidu_token', sanitize_text_field( $baidu_token ) );
+                    // 无完整 URL 时默认使用当前站点域名
+                    update_option( 'drea_search_push_baidu_site', wp_parse_url( home_url(), PHP_URL_HOST ) );
                 }
             }
 
@@ -126,6 +133,7 @@ class Search_Push extends Module_Base {
         $options = [
             'drea_search_push_baidu_enabled',
             'drea_search_push_baidu_token',
+            'drea_search_push_baidu_site',
             'drea_search_push_bing_enabled',
             'drea_search_push_bing_key',
             'drea_search_push_indexnow_enabled',
@@ -200,6 +208,7 @@ class Search_Push extends Module_Base {
 
         $baidu_enabled    = isset( $_POST['baidu_enabled'] ) ? boolval( $_POST['baidu_enabled'] ) : false;
         $baidu_token      = isset( $_POST['baidu_token'] ) ? sanitize_text_field( wp_unslash( $_POST['baidu_token'] ) ) : '';
+        $baidu_site       = isset( $_POST['baidu_site'] ) ? sanitize_text_field( wp_unslash( $_POST['baidu_site'] ) ) : '';
         $bing_enabled     = isset( $_POST['bing_enabled'] ) ? boolval( $_POST['bing_enabled'] ) : false;
         $bing_key         = isset( $_POST['bing_key'] ) ? sanitize_text_field( wp_unslash( $_POST['bing_key'] ) ) : '';
         $indexnow_enabled = isset( $_POST['indexnow_enabled'] ) ? boolval( $_POST['indexnow_enabled'] ) : false;
@@ -207,6 +216,7 @@ class Search_Push extends Module_Base {
 
         update_option( 'drea_search_push_baidu_enabled', $baidu_enabled );
         update_option( 'drea_search_push_baidu_token', $baidu_token );
+        update_option( 'drea_search_push_baidu_site', $baidu_site );
         update_option( 'drea_search_push_bing_enabled', $bing_enabled );
         update_option( 'drea_search_push_bing_key', $bing_key );
         update_option( 'drea_search_push_indexnow_enabled', $indexnow_enabled );
@@ -224,6 +234,7 @@ class Search_Push extends Module_Base {
         wp_send_json_success( [
             'baidu_enabled'    => (bool) $this->get_option( 'baidu_enabled', false ),
             'baidu_token'      => $this->get_option( 'baidu_token', '' ),
+            'baidu_site'       => $this->get_option( 'baidu_site', '' ),
             'bing_enabled'     => (bool) $this->get_option( 'bing_enabled', false ),
             'bing_key'         => $this->get_option( 'bing_key', '' ),
             'indexnow_enabled' => (bool) $this->get_option( 'indexnow_enabled', false ),
@@ -320,13 +331,17 @@ class Search_Push extends Module_Base {
      */
     protected function push_baidu( array $urls ) {
         $token    = $this->get_option( 'baidu_token', '' );
-        $hostname = wp_parse_url( home_url(), PHP_URL_HOST );
-
-        if ( ! $token || ! $hostname ) {
-            return new \WP_Error( 'drea_sp_baidu', __( '百度推送 Token 未配置。', 'dreamanual-toolkit' ) );
+        $site     = $this->get_option( 'baidu_site', '' );
+        // 回退：若未设置 baidu_site 则使用当前站点域名
+        if ( ! $site ) {
+            $site = wp_parse_url( home_url(), PHP_URL_HOST );
         }
 
-        $api_url = 'http://data.zz.baidu.com/urls?site=' . urlencode( $hostname ) . '&token=' . urlencode( $token );
+        if ( ! $token || ! $site ) {
+            return new \WP_Error( 'drea_sp_baidu', __( '百度推送 Token 或站点域名未配置。', 'dreamanual-toolkit' ) );
+        }
+
+        $api_url = 'http://data.zz.baidu.com/urls?site=' . urlencode( $site ) . '&token=' . urlencode( $token );
 
         $response = wp_remote_post( $api_url, [
             'body'    => implode( "\n", $urls ),
