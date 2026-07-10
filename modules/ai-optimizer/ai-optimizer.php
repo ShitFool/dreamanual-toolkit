@@ -491,7 +491,7 @@ class AI_Optimizer extends Module_Base {
      */
     public function ajax_apply(): void {
         check_ajax_referer( 'drea_ai_nonce', 'nonce' );
-        if ( ! current_user_can( 'manage_options' ) ) {
+        if ( ! current_user_can( 'edit_posts' ) ) {
             wp_send_json_error( __( '权限不足。', 'dreamanual-toolkit' ) );
         }
 

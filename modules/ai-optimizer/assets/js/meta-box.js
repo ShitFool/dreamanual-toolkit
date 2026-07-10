@@ -140,18 +140,12 @@
             .then(function (r) { return r.json(); })
             .then(function (res) {
                 if (res.success) {
-                    btn.textContent = i18n.applied;
+                    // 应用成功后刷新页面，确保表单从数据库重新加载
+                    // 避免用户点"发布/更新"时旧表单值覆盖 AJAX 写入的数据
+                    showMessage(i18n.applied, 'success');
                     setTimeout(function () {
-                        btn.disabled = false;
-                        btn.textContent = i18n.applyChanges;
-                    }, 2000);
-
-                    // Reload if slug changed
-                    var editablePostName = document.querySelector('#editable-post-name');
-                    if (suggestion.slug && editablePostName && suggestion.slug !== editablePostName.textContent) {
-                        showMessage(i18n.slugUpdatedReload, 'notice');
                         location.reload();
-                    }
+                    }, 500);
                 } else {
                     showMessage(i18n.applyFailed + (res.data || i18n.unknownError), 'error');
                     btn.disabled = false;
