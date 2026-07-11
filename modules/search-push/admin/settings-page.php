@@ -8,13 +8,11 @@
 defined( 'ABSPATH' ) || exit;
 
 $settings = [
-    'baidu_enabled'    => (bool) get_option( 'drea_search_push_baidu_enabled', false ),
-    'baidu_token'      => get_option( 'drea_search_push_baidu_token', '' ),
-    'baidu_site'       => get_option( 'drea_search_push_baidu_site', '' ),
-    'bing_enabled'     => (bool) get_option( 'drea_search_push_bing_enabled', false ),
-    'bing_key'         => get_option( 'drea_search_push_bing_key', '' ),
-    'indexnow_enabled' => (bool) get_option( 'drea_search_push_indexnow_enabled', false ),
-    'indexnow_key'     => get_option( 'drea_search_push_indexnow_key', '' ),
+    'baidu_enabled' => (bool) get_option( 'drea_search_push_baidu_enabled', false ),
+    'baidu_token'   => get_option( 'drea_search_push_baidu_token', '' ),
+    'baidu_site'    => get_option( 'drea_search_push_baidu_site', '' ),
+    'bing_enabled'  => (bool) get_option( 'drea_search_push_bing_enabled', false ),
+    'bing_key'      => get_option( 'drea_search_push_bing_key', '' ),
 ];
 
 /**
@@ -95,38 +93,6 @@ function drea_sp_body_class( bool $enabled ): void {
                     <td>
                         <button type="button" class="button" id="bing-test-btn" data-engine="bing"><?php echo esc_html__( '测试推送', 'dreamanual-toolkit' ); ?></button>
                         <span class="drea-sp-test-status" id="bing-test-status"></span>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-
-    <!-- IndexNow 推送 -->
-    <div class="drea-sp-section">
-        <div class="drea-sp-section__header">
-            <div class="drea-sp-section__title">
-                <h2><?php echo esc_html__( 'IndexNow 推送', 'dreamanual-toolkit' ); ?></h2>
-                <span class="drea-sp-section__desc"><?php echo esc_html__( '通过 IndexNow 协议一次通知多个搜索引擎', 'dreamanual-toolkit' ); ?></span>
-            </div>
-            <label class="drea-sp-toggle">
-                <input type="checkbox" id="indexnow-enabled" <?php checked( $settings['indexnow_enabled'] ); ?>>
-                <span class="drea-sp-toggle__slider"></span>
-            </label>
-        </div>
-        <div class="drea-sp-section__body<?php drea_sp_body_class( $settings['indexnow_enabled'] ); ?>" id="indexnow-settings">
-            <table class="form-table">
-                <tr>
-                    <th><?php echo esc_html__( 'API Key', 'dreamanual-toolkit' ); ?></th>
-                    <td>
-                        <input type="text" id="indexnow-key" value="<?php echo esc_attr( $settings['indexnow_key'] ); ?>" class="regular-text" placeholder="<?php echo esc_attr__( '自动生成或自定义', 'dreamanual-toolkit' ); ?>">
-                        <p class="description"><?php echo esc_html__( '搜索引擎会访问 {key}.txt 验证所有权。留空则自动生成。', 'dreamanual-toolkit' ); ?></p>
-                    </td>
-                </tr>
-                <tr>
-                    <th><?php echo esc_html__( '测试推送', 'dreamanual-toolkit' ); ?></th>
-                    <td>
-                        <button type="button" class="button" id="indexnow-test-btn" data-engine="indexnow"><?php echo esc_html__( '测试推送', 'dreamanual-toolkit' ); ?></button>
-                        <span class="drea-sp-test-status" id="indexnow-test-status"></span>
                     </td>
                 </tr>
             </table>

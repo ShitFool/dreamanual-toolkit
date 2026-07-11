@@ -1,6 +1,6 @@
 <?php
 /**
- * 搜索推送模块 — 文章发布/更新时自动推送到百度、Bing、IndexNow
+ * 搜索推送模块 — 文章发布/更新时自动推送到百度、Bing
  *
  * 每个搜索引擎独立开关，互不耦合。
  *
@@ -34,7 +34,7 @@ class Search_Push extends Module_Base {
      * {@inheritdoc}
      */
     public function get_description(): string {
-        return __( '文章发布/更新时自动推送链接到百度、Bing、IndexNow，提升搜索引擎收录效率。', 'dreamanual-toolkit' );
+        return __( '文章发布/更新时自动推送链接到百度、Bing，提升搜索引擎收录效率。', 'dreamanual-toolkit' );
     }
 
     /**
@@ -57,16 +57,10 @@ class Search_Push extends Module_Base {
         add_action( 'wp_ajax_drea_sp_get_settings', [ $this, 'ajax_get_settings' ] );
         add_action( 'wp_ajax_drea_sp_test_push', [ $this, 'ajax_test_push' ] );
 
-        // ─── IndexNow key 验证路由 ───
-        if ( $this->get_option( 'indexnow_enabled', false ) ) {
-            add_action( 'parse_request', [ $this, 'indexnow_key_route' ] );
-        }
-
         // ─── 发布/更新文章时推送 ───
         $any_enabled = (
             $this->get_option( 'baidu_enabled', false ) ||
-            $this->get_option( 'bing_enabled', false ) ||
-            $this->get_option( 'indexnow_enabled', false )
+            $this->get_option( 'bing_enabled', false )
         );
         if ( $any_enabled ) {
             add_action( 'transition_post_status', [ $this, 'on_post_status_change' ], 10, 3 );
@@ -112,17 +106,6 @@ class Search_Push extends Module_Base {
                 update_option( 'drea_search_push_bing_enabled', true );
                 update_option( 'drea_search_push_bing_key', sanitize_text_field( $old['bing_key'] ) );
             }
-
-            // IndexNow
-            if ( ! empty( $old['indexnow_key'] ) ) {
-                update_option( 'drea_search_push_indexnow_enabled', ! empty( $old['indexnow'] ) );
-                update_option( 'drea_search_push_indexnow_key', sanitize_text_field( $old['indexnow_key'] ) );
-            }
-        }
-
-        // 自动生成 IndexNow key（如果未设置）
-        if ( ! get_option( 'drea_search_push_indexnow_key' ) ) {
-            update_option( 'drea_search_push_indexnow_key', md5( AUTH_KEY . home_url() ) );
         }
     }
 
@@ -136,8 +119,6 @@ class Search_Push extends Module_Base {
             'drea_search_push_baidu_site',
             'drea_search_push_bing_enabled',
             'drea_search_push_bing_key',
-            'drea_search_push_indexnow_enabled',
-            'drea_search_push_indexnow_key',
         ];
         foreach ( $options as $opt ) {
             delete_option( $opt );
@@ -206,21 +187,17 @@ class Search_Push extends Module_Base {
             wp_send_json_error( [ 'message' => __( '权限不足', 'dreamanual-toolkit' ) ] );
         }
 
-        $baidu_enabled    = isset( $_POST['baidu_enabled'] ) ? boolval( $_POST['baidu_enabled'] ) : false;
-        $baidu_token      = isset( $_POST['baidu_token'] ) ? sanitize_text_field( wp_unslash( $_POST['baidu_token'] ) ) : '';
-        $baidu_site       = isset( $_POST['baidu_site'] ) ? sanitize_text_field( wp_unslash( $_POST['baidu_site'] ) ) : '';
-        $bing_enabled     = isset( $_POST['bing_enabled'] ) ? boolval( $_POST['bing_enabled'] ) : false;
-        $bing_key         = isset( $_POST['bing_key'] ) ? sanitize_text_field( wp_unslash( $_POST['bing_key'] ) ) : '';
-        $indexnow_enabled = isset( $_POST['indexnow_enabled'] ) ? boolval( $_POST['indexnow_enabled'] ) : false;
-        $indexnow_key     = isset( $_POST['indexnow_key'] ) ? sanitize_text_field( wp_unslash( $_POST['indexnow_key'] ) ) : '';
+        $baidu_enabled = isset( $_POST['baidu_enabled'] ) ? boolval( $_POST['baidu_enabled'] ) : false;
+        $baidu_token   = isset( $_POST['baidu_token'] ) ? sanitize_text_field( wp_unslash( $_POST['baidu_token'] ) ) : '';
+        $baidu_site    = isset( $_POST['baidu_site'] ) ? sanitize_text_field( wp_unslash( $_POST['baidu_site'] ) ) : '';
+        $bing_enabled  = isset( $_POST['bing_enabled'] ) ? boolval( $_POST['bing_enabled'] ) : false;
+        $bing_key      = isset( $_POST['bing_key'] ) ? sanitize_text_field( wp_unslash( $_POST['bing_key'] ) ) : '';
 
         update_option( 'drea_search_push_baidu_enabled', $baidu_enabled );
         update_option( 'drea_search_push_baidu_token', $baidu_token );
         update_option( 'drea_search_push_baidu_site', $baidu_site );
         update_option( 'drea_search_push_bing_enabled', $bing_enabled );
         update_option( 'drea_search_push_bing_key', $bing_key );
-        update_option( 'drea_search_push_indexnow_enabled', $indexnow_enabled );
-        update_option( 'drea_search_push_indexnow_key', $indexnow_key );
 
         wp_send_json_success( [ 'message' => __( '设置已保存。', 'dreamanual-toolkit' ) ] );
     }
@@ -232,13 +209,11 @@ class Search_Push extends Module_Base {
         }
 
         wp_send_json_success( [
-            'baidu_enabled'    => (bool) $this->get_option( 'baidu_enabled', false ),
-            'baidu_token'      => $this->get_option( 'baidu_token', '' ),
-            'baidu_site'       => $this->get_option( 'baidu_site', '' ),
-            'bing_enabled'     => (bool) $this->get_option( 'bing_enabled', false ),
-            'bing_key'         => $this->get_option( 'bing_key', '' ),
-            'indexnow_enabled' => (bool) $this->get_option( 'indexnow_enabled', false ),
-            'indexnow_key'     => $this->get_option( 'indexnow_key', '' ),
+            'baidu_enabled' => (bool) $this->get_option( 'baidu_enabled', false ),
+            'baidu_token'   => $this->get_option( 'baidu_token', '' ),
+            'baidu_site'    => $this->get_option( 'baidu_site', '' ),
+            'bing_enabled'  => (bool) $this->get_option( 'bing_enabled', false ),
+            'bing_key'      => $this->get_option( 'bing_key', '' ),
         ] );
     }
 
@@ -251,7 +226,7 @@ class Search_Push extends Module_Base {
             wp_send_json_error( [ 'message' => __( '权限不足', 'dreamanual-toolkit' ) ] );
         }
 
-        $engine  = isset( $_POST['engine'] ) ? sanitize_text_field( wp_unslash( $_POST['engine'] ) ) : '';
+        $engine   = isset( $_POST['engine'] ) ? sanitize_text_field( wp_unslash( $_POST['engine'] ) ) : '';
         $test_url = home_url( '/' );
 
         $result = false;
@@ -261,9 +236,6 @@ class Search_Push extends Module_Base {
                 break;
             case 'bing':
                 $result = $this->push_bing( [ $test_url ] );
-                break;
-            case 'indexnow':
-                $result = $this->push_indexnow( [ $test_url ] );
                 break;
             default:
                 wp_send_json_error( [ 'message' => __( '未知的搜索引擎。', 'dreamanual-toolkit' ) ] );
@@ -315,9 +287,6 @@ class Search_Push extends Module_Base {
         }
         if ( $this->get_option( 'bing_enabled', false ) ) {
             $this->push_bing( $urls );
-        }
-        if ( $this->get_option( 'indexnow_enabled', false ) ) {
-            $this->push_indexnow( $urls );
         }
     }
 
@@ -410,78 +379,6 @@ class Search_Push extends Module_Base {
         }
 
         return true;
-    }
-
-    // ─── IndexNow 推送 ─────────────────────────────────
-
-    /**
-     * 推送 URL 到 IndexNow（通过 Bing 端点）
-     *
-     * @param string[] $urls URL 列表。
-     * @return true|\WP_Error
-     */
-    protected function push_indexnow( array $urls ) {
-        $key = $this->get_option( 'indexnow_key', '' );
-        if ( ! $key ) {
-            return new \WP_Error( 'drea_sp_indexnow', __( 'IndexNow Key 未配置。', 'dreamanual-toolkit' ) );
-        }
-
-        $host = wp_parse_url( home_url(), PHP_URL_HOST );
-        $body = wp_json_encode( [
-            'host'    => $host,
-            'key'     => $key,
-            'urlList' => $urls,
-        ] );
-
-        // 使用 Bing IndexNow 端点（一次推送通知多个搜索引擎）
-        $api_url = 'https://www.bing.com/indexnow';
-
-        $response = wp_remote_post( $api_url, [
-            'headers' => [ 'Content-Type' => 'application/json' ],
-            'body'    => $body,
-            'timeout' => 10,
-        ] );
-
-        if ( is_wp_error( $response ) ) {
-            return new \WP_Error( 'drea_sp_indexnow', $response->get_error_message() );
-        }
-
-        $code = wp_remote_retrieve_response_code( $response );
-
-        // 200 = 成功, 202 = key 验证中
-        if ( 200 === $code || 202 === $code ) {
-            return true;
-        }
-
-        $messages = [
-            400 => __( '请求格式无效', 'dreamanual-toolkit' ),
-            403 => __( 'Key 无效', 'dreamanual-toolkit' ),
-            422 => __( 'URL 不属于此站点', 'dreamanual-toolkit' ),
-            429 => __( '请求过于频繁', 'dreamanual-toolkit' ),
-        ];
-
-        $msg = isset( $messages[ $code ] ) ? $messages[ $code ] : sprintf( __( 'HTTP %d', 'dreamanual-toolkit' ), $code );
-        return new \WP_Error( 'drea_sp_indexnow', sprintf( __( 'IndexNow 推送失败: %s', 'dreamanual-toolkit' ), $msg ) );
-    }
-
-    /**
-     * IndexNow key 验证路由
-     * 搜索引擎请求 {key}.txt 时返回 key 值
-     *
-     * @param \WP $wp WP 对象。
-     */
-    public function indexnow_key_route( \WP $wp ): void {
-        $key = $this->get_option( 'indexnow_key', '' );
-        if ( ! $key || ! isset( $wp->request ) ) return;
-
-        $expected = $key . '.txt';
-        if ( $wp->request === $expected || trailingslashit( $wp->request ) === $expected ) {
-            header( 'Content-Type: text/plain' );
-            header( 'X-Robots-Tag: noindex' );
-            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- key is alphanumeric hash
-            echo $key;
-            exit;
-        }
     }
 }
 

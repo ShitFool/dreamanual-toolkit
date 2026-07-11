@@ -50,8 +50,6 @@
         formData.append('baidu_site', ($('#baidu-site').value || '').trim());
         formData.append('bing_enabled', $('#bing-enabled').checked ? 1 : 0);
         formData.append('bing_key', ($('#bing-key').value || '').trim());
-        formData.append('indexnow_enabled', $('#indexnow-enabled').checked ? 1 : 0);
-        formData.append('indexnow_key', ($('#indexnow-key').value || '').trim());
 
         fetch(ajaxUrl, { method: 'POST', body: formData, credentials: 'same-origin' })
             .then(function (r) { return r.json(); })
@@ -122,7 +120,6 @@
         var toggles = [
             { checkbox: '#baidu-enabled', body: 'baidu-settings' },
             { checkbox: '#bing-enabled', body: 'bing-settings' },
-            { checkbox: '#indexnow-enabled', body: 'indexnow-settings' },
         ];
 
         toggles.forEach(function (t) {
