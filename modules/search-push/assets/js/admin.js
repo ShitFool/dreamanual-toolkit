@@ -12,29 +12,8 @@
 
     function $(sel) { return document.querySelector(sel); }
 
-    function escapeHtml(text) {
-        if (!text) return '';
-        var div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-    }
-
     function showToast(message, type) {
-        type = type || 'info';
-        var container = $('#drea-sp-toast-container');
-        if (!container) return;
-        var icons = { success: '\u2705', error: '\u274C', info: '\u2139\uFE0F' };
-        var toast = document.createElement('div');
-        toast.className = 'drea-sp-toast drea-sp-toast--' + type;
-        toast.innerHTML = '<span style="flex-shrink:0;">' + (icons[type] || icons.info) + '</span>' +
-            '<span>' + escapeHtml(message) + '</span>';
-        container.appendChild(toast);
-        toast.offsetHeight;
-        toast.classList.add('drea-sp-toast--show');
-        setTimeout(function () {
-            toast.classList.remove('drea-sp-toast--show');
-            setTimeout(function () { toast.remove(); }, 300);
-        }, 3000);
+        DreaToast.show(message, type, 'drea-sp-toast-container');
     }
 
     function saveSettings() {
@@ -65,23 +44,6 @@
                 showToast(i18n.error, 'error');
                 btn.disabled = false;
             });
-    }
-
-    function toggleSectionBody(checkbox, bodyId) {
-        var body = document.getElementById(bodyId);
-        if (!body) return;
-        if (checkbox.checked) {
-            body.classList.remove('drea-sp-section__body--collapsed');
-        } else {
-            body.classList.add('drea-sp-section__body--collapsed');
-        }
-        var section = body.closest('.drea-sp-section');
-        if (section) {
-            var header = section.querySelector('.drea-sp-section__header');
-            if (header) {
-                header.style.borderBottom = checkbox.checked ? '1px solid #f0f0f1' : 'none';
-            }
-        }
     }
 
     function testPush(engine) {
@@ -118,16 +80,25 @@
 
         // 开关联动
         var toggles = [
-            { checkbox: '#baidu-enabled', body: 'baidu-settings' },
-            { checkbox: '#bing-enabled', body: 'bing-settings' },
+            { checkbox: '#baidu-enabled', body: 'baidu-settings', section: null },
+            { checkbox: '#bing-enabled', body: 'bing-settings', section: null },
         ];
 
         toggles.forEach(function (t) {
             var cb = $(t.checkbox);
             if (cb) {
-                toggleSectionBody(cb, t.body);
+                // 初始化折叠状态
+                DreaSection.toggle(cb, t.body);
                 cb.addEventListener('change', function () {
-                    toggleSectionBody(cb, t.body);
+                    DreaSection.toggle(cb, t.body);
+                    // 更新 section --collapsed class
+                    var body = document.getElementById(t.body);
+                    if (body) {
+                        var section = body.closest('.drea-section');
+                        if (section) {
+                            section.classList.toggle('drea-section--collapsed', !cb.checked);
+                        }
+                    }
                 });
             }
         });

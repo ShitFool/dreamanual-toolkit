@@ -7,12 +7,14 @@
 
 defined( 'ABSPATH' ) || exit;
 ?>
-<div class="wrap drea-ai-wrap">
-    <h1><?php echo esc_html__( 'AI 优化 — 批量处理', 'dreamanual-toolkit' ); ?> <span style="font-size:12px;color:#666;font-weight:normal;">v<?php echo esc_html( DREA_VERSION ); ?></span></h1>
+<div class="wrap drea-wrap drea-ai-wrap">
+    <h1 class="drea-wrap__title">
+        <?php echo esc_html__( 'AI 优化 — 批量处理', 'dreamanual-toolkit' ); ?>
+    </h1>
     <p class="description"><?php echo esc_html__( '选择文章自动生成标签、Slug 和摘要。请先在设置中配置 API Key。', 'dreamanual-toolkit' ); ?></p>
 
     <!-- Toast 容器 -->
-    <div class="drea-ai-toast-container" id="drea-ai-toast-container"></div>
+    <div class="drea-toast-container" id="drea-ai-toast-container"></div>
 
     <!-- 进度面板 -->
     <div class="drea-ai-progress-panel" style="display:none;">
@@ -26,7 +28,7 @@ defined( 'ABSPATH' ) || exit;
     <div class="drea-ai-apply-panel" style="display:none;">
         <div class="drea-ai-apply-header">
             <h3><?php echo esc_html__( '待应用更改', 'dreamanual-toolkit' ); ?> (<span id="pending-count">0</span>)</h3>
-            <button type="button" class="button button-primary" id="apply-all-btn"><?php echo esc_html__( '应用所有更改', 'dreamanual-toolkit' ); ?></button>
+            <button type="button" class="drea-btn drea-btn--primary" id="apply-all-btn"><?php echo esc_html__( '应用所有更改', 'dreamanual-toolkit' ); ?></button>
             <span class="spinner" style="float:none;margin-top:0;"></span>
         </div>
         <div class="drea-ai-apply-table-wrap">
@@ -70,7 +72,7 @@ defined( 'ABSPATH' ) || exit;
                 <label style="margin-right:15px;"><input type="checkbox" id="drea-toggle-excerpt"> <?php echo esc_html__( '摘要', 'dreamanual-toolkit' ); ?></label>
                 <span style="color:#ccc;margin-right:10px;">|</span>
                 <label style="margin-right:15px;"><input type="checkbox" id="select-all"> <?php echo esc_html__( '全选', 'dreamanual-toolkit' ); ?></label>
-                <button type="button" class="button" id="generate-selected-btn" disabled><?php echo esc_html__( '生成 AI 建议', 'dreamanual-toolkit' ); ?></button>
+                <button type="button" class="drea-btn drea-btn--secondary" id="generate-selected-btn" disabled><?php echo esc_html__( '生成 AI 建议', 'dreamanual-toolkit' ); ?></button>
                 <span class="spinner" style="float:none;margin-top:0;"></span>
             </div>
         </div>

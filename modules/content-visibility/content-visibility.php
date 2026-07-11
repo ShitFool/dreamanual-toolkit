@@ -414,14 +414,14 @@ class Content_Visibility extends Module_Base {
         wp_enqueue_style(
             'drea-cv-admin',
             $module_url . '/assets/css/admin.css',
-            [],
+            [ 'drea-toolkit-common' ],
             filemtime( $module_path . '/assets/css/admin.css' )
         );
 
         wp_enqueue_script(
             'drea-cv-admin',
             $module_url . '/assets/js/admin.js',
-            [],
+            [ 'drea-toolkit-common' ],
             filemtime( $module_path . '/assets/js/admin.js' ),
             true
         );

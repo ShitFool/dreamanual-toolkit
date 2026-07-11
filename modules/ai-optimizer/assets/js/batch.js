@@ -63,21 +63,7 @@
     function showToast(message, type, duration) {
         type = type || 'info';
         duration = duration || 3000;
-        var container = $('#drea-ai-toast-container');
-        if (!container) return;
-        var icons = { success: '\u2705', error: '\u274C', info: '\u2139\uFE0F' };
-        var toast = document.createElement('div');
-        toast.className = 'drea-ai-toast drea-ai-toast--' + type;
-        toast.innerHTML = '<span class="drea-ai-toast__icon">' + (icons[type] || icons.info) + '</span>' +
-            '<span class="drea-ai-toast__message">' + escapeHtml(message) + '</span>';
-        container.appendChild(toast);
-        // trigger reflow for animation
-        toast.offsetHeight;
-        toast.classList.add('drea-ai-toast--show');
-        setTimeout(function () {
-            toast.classList.remove('drea-ai-toast--show');
-            setTimeout(function () { toast.remove(); }, 300);
-        }, duration);
+        DreaToast.show(message, type, 'drea-ai-toast-container');
     }
 
     function postAjax(data) {

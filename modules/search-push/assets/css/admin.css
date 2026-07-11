@@ -1,6 +1,6 @@
 /**
  * 搜索推送模块 — 管理样式
- * BEM 命名前缀: drea-sp-
+ * 公共组件（toast / toggle / section / btn）由 toolkit-common.css 提供
  */
 
 /* ─── 页面容器 ─── */
@@ -8,148 +8,9 @@
     max-width: 800px;
 }
 
-.drea-sp-wrap h1 {
-    margin-bottom: 20px;
-}
-
-/* ─── Toast ─── */
-.drea-sp-toast-container {
-    position: fixed;
-    top: 32px;
-    right: 20px;
-    z-index: 999999;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    max-width: 400px;
-}
-
-.drea-sp-toast {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 16px;
-    background: #fff;
-    border-radius: 6px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, .15);
-    border-left: 4px solid #2271b1;
+/* ─── 测试推送状态文字 ─── */
+.drea-sp-test-status {
+    margin-left: 8px;
     font-size: 13px;
-    line-height: 1.5;
-    opacity: 0;
-    transform: translateX(100px);
-    transition: all .3s ease;
-    pointer-events: none;
-}
-
-.drea-sp-toast--show {
-    opacity: 1;
-    transform: translateX(0);
-    pointer-events: auto;
-}
-
-.drea-sp-toast--success {
-    border-left-color: #008a20;
-    background: #edfaef;
-}
-
-.drea-sp-toast--error {
-    border-left-color: #d63638;
-    background: #fcf0f1;
-}
-
-/* ─── 分区块 ─── */
-.drea-sp-section {
-    background: #fff;
-    border: 1px solid #c3c4c7;
-    border-radius: 4px;
-    margin-bottom: 16px;
-    overflow: hidden;
-}
-
-.drea-sp-section__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 20px;
-}
-
-.drea-sp-section:not(:has(.drea-sp-section__body--collapsed)) .drea-sp-section__header {
-    border-bottom: 1px solid #f0f0f1;
-}
-
-.drea-sp-section__title {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.drea-sp-section__header h2 {
-    margin: 0;
-    font-size: 15px;
-}
-
-.drea-sp-section__desc {
-    font-size: 13px;
-    color: #646970;
-    line-height: 1.4;
-}
-
-.drea-sp-section__body {
-    padding: 16px 20px;
-}
-
-.drea-sp-section__body--collapsed {
-    display: none;
-}
-
-.drea-sp-section__body .form-table {
-    margin-top: 0;
-}
-
-.drea-sp-section__body .form-table th {
-    width: 120px;
-    font-size: 13px;
-}
-
-/* ─── Toggle 开关 ─── */
-.drea-sp-toggle {
-    position: relative;
-    display: inline-block;
-    width: 40px;
-    height: 22px;
-    cursor: pointer;
-}
-
-.drea-sp-toggle input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.drea-sp-toggle__slider {
-    position: absolute;
-    inset: 0;
-    background: #ccc;
-    border-radius: 22px;
-    transition: background .2s;
-}
-
-.drea-sp-toggle__slider::before {
-    content: '';
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    left: 3px;
-    bottom: 3px;
-    background: #fff;
-    border-radius: 50%;
-    transition: transform .2s;
-}
-
-.drea-sp-toggle input:checked + .drea-sp-toggle__slider {
-    background: #00a0d2;
-}
-
-.drea-sp-toggle input:checked + .drea-sp-toggle__slider::before {
-    transform: translateX(18px);
+    color: var(--drea-text-secondary);
 }

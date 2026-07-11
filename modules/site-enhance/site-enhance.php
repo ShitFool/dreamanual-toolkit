@@ -206,7 +206,7 @@ class Site_Enhance extends Module_Base {
             wp_enqueue_style(
                 'drea-se-admin',
                 $module_url . '/assets/css/admin.css',
-                [],
+                [ 'drea-toolkit-common' ],
                 filemtime( $module_path . '/assets/css/admin.css' )
             );
             return;
@@ -219,14 +219,14 @@ class Site_Enhance extends Module_Base {
         wp_enqueue_style(
             'drea-se-admin',
             $module_url . '/assets/css/admin.css',
-            [],
+            [ 'drea-toolkit-common' ],
             filemtime( $module_path . '/assets/css/admin.css' )
         );
 
         wp_enqueue_script(
             'drea-se-admin',
             $module_url . '/assets/js/admin.js',
-            [],
+            [ 'drea-toolkit-common' ],
             filemtime( $module_path . '/assets/js/admin.js' ),
             true
         );

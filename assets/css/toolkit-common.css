@@ -1,136 +1,239 @@
 /**
  * Dreamanual Toolkit - 公共管理样式
+ * 基于 WPMU DEV SUI (Shared UI) 风格
  */
+
+/* ─── Design Tokens ─── */
+:root {
+    /* Primary */
+    --drea-primary: #571EE7;
+    --drea-primary-hover: rgba(87, 30, 231, 0.8);
+
+    /* Neutral */
+    --drea-gray-50: #f9fafb;
+    --drea-gray-100: #f3f4f6;
+    --drea-gray-200: #e5e7eb;
+    --drea-gray-300: #d1d5db;
+    --drea-gray-400: #9ca3af;
+    --drea-gray-500: #6b7280;
+    --drea-gray-600: #4b5563;
+    --drea-gray-700: #374151;
+    --drea-gray-800: #1f2937;
+    --drea-gray-900: #111827;
+
+    /* Semantic */
+    --drea-success: #22c55e;
+    --drea-success-bg: #f0fdf4;
+    --drea-warning: #f59e0b;
+    --drea-warning-bg: #fffbeb;
+    --drea-error: #ef4444;
+    --drea-error-bg: #fef2f2;
+    --drea-info: #3b82f6;
+
+    /* Surface */
+    --drea-bg: #f8f8f8;
+    --drea-surface: #ffffff;
+    --drea-border: #e5e7eb;
+
+    /* Text */
+    --drea-text-primary: #1a1a1a;
+    --drea-text-secondary: #666666;
+    --drea-text-tertiary: #9ca3af;
+
+    /* Radius */
+    --drea-radius-sm: 4px;
+    --drea-radius-md: 8px;
+    --drea-radius-lg: 12px;
+    --drea-radius-xl: 20px;
+
+    /* Spacing */
+    --drea-space-1: 4px;
+    --drea-space-2: 8px;
+    --drea-space-3: 12px;
+    --drea-space-4: 16px;
+    --drea-space-5: 20px;
+    --drea-space-6: 24px;
+    --drea-space-8: 32px;
+
+    /* Transition */
+    --drea-transition: 0.15s ease;
+
+    /* Toggle */
+    --drea-toggle-off: #666;
+    --drea-toggle-off-hover: #5c5c5c;
+    --drea-toggle-on: #00E448;
+    --drea-toggle-on-hover: #00cd41;
+}
 
 /* ─── 页面容器 ─── */
 .drea-wrap {
     max-width: 960px;
-    margin-top: 10px;
+    margin: 30px 30px 0 10px;
+    font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    color: var(--drea-text-primary);
 }
 
 .drea-wrap__title {
     display: flex;
     align-items: baseline;
-    gap: 8px;
-    margin-bottom: 20px;
+    gap: var(--drea-space-2);
+    margin-bottom: var(--drea-space-6);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--drea-gray-900);
+    line-height: 1.5;
 }
 
 .drea-wrap__version {
     font-size: 12px;
-    color: #999;
+    color: var(--drea-text-tertiary);
     font-weight: 400;
+    letter-spacing: -0.25px;
 }
 
 /* ─── 通知条 ─── */
 .drea-notice {
-    padding: 12px 16px;
-    border-left: 4px solid #00a0d2;
-    background: #fff;
-    margin-bottom: 16px;
+    padding: var(--drea-space-3) var(--drea-space-4);
+    border-left: 4px solid var(--drea-info);
+    background: var(--drea-surface);
+    border-radius: var(--drea-radius-md);
+    margin-bottom: var(--drea-space-4);
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--drea-text-secondary);
 }
 
 .drea-notice--info {
-    border-left-color: #00a0d2;
+    border-left-color: var(--drea-info);
 }
 
 .drea-notice--success {
-    border-left-color: #46b450;
+    border-left-color: var(--drea-success);
 }
 
 .drea-notice--error {
-    border-left-color: #dc3232;
+    border-left-color: var(--drea-error);
 }
 
 /* ─── 模块卡片网格 ─── */
 .drea-modules {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(2, minmax(280px, 1fr));
+    gap: var(--drea-space-5);
+}
+
+@media (max-width: 782px) {
+    .drea-modules {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* ─── 模块卡片 ─── */
 .drea-module-card {
-    background: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 6px;
-    padding: 20px;
-    transition: border-color .2s, box-shadow .2s;
+    background: var(--drea-surface);
+    border: 1px solid var(--drea-border);
+    border-radius: var(--drea-radius-xl);
+    overflow: hidden;
+    transition: box-shadow var(--drea-transition), border-color var(--drea-transition), transform var(--drea-transition);
 }
 
 .drea-module-card:hover {
-    border-color: #999;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, .06);
+    border-color: var(--drea-gray-300);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
 }
 
 .drea-module-card--active {
-    border-color: #00a0d2;
+    border-color: var(--drea-primary);
+}
+
+.drea-module-card--active:hover {
+    border-color: var(--drea-primary);
 }
 
 .drea-module-card__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
+    padding: var(--drea-space-4) var(--drea-space-5);
+    border-bottom: 1px solid var(--drea-border);
+    min-height: 60px;
 }
 
 .drea-module-card__name {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 600;
     margin: 0;
+    color: var(--drea-gray-900);
+    line-height: 1.4;
 }
 
 .drea-module-card__desc {
-    color: #666;
+    color: var(--drea-text-secondary);
     font-size: 13px;
-    line-height: 1.5;
-    margin: 0 0 16px;
+    line-height: 22px;
+    letter-spacing: -0.25px;
+    margin: 0;
+    padding: var(--drea-space-4) var(--drea-space-5);
 }
 
 .drea-module-card__footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: var(--drea-space-4) var(--drea-space-5);
+    border-top: 1px solid var(--drea-border);
+    background: var(--drea-gray-50);
+    min-height: 60px;
 }
 
 .drea-module-card__status {
     font-size: 12px;
-    color: #999;
+    font-weight: 500;
+    color: var(--drea-text-tertiary);
+    letter-spacing: -0.25px;
 }
 
 .drea-module-card--active .drea-module-card__status {
-    color: #00a0d2;
+    color: var(--drea-success);
 }
 
 .drea-module-card__link {
     font-size: 13px;
+    font-weight: 500;
+    color: var(--drea-primary);
     text-decoration: none;
+    letter-spacing: -0.25px;
+    transition: color var(--drea-transition);
 }
 
 .drea-module-card__link:hover {
-    text-decoration: underline;
+    color: var(--drea-primary-hover);
 }
 
-/* ─── Toggle 开关 ─── */
+/* ─── Toggle 开关 (SUI 风格) ─── */
 .drea-toggle {
     position: relative;
     display: inline-block;
     width: 40px;
-    height: 22px;
+    height: 20px;
     cursor: pointer;
 }
 
-.drea-toggle__input {
+.drea-toggle__input,
+.drea-toggle input[type="checkbox"] {
     opacity: 0;
     width: 0;
     height: 0;
+    position: absolute;
 }
 
 .drea-toggle__slider {
     position: absolute;
     inset: 0;
-    background: #ccc;
-    border-radius: 22px;
-    transition: background .2s;
+    background: var(--drea-toggle-off);
+    border-radius: 100px;
+    transition: background-color var(--drea-transition);
 }
 
 .drea-toggle__slider::before {
@@ -138,31 +241,57 @@
     position: absolute;
     width: 16px;
     height: 16px;
-    left: 3px;
-    bottom: 3px;
+    top: 2px;
+    left: 2px;
     background: #fff;
     border-radius: 50%;
-    transition: transform .2s;
+    transition: transform var(--drea-transition);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
-.drea-toggle__input:checked + .drea-toggle__slider {
-    background: #00a0d2;
+.drea-toggle:hover .drea-toggle__slider {
+    background: var(--drea-toggle-off-hover);
 }
 
-.drea-toggle__input:checked + .drea-toggle__slider::before {
-    transform: translateX(18px);
+.drea-toggle__input:checked + .drea-toggle__slider,
+.drea-toggle input[type="checkbox"]:checked + .drea-toggle__slider {
+    background: var(--drea-toggle-on);
+}
+
+.drea-toggle:hover .drea-toggle__input:checked + .drea-toggle__slider,
+.drea-toggle:hover input[type="checkbox"]:checked + .drea-toggle__slider {
+    background: var(--drea-toggle-on-hover);
+}
+
+.drea-toggle__input:checked + .drea-toggle__slider::before,
+.drea-toggle input[type="checkbox"]:checked + .drea-toggle__slider::before {
+    transform: translateX(20px);
+}
+
+.drea-toggle__input:focus + .drea-toggle__slider,
+.drea-toggle input[type="checkbox"]:focus + .drea-toggle__slider {
+    outline: 2px solid var(--drea-primary);
+    outline-offset: 2px;
+}
+
+.drea-toggle__input:disabled + .drea-toggle__slider,
+.drea-toggle input[type="checkbox"]:disabled + .drea-toggle__slider {
+    background: var(--drea-gray-300);
+    cursor: not-allowed;
 }
 
 /* ─── 表单通用 ─── */
 .drea-form-group {
-    margin-bottom: 16px;
+    margin-bottom: var(--drea-space-4);
 }
 
 .drea-form-group label {
     display: block;
     font-weight: 600;
-    margin-bottom: 4px;
+    margin-bottom: var(--drea-space-1);
     font-size: 13px;
+    color: var(--drea-gray-900);
+    letter-spacing: -0.25px;
 }
 
 .drea-form-group select,
@@ -171,57 +300,273 @@
 .drea-form-group textarea {
     width: 100%;
     max-width: 400px;
+    border: 1px solid #e6e6e6;
+    border-radius: var(--drea-radius-md);
+    height: 40px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--drea-text-primary);
+    transition: border-color var(--drea-transition);
+}
+
+.drea-form-group select:focus,
+.drea-form-group input[type="text"]:focus,
+.drea-form-group input[type="number"]:focus,
+.drea-form-group textarea:focus {
+    border-color: var(--drea-primary);
+    outline: none;
+    box-shadow: 0 0 0 1px var(--drea-primary);
+}
+
+.drea-form-group textarea {
+    height: auto;
+    min-height: 80px;
 }
 
 .drea-form-group .description {
-    color: #666;
-    font-size: 12px;
+    color: var(--drea-text-secondary);
+    font: 400 12px/1.5 "Roboto", sans-serif;
     margin-top: 2px;
+    letter-spacing: -0.25px;
 }
 
-/* ─── 按钮 ─── */
+/* ─── 按钮 (SUI 风格) ─── */
 .drea-btn {
-    display: inline-block;
-    padding: 6px 16px;
-    border: 1px solid #00a0d2;
-    border-radius: 4px;
-    background: #00a0d2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--drea-space-1);
+    padding: 0 14px;
+    min-width: 80px;
+    height: 30px;
+    border: 2px solid transparent;
+    border-radius: var(--drea-radius-md);
+    background: var(--drea-primary);
     color: #fff;
-    font-size: 13px;
+    font: 500 12px/1 "Roboto", sans-serif;
+    letter-spacing: -0.25px;
     cursor: pointer;
     text-decoration: none;
-    transition: background .15s;
+    transition: all var(--drea-transition);
 }
 
 .drea-btn:hover {
-    background: #0086b3;
+    opacity: 0.8;
+    color: #fff;
+}
+
+.drea-btn--primary {
+    background: var(--drea-primary);
+    color: #fff;
+    border-color: var(--drea-primary);
+    min-width: 120px;
+}
+
+.drea-btn--primary:hover {
+    opacity: 0.8;
     color: #fff;
 }
 
 .drea-btn--secondary {
-    background: #fff;
-    color: #00a0d2;
+    background: var(--drea-surface);
+    color: var(--drea-text-primary);
+    border-color: rgba(26, 26, 26, 0.15);
 }
 
 .drea-btn--secondary:hover {
-    background: #f0f8fc;
+    background: var(--drea-gray-50);
+    opacity: 1;
 }
 
 .drea-btn--danger {
-    background: #dc3232;
-    border-color: #dc3232;
+    background: #D70015;
+    border-color: #D70015;
 }
 
 .drea-btn--danger:hover {
-    background: #b52b2b;
+    opacity: 0.8;
 }
 
 .drea-btn--small {
-    padding: 3px 10px;
-    font-size: 12px;
+    padding: 0 10px;
+    min-width: auto;
+    font-size: 11px;
 }
 
 .drea-btn[disabled] {
-    opacity: .5;
+    background: #e6e6e6;
+    color: #aaa;
     cursor: not-allowed;
+    border-color: transparent;
+    opacity: 1;
+}
+
+/* ─── Section 卡片 (设置页共用) ─── */
+.drea-section {
+    background: var(--drea-surface);
+    border: 1px solid var(--drea-border);
+    border-radius: var(--drea-radius-xl);
+    overflow: hidden;
+    margin-bottom: var(--drea-space-5);
+}
+
+.drea-section__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--drea-space-4) var(--drea-space-5);
+    gap: var(--drea-space-2);
+    cursor: pointer;
+}
+
+/* 折叠箭头指示器 */
+.drea-section__arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--drea-gray-100);
+    color: var(--drea-gray-600);
+    font-size: 14px;
+    transition: transform var(--drea-transition), background var(--drea-transition);
+    flex-shrink: 0;
+    margin-right: var(--drea-space-2);
+}
+
+.drea-section__arrow::before {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-left: 5px solid currentColor;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    transition: transform var(--drea-transition);
+}
+
+/* 展开时箭头朝下 */
+.drea-section:not(.drea-section--collapsed) .drea-section__arrow::before,
+.drea-section:not(:has(.drea-section__body--collapsed)) .drea-section__arrow::before {
+    transform: rotate(90deg);
+}
+
+/* body 折叠时去掉 header 底部边框 */
+.drea-section--collapsed .drea-section__header,
+.drea-section:has(.drea-section__body--collapsed) .drea-section__header {
+    border-bottom: none;
+}
+
+.drea-section__title {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.drea-section__title h2 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    color: var(--drea-gray-900);
+    line-height: 1.4;
+}
+
+.drea-section__desc {
+    font-size: 13px;
+    color: var(--drea-text-tertiary);
+    letter-spacing: -0.25px;
+}
+
+.drea-section__body {
+    padding: 0 var(--drea-space-5) var(--drea-space-5);
+}
+
+.drea-section__body--collapsed {
+    display: none;
+}
+
+.drea-section--collapsed .drea-section__header {
+    border-bottom: none;
+}
+
+.drea-section--collapsed .drea-section__body {
+    display: none;
+}
+
+/* ─── 通用设置行 (form-table 替代) ─── */
+.drea-settings-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--drea-space-3-75, 15px) var(--drea-space-5);
+    border-bottom: 1px solid #f2f2f2;
+    min-height: 50px;
+}
+
+.drea-settings-row:last-child {
+    border-bottom: none;
+}
+
+.drea-settings-row__label {
+    font-size: 13px;
+    color: var(--drea-gray-900);
+    letter-spacing: -0.25px;
+}
+
+.drea-settings-row__label small {
+    display: block;
+    font-size: 12px;
+    color: var(--drea-text-tertiary);
+    font-weight: 400;
+    margin-top: 2px;
+}
+
+.drea-settings-row__action {
+    flex-shrink: 0;
+}
+
+/* ─── Toast 通知 ─── */
+.drea-toast-container {
+    position: fixed;
+    top: 40px;
+    right: 20px;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    gap: var(--drea-space-2);
+}
+
+.drea-toast {
+    display: flex;
+    align-items: center;
+    gap: var(--drea-space-2);
+    padding: var(--drea-space-3) var(--drea-space-4);
+    background: var(--drea-surface);
+    border: 1px solid var(--drea-border);
+    border-radius: var(--drea-radius-lg);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-size: 13px;
+    color: var(--drea-text-primary);
+    opacity: 0;
+    transform: translateX(20px);
+    transition: opacity 0.3s, transform 0.3s;
+    max-width: 320px;
+}
+
+.drea-toast--show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.drea-toast--success {
+    border-left: 3px solid var(--drea-success);
+}
+
+.drea-toast--error {
+    border-left: 3px solid var(--drea-error);
+}
+
+.drea-toast--info {
+    border-left: 3px solid var(--drea-info);
 }

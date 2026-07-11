@@ -205,13 +205,13 @@ class AI_Optimizer extends Module_Base {
             wp_enqueue_style(
                 'drea-ai-admin',
                 $module_url . '/assets/css/admin.css',
-                [],
+                [ 'drea-toolkit-common' ],
                 filemtime( $module_path . '/assets/css/admin.css' )
             );
             wp_enqueue_script(
                 'drea-ai-batch',
                 $module_url . '/assets/js/batch.js',
-                [],
+                [ 'drea-toolkit-common' ],
                 filemtime( $module_path . '/assets/js/batch.js' ),
                 true
             );
@@ -223,13 +223,13 @@ class AI_Optimizer extends Module_Base {
             wp_enqueue_style(
                 'drea-ai-admin',
                 $module_url . '/assets/css/admin.css',
-                [],
+                [ 'drea-toolkit-common' ],
                 filemtime( $module_path . '/assets/css/admin.css' )
             );
             wp_enqueue_script(
                 'drea-ai-settings',
                 $module_url . '/assets/js/settings.js',
-                [],
+                [ 'drea-toolkit-common' ],
                 filemtime( $module_path . '/assets/js/settings.js' ),
                 true
             );
@@ -242,13 +242,13 @@ class AI_Optimizer extends Module_Base {
             wp_enqueue_style(
                 'drea-ai-admin',
                 $module_url . '/assets/css/admin.css',
-                [],
+                [ 'drea-toolkit-common' ],
                 filemtime( $module_path . '/assets/css/admin.css' )
             );
             wp_enqueue_script(
                 'drea-ai-meta',
                 $module_url . '/assets/js/meta-box.js',
-                [],
+                [ 'drea-toolkit-common' ],
                 filemtime( $module_path . '/assets/js/meta-box.js' ),
                 true
             );

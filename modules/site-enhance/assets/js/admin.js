@@ -12,29 +12,8 @@
 
     function $(sel) { return document.querySelector(sel); }
 
-    function escapeHtml(text) {
-        if (!text) return '';
-        var div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-    }
-
     function showToast(message, type) {
-        type = type || 'info';
-        var container = $('#drea-se-toast-container');
-        if (!container) return;
-        var icons = { success: '\u2705', error: '\u274C', info: '\u2139\uFE0F' };
-        var toast = document.createElement('div');
-        toast.className = 'drea-se-toast drea-se-toast--' + type;
-        toast.innerHTML = '<span style="flex-shrink:0;">' + (icons[type] || icons.info) + '</span>' +
-            '<span>' + escapeHtml(message) + '</span>';
-        container.appendChild(toast);
-        toast.offsetHeight;
-        toast.classList.add('drea-se-toast--show');
-        setTimeout(function () {
-            toast.classList.remove('drea-se-toast--show');
-            setTimeout(function () { toast.remove(); }, 300);
-        }, 3000);
+        DreaToast.show(message, type, 'drea-se-toast-container');
     }
 
     function saveSettings() {
@@ -83,28 +62,6 @@
             });
     }
 
-    function toggleSectionBody(checkbox, bodyId) {
-        var body = document.getElementById(bodyId);
-        if (!body) return;
-        if (checkbox.checked) {
-            body.classList.remove('drea-se-section__body--collapsed');
-        } else {
-            body.classList.add('drea-se-section__body--collapsed');
-        }
-        // 更新 header 底部边框
-        var section = body.closest('.drea-se-section');
-        if (section) {
-            var header = section.querySelector('.drea-se-section__header');
-            if (header) {
-                if (checkbox.checked) {
-                    header.style.borderBottom = '1px solid #f0f0f1';
-                } else {
-                    header.style.borderBottom = 'none';
-                }
-            }
-        }
-    }
-
     function init() {
         var saveBtn = $('#drea-se-save-btn');
         if (saveBtn) saveBtn.addEventListener('click', saveSettings);
@@ -123,21 +80,17 @@
         toggles.forEach(function (t) {
             var cb = $(t.checkbox);
             if (cb) {
-                toggleSectionBody(cb, t.body);
+                DreaSection.toggle(cb, t.body);
                 cb.addEventListener('change', function () {
-                    toggleSectionBody(cb, t.body);
+                    DreaSection.toggle(cb, t.body);
+                    var body = document.getElementById(t.body);
+                    if (body) {
+                        var section = body.closest('.drea-section');
+                        if (section) {
+                            section.classList.toggle('drea-section--collapsed', !cb.checked);
+                        }
+                    }
                 });
-            }
-        });
-
-        // 无开关的 section（如默认特色图片）始终显示 header 边框
-        document.querySelectorAll('.drea-se-section__body:not(.drea-se-section__body--collapsed)').forEach(function (body) {
-            var section = body.closest('.drea-se-section');
-            if (section) {
-                var header = section.querySelector('.drea-se-section__header');
-                if (header && !header.style.borderBottom) {
-                    header.style.borderBottom = '1px solid #f0f0f1';
-                }
             }
         });
 
@@ -158,7 +111,7 @@
                 frame.on('select', function () {
                     var attachment = frame.state().get('selection').first().toJSON();
                     imgIdInput.value = attachment.id;
-                    previewDiv.innerHTML = '<img src="' + escapeHtml(attachment.url) + '" style="max-width:300px;max-height:150px;border:1px solid #dcdcde;border-radius:4px;">';
+                    previewDiv.innerHTML = '<img src="' + DreaToast._escapeHtml(attachment.url) + '">';
                     removeBtn.style.display = '';
                 });
                 frame.open();
@@ -168,7 +121,7 @@
         if (removeBtn) {
             removeBtn.addEventListener('click', function () {
                 imgIdInput.value = 0;
-                previewDiv.innerHTML = '<span style="color:#999;">未设置</span>';
+                previewDiv.innerHTML = '<span>未设置</span>';
                 removeBtn.style.display = 'none';
             });
         }

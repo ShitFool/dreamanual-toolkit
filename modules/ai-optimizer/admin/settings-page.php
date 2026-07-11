@@ -7,12 +7,14 @@
 
 defined( 'ABSPATH' ) || exit;
 ?>
-<div class="wrap drea-ai-wrap">
-    <h1><?php echo esc_html__( 'AI 优化 — 设置', 'dreamanual-toolkit' ); ?> <span style="font-size:12px;color:#666;font-weight:normal;">v<?php echo esc_html( DREA_VERSION ); ?></span></h1>
+<div class="wrap drea-wrap drea-ai-wrap">
+    <h1 class="drea-wrap__title">
+        <?php echo esc_html__( 'AI 优化 — 设置', 'dreamanual-toolkit' ); ?>
+    </h1>
     <p class="description"><?php echo esc_html__( '配置 AI 提供商、模型和生成选项。保存后使用批量处理页或文章编辑器。', 'dreamanual-toolkit' ); ?></p>
 
     <!-- Toast 容器 -->
-    <div class="drea-ai-toast-container" id="drea-ai-toast-container"></div>
+    <div class="drea-toast-container" id="drea-ai-toast-container"></div>
 
     <div class="drea-ai-settings-panel" style="max-width:800px;">
         <h2><?php echo esc_html__( 'AI 配置', 'dreamanual-toolkit' ); ?></h2>
@@ -27,7 +29,7 @@ defined( 'ABSPATH' ) || exit;
                         <option value="claude"><?php echo esc_html__( 'Claude（Anthropic）', 'dreamanual-toolkit' ); ?></option>
                     </select>
                     <p class="description">
-                        <strong style="color:#008a20;"><?php echo esc_html__( '推荐 DeepSeek —— 性价比高，审核宽松。如被拦截可切换。', 'dreamanual-toolkit' ); ?></strong>
+                        <strong style="color:var(--drea-success);"><?php echo esc_html__( '推荐 DeepSeek —— 性价比高，审核宽松。如被拦截可切换。', 'dreamanual-toolkit' ); ?></strong>
                     </p>
                 </td>
             </tr>
@@ -47,10 +49,10 @@ defined( 'ABSPATH' ) || exit;
             </tr>
         </table>
 
-        <h2 style="margin-top:30px;border-top:1px solid #f0f0f1;padding-top:20px;cursor:pointer;" id="generation-options-toggle">
+        <h2 id="generation-options-toggle">
             <span class="dashicons dashicons-arrow-right" style="vertical-align:middle;margin-right:5px;transition:transform .2s;"></span>
             <?php echo esc_html__( '生成选项', 'dreamanual-toolkit' ); ?>
-            <span style="font-size:12px;color:#888;font-weight:normal;margin-left:8px;"><?php echo esc_html__( '（点击展开）', 'dreamanual-toolkit' ); ?></span>
+            <span style="font-size:12px;color:var(--drea-text-tertiary);font-weight:normal;margin-left:8px;"><?php echo esc_html__( '（点击展开）', 'dreamanual-toolkit' ); ?></span>
         </h2>
         <div id="generation-options-panel" style="display:none;">
         <table class="form-table">
@@ -102,7 +104,7 @@ defined( 'ABSPATH' ) || exit;
         </div><!-- #generation-options-panel -->
 
         <p class="submit">
-            <button type="button" class="button button-primary" id="save-settings-btn" style="min-width:120px;"><?php echo esc_html__( '保存设置', 'dreamanual-toolkit' ); ?></button>
+            <button type="button" class="drea-btn drea-btn--primary" id="save-settings-btn" style="min-width:120px;"><?php echo esc_html__( '保存设置', 'dreamanual-toolkit' ); ?></button>
             <span class="spinner" style="float:none;margin-top:0;margin-left:10px;"></span>
         </p>
     </div>

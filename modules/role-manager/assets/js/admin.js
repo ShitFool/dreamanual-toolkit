@@ -24,21 +24,7 @@
     }
 
     function showToast(message, type) {
-        type = type || 'info';
-        var container = $('#drea-rm-toast-container');
-        if (!container) return;
-        var icons = { success: '\u2705', error: '\u274C', info: '\u2139\uFE0F' };
-        var toast = document.createElement('div');
-        toast.className = 'drea-rm-toast drea-rm-toast--' + type;
-        toast.innerHTML = '<span style="flex-shrink:0;">' + (icons[type] || icons.info) + '</span>' +
-            '<span>' + escapeHtml(message) + '</span>';
-        container.appendChild(toast);
-        toast.offsetHeight;
-        toast.classList.add('drea-rm-toast--show');
-        setTimeout(function () {
-            toast.classList.remove('drea-rm-toast--show');
-            setTimeout(function () { toast.remove(); }, 300);
-        }, 3000);
+        DreaToast.show(message, type, 'drea-rm-toast-container');
     }
 
     function postAjax(data) {

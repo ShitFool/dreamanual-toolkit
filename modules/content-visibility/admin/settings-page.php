@@ -20,29 +20,31 @@ $channel_labels = [
     'sitemap'  => __( '站点地图', 'dreamanual-toolkit' ),
 ];
 ?>
-<div class="wrap drea-cv-wrap">
-    <h1><?php echo esc_html__( '内容可见性', 'dreamanual-toolkit' ); ?></h1>
+<div class="wrap drea-wrap drea-cv-wrap">
+    <h1 class="drea-wrap__title">
+        <?php echo esc_html__( '内容可见性', 'dreamanual-toolkit' ); ?>
+    </h1>
     <p class="description"><?php echo esc_html__( '按分类配置内容显示渠道和可见角色。未配置的分类在所有渠道正常显示。', 'dreamanual-toolkit' ); ?></p>
 
     <!-- 使用说明 -->
-    <div class="drea-cv-guide" style="background:#f6f7f7;border:1px solid #dcdcde;border-radius:4px;padding:12px 16px;margin:12px 0;">
-        <h3 style="margin:0 0 8px;font-size:13px;"><?php echo esc_html__( '使用说明', 'dreamanual-toolkit' ); ?></h3>
-        <ol style="margin:0;padding-left:20px;font-size:13px;line-height:1.8;color:#50575e;">
+    <div class="drea-cv-guide">
+        <h3><?php echo esc_html__( '使用说明', 'dreamanual-toolkit' ); ?></h3>
+        <ol>
             <li><?php echo esc_html__( '渠道列勾选 = 该分类内容在此渠道显示；取消勾选 = 在此渠道隐藏。默认全勾选（全部显示）。', 'dreamanual-toolkit' ); ?></li>
             <li><?php echo esc_html__( '「隐藏后仍可见角色」决定：渠道被隐藏时，哪些登录角色仍能看见。不选则仅管理员可见。', 'dreamanual-toolkit' ); ?></li>
             <li><?php echo esc_html__( '所有渠道都勾选（默认状态）= 该分类不做任何处理。', 'dreamanual-toolkit' ); ?></li>
         </ol>
-        <p style="margin:8px 0 0;font-size:13px;color:#50575e;"><strong><?php echo esc_html__( '示例：', 'dreamanual-toolkit' ); ?></strong><?php echo esc_html__( '"日记"分类，取消所有渠道勾选 + 可见角色选「管理员」= 全站隐藏，只有管理员能看（包括直链也会 404）。', 'dreamanual-toolkit' ); ?></p>
-        <p style="margin:4px 0 0;font-size:13px;color:#50575e;"><strong><?php echo esc_html__( '示例：', 'dreamanual-toolkit' ); ?></strong><?php echo esc_html__( '"小程序精选"分类，只勾选 REST API，其他取消 + 可见角色选「管理员」= 前台不显示且直链 404，但小程序通过 API 仍能读取。', 'dreamanual-toolkit' ); ?></p>
+        <p><strong><?php echo esc_html__( '示例：', 'dreamanual-toolkit' ); ?></strong><?php echo esc_html__( '"日记"分类，取消所有渠道勾选 + 可见角色选「管理员」= 全站隐藏，只有管理员能看（包括直链也会 404）。', 'dreamanual-toolkit' ); ?></p>
+        <p><strong><?php echo esc_html__( '示例：', 'dreamanual-toolkit' ); ?></strong><?php echo esc_html__( '"小程序精选"分类，只勾选 REST API，其他取消 + 可见角色选「管理员」= 前台不显示且直链 404，但小程序通过 API 仍能读取。', 'dreamanual-toolkit' ); ?></p>
     </div>
 
     <!-- Toast -->
-    <div class="drea-cv-toast-container" id="drea-cv-toast-container"></div>
+    <div class="drea-toast-container" id="drea-cv-toast-container"></div>
 
     <div class="drea-cv-rules-panel">
         <div class="drea-cv-rules-header">
             <h2><?php echo esc_html__( '分类可见性规则', 'dreamanual-toolkit' ); ?></h2>
-            <button type="button" class="button button-primary" id="drea-cv-save-btn"><?php echo esc_html__( '保存规则', 'dreamanual-toolkit' ); ?></button>
+            <button type="button" class="drea-btn drea-btn--primary" id="drea-cv-save-btn"><?php echo esc_html__( '保存规则', 'dreamanual-toolkit' ); ?></button>
         </div>
 
         <table class="wp-list-table widefat fixed striped drea-cv-rules-table">
