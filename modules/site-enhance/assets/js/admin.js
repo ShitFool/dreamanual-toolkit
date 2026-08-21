@@ -12,9 +12,11 @@
 
     function $(sel) { return document.querySelector(sel); }
 
-    function showToast(message, type) {
-        DreaToast.show(message, type, 'drea-se-toast-container');
+    function showToast(message, type, duration) {
+        DreaToast.show(message, type, 'drea-se-toast-container', duration);
     }
+
+    var dirtyCtrl = null;
 
     function saveSettings() {
         var btn = $('#drea-se-save-btn');
@@ -26,7 +28,9 @@
         formData.append('nonce', nonce);
         formData.append('btt_enabled', $('#btt-enabled').checked ? 1 : 0);
         formData.append('btt_color', ($('#btt-color').value || '#2271b1'));
-        formData.append('btt_position', $('#btt-position').value);
+        formData.append('btt_icon_color', ($('#btt-icon-color').value || '#ffffff'));
+        var bttPosEl = $('#btt-position');
+        formData.append('btt_position', bttPosEl ? bttPosEl.value : 'right-bottom');
         formData.append('maintenance_enabled', $('#maintenance-enabled').checked ? 1 : 0);
         formData.append('maintenance_msg', ($('#maintenance-msg').value || '').trim());
         formData.append('feat_img_enabled', $('#feat-img-enabled').checked ? 1 : 0);
@@ -46,25 +50,81 @@
         formData.append('smtp_from_name', ($('#smtp-from-name').value || '').trim());
         formData.append('smtp_from_email', ($('#smtp-from-email').value || '').trim());
 
+        // SMTP 完整性校验 (F-04)
+        if ($('#smtp-enabled').checked) {
+            var smtpHost = ($('#smtp-host').value || '').trim();
+            var smtpUser = ($('#smtp-user').value || '').trim();
+            if (!smtpHost) {
+                showToast(i18n.smtpHostRequired, 'error');
+                btn.disabled = false;
+                return;
+            }
+            if (!smtpUser) {
+                showToast(i18n.smtpUserRequired, 'error');
+                btn.disabled = false;
+                return;
+            }
+            // 端口范围校验 (F-12)
+            var port = parseInt($('#smtp-port').value, 10) || 465;
+            if (port < 1 || port > 65535) {
+                showToast(i18n.smtpPortRange, 'error');
+                btn.disabled = false;
+                return;
+            }
+        }
+
         fetch(ajaxUrl, { method: 'POST', body: formData, credentials: 'same-origin' })
-            .then(function (r) { return r.json(); })
+            .then(function (r) {
+                return r.text().then(function (text) {
+                    try { return JSON.parse(text); }
+                    catch (e) {
+                        console.error('[DREA SE] saveSettings JSON parse error, raw:', text.substring(0, 500));
+                        throw e;
+                    }
+                });
+            })
             .then(function (res) {
                 if (res.success) {
                     showToast(i18n.saved, 'success');
+                    if (dirtyCtrl) dirtyCtrl.markClean();
                 } else {
                     showToast(res.data && res.data.message ? res.data.message : i18n.failed, 'error');
+                    if (dirtyCtrl) dirtyCtrl.markDirty();
                 }
-                btn.disabled = false;
             })
             .catch(function () {
                 showToast(i18n.error, 'error');
-                btn.disabled = false;
+                if (dirtyCtrl) dirtyCtrl.markDirty();
             });
     }
 
     function init() {
         var saveBtn = $('#drea-se-save-btn');
         if (saveBtn) saveBtn.addEventListener('click', saveSettings);
+
+        // dirty-state 跟踪：无修改时按钮禁用，修改后启用，保存成功后禁用
+        var seInputs = document.querySelectorAll(
+            '#btt-enabled,#btt-color,#btt-icon-color,#maintenance-enabled,#maintenance-msg,' +
+            '#feat-img-enabled,#feat-img-col-enabled,#default-feat-img-enabled,#default-feat-img-id,' +
+            '#quickedit-excerpt-enabled,#smtp-enabled,#smtp-host,#smtp-port,#smtp-encryption,' +
+            '#smtp-user,#smtp-pass,#smtp-from-name,#smtp-from-email'
+        );
+        dirtyCtrl = DreaFormDirty.watch(seInputs, saveBtn);
+
+        // BTT 实时预览：背景色/图标色变化时更新预览按钮
+        var bttColorInput = $('#btt-color');
+        var bttIconColorInput = $('#btt-icon-color');
+        var bttPreviewBtn = $('#drea-btt-preview-btn');
+        if (bttColorInput && bttPreviewBtn) {
+            bttColorInput.addEventListener('input', function () {
+                bttPreviewBtn.style.background = bttColorInput.value;
+            });
+        }
+        if (bttIconColorInput && bttPreviewBtn) {
+            bttIconColorInput.addEventListener('input', function () {
+                bttPreviewBtn.style.color = bttIconColorInput.value;
+            });
+        }
 
         // 子功能开关联动
         var toggles = [
@@ -93,6 +153,24 @@
                 });
             }
         });
+
+        // 维护模式开启二次确认 (F-15)
+        var maintCheckbox = $('#maintenance-enabled');
+        if (maintCheckbox) {
+            maintCheckbox.addEventListener('change', function () {
+                if (maintCheckbox.checked) {
+                    if (!confirm(i18n.maintenanceConfirm)) {
+                        maintCheckbox.checked = false;
+                        DreaSection.toggle(maintCheckbox, 'maintenance-settings');
+                        var body = document.getElementById('maintenance-settings');
+                        if (body) {
+                            var section = body.closest('.drea-section');
+                            if (section) section.classList.add('drea-section--collapsed');
+                        }
+                    }
+                }
+            });
+        }
 
         // 默认特色图片 — 媒体库选择器
         var selectBtn = $('#default-feat-img-select');
@@ -135,6 +213,11 @@
                     showToast(i18n.smtpTestNoTo, 'error');
                     return;
                 }
+                // SMTP 未启用时提示 (F-12)
+                if (!$('#smtp-enabled').checked) {
+                    showToast(i18n.smtpNotEnabled, 'error');
+                    return;
+                }
                 smtpTestBtn.disabled = true;
                 var statusEl = $('#smtp-test-status');
                 if (statusEl) statusEl.textContent = '';
@@ -145,12 +228,21 @@
                 formData.append('to', to);
 
                 fetch(ajaxUrl, { method: 'POST', body: formData, credentials: 'same-origin' })
-                    .then(function (r) { return r.json(); })
+                    .then(function (r) {
+                        return r.text().then(function (text) {
+                            try { return JSON.parse(text); }
+                            catch (e) {
+                                console.error('[DREA SE] smtpTest JSON parse error, raw:', text.substring(0, 500));
+                                throw e;
+                            }
+                        });
+                    })
                     .then(function (res) {
                         if (res.success) {
                             showToast(i18n.smtpTestSuccess, 'success');
                         } else {
-                            showToast(res.data && res.data.message ? res.data.message : i18n.smtpTestFail, 'error');
+                            var errMsg = res.data && res.data.message ? res.data.message : i18n.smtpTestFail;
+                            showToast(errMsg, 'error', 6000);
                         }
                         smtpTestBtn.disabled = false;
                     })

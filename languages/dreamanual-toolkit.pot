@@ -1,0 +1,1674 @@
+# Copyright (C) 2026 Dreamanual
+# This file is distributed under the GPL-2.0+.
+msgid ""
+msgstr ""
+"Project-Id-Version: Dreamanual Toolkit 1.1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/dreamanual-toolkit\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-08-14T06:56:09+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: dreamanual-toolkit\n"
+
+#. Plugin Name of the plugin
+#: dreamanual-toolkit.php
+msgid "Dreamanual Toolkit"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: dreamanual-toolkit.php
+msgid "https://github.com/ShitFool/dreamanual-toolkit"
+msgstr ""
+
+#. Description of the plugin
+#: dreamanual-toolkit.php
+msgid "模块化 WordPress 工具箱，整合 AI 优化、内容可见性、角色管理、站点增强等功能。"
+msgstr ""
+
+#. Author of the plugin
+#: dreamanual-toolkit.php
+msgid "Dreamanual"
+msgstr ""
+
+#. Author URI of the plugin
+#: dreamanual-toolkit.php
+msgid "https://dreamanual.com"
+msgstr ""
+
+#: includes/admin-modules-page.php:22
+msgid "未发现可用模块。"
+msgstr ""
+
+#: includes/admin-modules-page.php:45
+#: includes/class-core.php:302
+msgid "已启用"
+msgstr ""
+
+#: includes/admin-modules-page.php:46
+msgid "未启用"
+msgstr ""
+
+#: includes/admin-modules-page.php:51
+#: includes/class-core.php:365
+msgid "设置"
+msgstr ""
+
+#: includes/class-ai-client.php:90
+msgid "不支持的 AI 提供商。"
+msgstr ""
+
+#: includes/class-ai-client.php:264
+#: includes/class-ai-client.php:312
+msgid "API 响应格式无效。"
+msgstr ""
+
+#: includes/class-ai-client.php:338
+msgid "AI 返回的内容格式异常，无法解析。请重试或更换 AI 模型。"
+msgstr ""
+
+#: includes/class-ai-client.php:343
+msgid "AI 响应中无有效字段。"
+msgstr ""
+
+#: includes/class-ai-client.php:368
+msgid "API Key 无效或已过期，请检查 AI 优化设置。"
+msgstr ""
+
+#: includes/class-ai-client.php:372
+msgid "AI API 配额不足、余额不够或触发限流，请检查账户或稍后重试。"
+msgstr ""
+
+#: includes/class-ai-client.php:376
+msgid "内容被 AI 提供商安全策略拦截，请修改内容或更换提供商。"
+msgstr ""
+
+#: includes/class-ai-client.php:380
+msgid "AI 服务暂时不可用，请稍后重试。"
+msgstr ""
+
+#: includes/class-ai-client.php:384
+msgid "AI 请求参数有误，请检查模型名称和请求设置是否正确。"
+msgstr ""
+
+#. translators: %d: HTTP status code
+#: includes/class-ai-client.php:388
+#, php-format
+msgid "AI 请求失败（HTTP %1$d），请稍后重试。"
+msgstr ""
+
+#: includes/class-ai-client.php:400
+msgid "AI 请求超时，请稍后重试。"
+msgstr ""
+
+#: includes/class-ai-client.php:403
+msgid "无法连接 AI 服务，请检查网络。"
+msgstr ""
+
+#: includes/class-ai-client.php:405
+#: modules/ai-optimizer/ai-optimizer.php:268
+#: modules/ai-optimizer/ai-optimizer.php:323
+msgid "网络错误，请检查连接。"
+msgstr ""
+
+#: includes/class-ai-client.php:408
+msgid "请求失败，请检查网络连接或稍后重试。"
+msgstr ""
+
+#: includes/class-core.php:97
+#: includes/class-core.php:126
+msgid "未知模块"
+msgstr ""
+
+#: includes/class-core.php:230
+#: includes/class-core.php:231
+msgid "DM工具箱"
+msgstr ""
+
+#: includes/class-core.php:242
+#: includes/class-core.php:243
+msgid "模块管理"
+msgstr ""
+
+#: includes/class-core.php:257
+#: modules/ai-optimizer/ai-optimizer.php:152
+#: modules/ai-optimizer/ai-optimizer.php:162
+#: modules/content-visibility/content-visibility.php:402
+#: modules/role-manager/role-manager.php:104
+#: modules/search-push/search-push.php:143
+#: modules/site-enhance/site-enhance.php:199
+#: modules/site-optimize/site-optimize.php:311
+msgid "您没有权限访问此页面。"
+msgstr ""
+
+#: includes/class-core.php:300
+msgid "启用中…"
+msgstr ""
+
+#: includes/class-core.php:301
+msgid "停用中…"
+msgstr ""
+
+#: includes/class-core.php:303
+msgid "已停用"
+msgstr ""
+
+#: includes/class-core.php:304
+msgid "操作失败，请重试"
+msgstr ""
+
+#: includes/class-core.php:329
+#: modules/content-visibility/content-visibility.php:461
+#: modules/content-visibility/content-visibility.php:514
+#: modules/role-manager/role-manager.php:172
+#: modules/role-manager/role-manager.php:198
+#: modules/role-manager/role-manager.php:221
+#: modules/role-manager/role-manager.php:250
+#: modules/role-manager/role-manager.php:285
+#: modules/role-manager/role-manager.php:310
+#: modules/role-manager/role-manager.php:361
+#: modules/search-push/search-push.php:191
+#: modules/search-push/search-push.php:240
+#: modules/search-push/search-push.php:258
+#: modules/site-enhance/site-enhance.php:268
+#: modules/site-enhance/site-enhance.php:357
+#: modules/site-enhance/site-enhance.php:724
+#: modules/site-optimize/site-optimize.php:359
+#: modules/site-optimize/site-optimize.php:388
+msgid "权限不足"
+msgstr ""
+
+#: includes/class-core.php:336
+#: modules/role-manager/role-manager.php:368
+msgid "参数无效"
+msgstr ""
+
+#: modules/ai-optimizer/admin/batch-page.php:12
+#: modules/ai-optimizer/ai-optimizer.php:129
+msgid "AI 优化 — 批量处理"
+msgstr ""
+
+#: modules/ai-optimizer/admin/batch-page.php:14
+msgid "选择文章自动生成标签、Slug 和摘要。请先在设置中配置 API Key。"
+msgstr ""
+
+#: modules/ai-optimizer/admin/batch-page.php:24
+#: modules/ai-optimizer/ai-optimizer.php:286
+msgid "处理中..."
+msgstr ""
+
+#: modules/ai-optimizer/admin/batch-page.php:30
+msgid "待应用更改"
+msgstr ""
+
+#: modules/ai-optimizer/admin/batch-page.php:31
+msgid "应用所有更改"
+msgstr ""
+
+#: modules/ai-optimizer/admin/batch-page.php:38
+msgid "文章标题"
+msgstr ""
+
+#: modules/ai-optimizer/admin/batch-page.php:39
+#: modules/ai-optimizer/admin/batch-page.php:86
+#: modules/ai-optimizer/admin/settings-page.php:98
+msgid "当前标签"
+msgstr ""
+
+#: modules/ai-optimizer/admin/batch-page.php:40
+msgid "新标签"
+msgstr ""
+
+#: modules/ai-optimizer/admin/batch-page.php:41
+#: modules/ai-optimizer/admin/batch-page.php:87
+msgid "当前 Slug"
+msgstr ""
+
+#: modules/ai-optimizer/admin/batch-page.php:42
+msgid "新 Slug"
+msgstr ""
+
+#: modules/ai-optimizer/admin/batch-page.php:43
+msgid "当前摘要"
+msgstr ""
+
+#: modules/ai-optimizer/admin/batch-page.php:44
+msgid "新摘要"
+msgstr ""
+
+#: modules/ai-optimizer/admin/batch-page.php:45
+#: modules/ai-optimizer/admin/batch-page.php:91
+#: modules/role-manager/admin/roles-page.php:33
+msgid "操作"
+msgstr ""
+
+#: modules/ai-optimizer/admin/batch-page.php:56
+msgid "文章列表"
+msgstr ""
+
+#: modules/ai-optimizer/admin/batch-page.php:59
+msgid "分类筛选:"
+msgstr ""
+
+#: modules/ai-optimizer/admin/batch-page.php:61
+msgid "全部"
+msgstr ""
+
+#: modules/ai-optimizer/admin/batch-page.php:70
+#: modules/ai-optimizer/admin/meta-box.php:21
+msgid "标签"
+msgstr ""
+
+#: modules/ai-optimizer/admin/batch-page.php:71
+msgid "别名"
+msgstr ""
+
+#: modules/ai-optimizer/admin/batch-page.php:72
+#: modules/ai-optimizer/admin/meta-box.php:32
+#: modules/site-enhance/site-enhance.php:630
+msgid "摘要"
+msgstr ""
+
+#: modules/ai-optimizer/admin/batch-page.php:74
+msgid "全选"
+msgstr ""
+
+#: modules/ai-optimizer/admin/batch-page.php:75
+#: modules/ai-optimizer/admin/meta-box.php:14
+msgid "生成 AI 建议"
+msgstr ""
+
+#: modules/ai-optimizer/admin/batch-page.php:85
+#: modules/ai-optimizer/admin/settings-page.php:95
+msgid "标题"
+msgstr ""
+
+#: modules/ai-optimizer/admin/batch-page.php:88
+msgid "AI 标签"
+msgstr ""
+
+#: modules/ai-optimizer/admin/batch-page.php:89
+msgid "AI Slug"
+msgstr ""
+
+#: modules/ai-optimizer/admin/batch-page.php:90
+msgid "AI 摘要"
+msgstr ""
+
+#: modules/ai-optimizer/admin/meta-box.php:12
+msgid "AI 根据文章标题和内容自动生成优化建议。"
+msgstr ""
+
+#: modules/ai-optimizer/admin/meta-box.php:27
+msgid "Slug"
+msgstr ""
+
+#: modules/ai-optimizer/admin/meta-box.php:37
+#: modules/ai-optimizer/ai-optimizer.php:336
+msgid "应用更改"
+msgstr ""
+
+#: modules/ai-optimizer/admin/meta-box.php:38
+#: modules/ai-optimizer/ai-optimizer.php:284
+msgid "重新生成"
+msgstr ""
+
+#: modules/ai-optimizer/admin/settings-page.php:12
+#: modules/ai-optimizer/ai-optimizer.php:139
+msgid "AI 优化 — 设置"
+msgstr ""
+
+#: modules/ai-optimizer/admin/settings-page.php:14
+msgid "配置 AI 提供商、模型和生成选项。保存后使用批量处理页或文章编辑器。"
+msgstr ""
+
+#: modules/ai-optimizer/admin/settings-page.php:20
+msgid "AI 配置"
+msgstr ""
+
+#: modules/ai-optimizer/admin/settings-page.php:23
+msgid "AI 提供商"
+msgstr ""
+
+#: modules/ai-optimizer/admin/settings-page.php:26
+msgid "DeepSeek（推荐）"
+msgstr ""
+
+#: modules/ai-optimizer/admin/settings-page.php:27
+msgid "Kimi（月之暗面）"
+msgstr ""
+
+#: modules/ai-optimizer/admin/settings-page.php:28
+msgid "OpenAI"
+msgstr ""
+
+#: modules/ai-optimizer/admin/settings-page.php:29
+msgid "Claude（Anthropic）"
+msgstr ""
+
+#: modules/ai-optimizer/admin/settings-page.php:32
+msgid "推荐 DeepSeek —— 性价比高，审核宽松。如被拦截可切换。"
+msgstr ""
+
+#: modules/ai-optimizer/admin/settings-page.php:37
+msgid "AI 模型"
+msgstr ""
+
+#: modules/ai-optimizer/admin/settings-page.php:40
+msgid "选择 AI 模型。如被审核拦截可切换。"
+msgstr ""
+
+#: modules/ai-optimizer/admin/settings-page.php:46
+msgid "输入 API Key"
+msgstr ""
+
+#: modules/ai-optimizer/admin/settings-page.php:47
+msgid "API Key 将加密存储于数据库。"
+msgstr ""
+
+#: modules/ai-optimizer/admin/settings-page.php:54
+msgid "生成选项"
+msgstr ""
+
+#: modules/ai-optimizer/admin/settings-page.php:55
+#: modules/ai-optimizer/ai-optimizer.php:327
+msgid "（点击展开）"
+msgstr ""
+
+#: modules/ai-optimizer/admin/settings-page.php:60
+msgid "默认开关"
+msgstr ""
+
+#: modules/ai-optimizer/admin/settings-page.php:63
+msgid "优化标签"
+msgstr ""
+
+#: modules/ai-optimizer/admin/settings-page.php:66
+msgid "优化 Slug"
+msgstr ""
+
+#: modules/ai-optimizer/admin/settings-page.php:69
+msgid "优化摘要"
+msgstr ""
+
+#: modules/ai-optimizer/admin/settings-page.php:71
+msgid "选择 AI 优化的项目。建议一次只开一个，降低被审核拦截的风险。"
+msgstr ""
+
+#: modules/ai-optimizer/admin/settings-page.php:75
+msgid "标签数量上限"
+msgstr ""
+
+#: modules/ai-optimizer/admin/settings-page.php:78
+msgid "AI 生成的标签最大数量。默认 5，范围 1-20。"
+msgstr ""
+
+#: modules/ai-optimizer/admin/settings-page.php:82
+#: modules/ai-optimizer/admin/settings-page.php:97
+msgid "摘要长度"
+msgstr ""
+
+#: modules/ai-optimizer/admin/settings-page.php:85
+msgid "字"
+msgstr ""
+
+#: modules/ai-optimizer/admin/settings-page.php:86
+msgid "控制摘要长度。默认 100，范围 50-500。如有自定义提示词则以提示词为准。"
+msgstr ""
+
+#: modules/ai-optimizer/admin/settings-page.php:90
+msgid "摘要提示词"
+msgstr ""
+
+#: modules/ai-optimizer/admin/settings-page.php:94
+msgid "自定义摘要生成提示词，留空则使用默认（见输入框灰字）。支持的占位符:"
+msgstr ""
+
+#: modules/ai-optimizer/admin/settings-page.php:96
+msgid "内容"
+msgstr ""
+
+#: modules/ai-optimizer/admin/settings-page.php:99
+msgid "已有标签"
+msgstr ""
+
+#: modules/ai-optimizer/admin/settings-page.php:107
+#: modules/search-push/admin/settings-page.php:111
+#: modules/site-enhance/admin/settings-page.php:287
+#: modules/site-optimize/admin/settings-page.php:48
+msgid "保存设置"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:33
+#: modules/ai-optimizer/ai-optimizer.php:130
+#: modules/ai-optimizer/ai-optimizer.php:175
+msgid "AI 优化"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:40
+msgid "AI 自动生成标签、Slug、摘要，支持 DeepSeek / Kimi / OpenAI / Claude。"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:140
+msgid "AI 设置"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:267
+#: modules/search-push/search-push.php:378
+msgid "未知错误"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:275
+msgid "请先在设置中配置 API Key。"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:276
+msgid "加载设置失败，请刷新。"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:277
+msgid " 篇文章已加载"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:278
+msgid "该分类下无文章。"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:279
+msgid "加载失败: "
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:280
+msgid "暂无文章"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:281
+msgid "无标签"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:282
+#: modules/ai-optimizer/ai-optimizer.php:338
+msgid "未生成"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:283
+msgid "生成"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:285
+msgid "应用"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:287
+msgid "完成!"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:288
+msgid "生成中..."
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:289
+msgid " 生成成功"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:290
+msgid " 失败: "
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:291
+msgid "重试"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:292
+msgid "加载已有标签失败，将无法进行标签去重。"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:293
+msgid "确认将 AI 建议应用到「{title}」？"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:294
+msgid "标签："
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:295
+msgid "Slug："
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:296
+msgid "摘要："
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:297
+msgid "无待应用更改。"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:298
+msgid "将 AI 建议应用到 "
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:299
+msgid " 篇文章？"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:300
+msgid "注意：更改 Slug 会导致旧 URL 404，请确保有正确的重定向。"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:301
+msgid "摘要更改将覆盖当前内容。"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:302
+msgid "正在应用 "
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:303
+msgid "所有更改已应用！刷新页面查看更新。"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:304
+msgid " 项更改已应用"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:305
+msgid " 应用失败: "
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:306
+msgid " 网络错误"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:307
+#: modules/ai-optimizer/ai-optimizer.php:322
+msgid "加载设置失败，请刷新页面重试。"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:308
+#: modules/ai-optimizer/ai-optimizer.php:324
+msgid "标签数量必须在 1-20 之间。"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:309
+#: modules/ai-optimizer/ai-optimizer.php:325
+msgid "摘要长度必须在 50-500 之间。"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:310
+msgid "上一页"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:311
+msgid "下一页"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:312
+msgid "第 "
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:313
+msgid "为选中的 "
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:314
+msgid " 篇生成 AI 建议"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:315
+msgid "成功 {0} 篇，失败 {1} 篇"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:316
+msgid "部分文章应用失败，请查看上方详情。"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:320
+#: modules/ai-optimizer/ai-optimizer.php:658
+#: modules/search-push/search-push.php:173
+#: modules/search-push/search-push.php:234
+#: modules/site-enhance/site-enhance.php:245
+#: modules/site-enhance/site-enhance.php:348
+#: modules/site-optimize/site-optimize.php:344
+#: modules/site-optimize/site-optimize.php:379
+msgid "设置已保存。"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:321
+msgid "保存失败: "
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:326
+msgid "（点击收起）"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:331
+msgid "请先保存文章草稿。"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:332
+msgid "生成失败: "
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:333
+msgid "无标签生成"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:334
+msgid "应用中..."
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:335
+msgid "已应用！页面将刷新。"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:337
+msgid "应用失败: "
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:357
+#: modules/ai-optimizer/ai-optimizer.php:405
+#: modules/ai-optimizer/ai-optimizer.php:460
+#: modules/ai-optimizer/ai-optimizer.php:513
+#: modules/ai-optimizer/ai-optimizer.php:569
+#: modules/ai-optimizer/ai-optimizer.php:613
+#: modules/ai-optimizer/ai-optimizer.php:668
+msgid "权限不足。"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:425
+#: modules/ai-optimizer/ai-optimizer.php:465
+#: modules/ai-optimizer/ai-optimizer.php:522
+msgid "无效的文章 ID。"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:428
+msgid "请输入 API Key。"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:433
+#: modules/ai-optimizer/ai-optimizer.php:475
+#: modules/ai-optimizer/ai-optimizer.php:527
+msgid "文章未找到。"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:470
+msgid "请先在\"AI 优化 → 设置\"中配置 API Key。"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:535
+msgid "标签保存失败，请重试。"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:551
+msgid "文章更新失败，请重试。"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:556
+msgid "更改已应用。"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:579
+msgid "加载标签列表失败，请重试。"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:602
+msgid "AI 处理失败，请稍后重试。如问题持续，请检查 AI 优化设置。"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:629
+msgid "不支持的 AI 提供商，请选择 DeepSeek / Kimi / OpenAI / Claude。"
+msgstr ""
+
+#: modules/ai-optimizer/ai-optimizer.php:646
+#: modules/content-visibility/content-visibility.php:443
+#: modules/content-visibility/content-visibility.php:494
+#: modules/content-visibility/content-visibility.php:533
+#: modules/content-visibility/content-visibility.php:538
+#: modules/search-push/search-push.php:174
+#: modules/search-push/search-push.php:231
+#: modules/site-enhance/site-enhance.php:246
+#: modules/site-enhance/site-enhance.php:345
+#: modules/site-optimize/site-optimize.php:345
+#: modules/site-optimize/site-optimize.php:376
+msgid "保存失败，请重试。"
+msgstr ""
+
+#: modules/content-visibility/admin/settings-page.php:16
+msgid "前端页面"
+msgstr ""
+
+#: modules/content-visibility/admin/settings-page.php:17
+msgid "RSS 订阅"
+msgstr ""
+
+#: modules/content-visibility/admin/settings-page.php:18
+msgid "REST API"
+msgstr ""
+
+#: modules/content-visibility/admin/settings-page.php:19
+msgid "站内搜索"
+msgstr ""
+
+#: modules/content-visibility/admin/settings-page.php:20
+msgid "站点地图"
+msgstr ""
+
+#: modules/content-visibility/admin/settings-page.php:25
+#: modules/content-visibility/content-visibility.php:44
+#: modules/content-visibility/content-visibility.php:389
+#: modules/content-visibility/content-visibility.php:390
+msgid "内容可见性"
+msgstr ""
+
+#: modules/content-visibility/admin/settings-page.php:27
+msgid "按分类配置内容显示渠道和可见角色。未配置的分类在所有渠道正常显示。"
+msgstr ""
+
+#: modules/content-visibility/admin/settings-page.php:31
+msgid "使用说明"
+msgstr ""
+
+#: modules/content-visibility/admin/settings-page.php:33
+msgid "渠道列勾选 = 该分类内容在此渠道显示；取消勾选 = 在此渠道隐藏。默认全勾选（全部显示）。"
+msgstr ""
+
+#: modules/content-visibility/admin/settings-page.php:34
+msgid "「隐藏后仍可见角色」决定：渠道被隐藏时，哪些登录角色仍能看见。不选则仅管理员可见。"
+msgstr ""
+
+#: modules/content-visibility/admin/settings-page.php:35
+msgid "所有渠道都勾选（默认状态）= 该分类不做任何处理。"
+msgstr ""
+
+#: modules/content-visibility/admin/settings-page.php:37
+#: modules/content-visibility/admin/settings-page.php:38
+msgid "示例："
+msgstr ""
+
+#: modules/content-visibility/admin/settings-page.php:37
+msgid "\"日记\"分类，取消所有渠道勾选 + 可见角色选「管理员」= 全站隐藏，只有管理员能看（包括直链也会 404）。"
+msgstr ""
+
+#: modules/content-visibility/admin/settings-page.php:38
+msgid "\"小程序精选\"分类，只勾选 REST API，其他取消 + 可见角色选「管理员」= 前台不显示且直链 404，但小程序通过 API 仍能读取。"
+msgstr ""
+
+#: modules/content-visibility/admin/settings-page.php:46
+msgid "分类可见性规则"
+msgstr ""
+
+#: modules/content-visibility/admin/settings-page.php:47
+msgid "保存规则"
+msgstr ""
+
+#: modules/content-visibility/admin/settings-page.php:53
+msgid "分类"
+msgstr ""
+
+#: modules/content-visibility/admin/settings-page.php:57
+msgid "隐藏后仍可见角色"
+msgstr ""
+
+#: modules/content-visibility/admin/settings-page.php:64
+msgid "暂无分类。请先在「文章 → 分类」中创建分类后再配置可见性规则。"
+msgstr ""
+
+#: modules/content-visibility/admin/settings-page.php:106
+msgid "文章级隐藏"
+msgstr ""
+
+#: modules/content-visibility/admin/settings-page.php:107
+msgid "在文章列表页，可通过\"可见性\"列或行操作快速隐藏单篇文章。隐藏的文章不会出现在列表中，直链访问也会返回 404。"
+msgstr ""
+
+#: modules/content-visibility/content-visibility.php:51
+msgid "按分类/文章控制内容可见性，支持渠道和角色粒度配置。"
+msgstr ""
+
+#: modules/content-visibility/content-visibility.php:294
+msgid "页面不存在。"
+msgstr ""
+
+#: modules/content-visibility/content-visibility.php:442
+#: modules/content-visibility/content-visibility.php:505
+msgid "规则已保存。"
+msgstr ""
+
+#: modules/content-visibility/content-visibility.php:444
+#: modules/search-push/search-push.php:175
+#: modules/site-enhance/site-enhance.php:247
+msgid "操作失败，请稍后重试。"
+msgstr ""
+
+#: modules/content-visibility/content-visibility.php:445
+msgid "切换可见性失败，请重试。"
+msgstr ""
+
+#: modules/content-visibility/content-visibility.php:446
+msgid "确定要隐藏这篇文章吗？隐藏后文章不会出现在列表中，直链访问也会返回 404。"
+msgstr ""
+
+#: modules/content-visibility/content-visibility.php:447
+msgid "确定要显示这篇文章吗？"
+msgstr ""
+
+#: modules/content-visibility/content-visibility.php:448
+msgid "警告：有分类隐藏了渠道但未选择可见角色，这些分类将对所有非管理员用户隐藏（包括管理员本人也可能无法在前台查看）。确认保存？"
+msgstr ""
+
+#: modules/content-visibility/content-visibility.php:468
+msgid "规则数据格式无效"
+msgstr ""
+
+#: modules/content-visibility/content-visibility.php:521
+msgid "无效的文章 ID"
+msgstr ""
+
+#: modules/content-visibility/content-visibility.php:527
+msgid "文章不存在或已被删除。"
+msgstr ""
+
+#: modules/content-visibility/content-visibility.php:567
+msgid "所有可见性"
+msgstr ""
+
+#: modules/content-visibility/content-visibility.php:568
+msgid "已隐藏"
+msgstr ""
+
+#: modules/content-visibility/content-visibility.php:569
+#: modules/content-visibility/content-visibility.php:635
+msgid "可见"
+msgstr ""
+
+#: modules/content-visibility/content-visibility.php:607
+msgid "显示"
+msgstr ""
+
+#: modules/content-visibility/content-visibility.php:607
+#: modules/content-visibility/content-visibility.php:634
+msgid "隐藏"
+msgstr ""
+
+#: modules/content-visibility/content-visibility.php:621
+msgid "可见性"
+msgstr ""
+
+#: modules/role-manager/admin/roles-page.php:12
+#: modules/role-manager/role-manager.php:34
+#: modules/role-manager/role-manager.php:91
+#: modules/role-manager/role-manager.php:92
+msgid "角色管理"
+msgstr ""
+
+#: modules/role-manager/admin/roles-page.php:14
+msgid "管理 WordPress 用户角色和能力。点击角色查看详情和编辑能力。"
+msgstr ""
+
+#: modules/role-manager/admin/roles-page.php:21
+#: modules/role-manager/admin/roles-page.php:45
+#: modules/role-manager/role-manager.php:158
+msgid "添加角色"
+msgstr ""
+
+#: modules/role-manager/admin/roles-page.php:29
+msgid "角色"
+msgstr ""
+
+#: modules/role-manager/admin/roles-page.php:30
+msgid "标识"
+msgstr ""
+
+#: modules/role-manager/admin/roles-page.php:31
+msgid "用户数"
+msgstr ""
+
+#: modules/role-manager/admin/roles-page.php:32
+msgid "能力数"
+msgstr ""
+
+#: modules/role-manager/admin/roles-page.php:37
+msgid "加载中..."
+msgstr ""
+
+#: modules/role-manager/admin/roles-page.php:48
+msgid "角色名称"
+msgstr ""
+
+#: modules/role-manager/admin/roles-page.php:49
+msgid "如: 编辑助理"
+msgstr ""
+
+#: modules/role-manager/admin/roles-page.php:52
+msgid "角色标识"
+msgstr ""
+
+#: modules/role-manager/admin/roles-page.php:53
+msgid "如: editorial_assistant"
+msgstr ""
+
+#: modules/role-manager/admin/roles-page.php:54
+msgid "使用小写字母和下划线，不可修改。"
+msgstr ""
+
+#: modules/role-manager/admin/roles-page.php:59
+msgid "确认"
+msgstr ""
+
+#: modules/role-manager/admin/roles-page.php:60
+msgid "取消"
+msgstr ""
+
+#: modules/role-manager/admin/roles-page.php:69
+msgid "关闭"
+msgstr ""
+
+#: modules/role-manager/admin/roles-page.php:72
+msgid "能力矩阵"
+msgstr ""
+
+#: modules/role-manager/admin/roles-page.php:73
+msgid "勾选该角色应具备的能力。"
+msgstr ""
+
+#: modules/role-manager/admin/roles-page.php:76
+msgid "保存能力"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:41
+msgid "可视化管理 WordPress 用户角色和能力，支持角色复制和批量编辑。"
+msgstr ""
+
+#. translators: %s: Role name
+#: modules/role-manager/role-manager.php:138
+#, php-format
+msgid "确定要删除角色\"%s\"吗？此操作不可撤销。"
+msgstr ""
+
+#. translators: %d: Number of users with this role
+#: modules/role-manager/role-manager.php:140
+#, php-format
+msgid "警告：该角色下有 %d 个用户，删除后这些用户将失去该角色，可能无法正常访问后台。请在删除前先为这些用户分配新角色。"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:141
+msgid "无法删除内置角色。"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:142
+#: modules/role-manager/role-manager.php:241
+msgid "角色已添加。"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:143
+#: modules/role-manager/role-manager.php:276
+msgid "角色已复制。"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:144
+#: modules/role-manager/role-manager.php:301
+msgid "角色已删除。"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:145
+#: modules/role-manager/role-manager.php:352
+msgid "角色能力已更新。"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:146
+#: modules/role-manager/role-manager.php:394
+msgid "用户角色已更改。"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:147
+msgid "操作失败，请重试。"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:148
+msgid "请求失败，请稍后重试。"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:149
+msgid "加载角色列表失败，可能是网络问题或权限不足，请刷新页面重试。"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:150
+msgid "网络错误，请检查连接后重试。"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:151
+msgid "角色标识只能使用小写字母、数字和下划线。"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:152
+msgid "暂无角色"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:153
+msgid "内置"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:154
+msgid "编辑"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:155
+msgid "复制"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:156
+msgid "删除"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:157
+msgid "请填写角色名称和标识"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:159
+msgid "复制角色"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:205
+#: modules/role-manager/role-manager.php:323
+msgid "角色不存在"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:228
+#: modules/role-manager/role-manager.php:258
+msgid "角色名称和标识不能为空"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:232
+#: modules/role-manager/role-manager.php:267
+msgid "角色标识已存在"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:238
+msgid "角色添加失败，请重试。"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:263
+msgid "源角色不存在"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:273
+msgid "角色复制失败，请重试。"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:291
+msgid "无法删除内置保护角色"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:298
+msgid "角色删除失败，请重试。"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:318
+msgid "能力数据格式无效"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:349
+msgid "角色能力更新失败，请重试。"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:373
+msgid "目标角色不存在"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:378
+msgid "不能修改自己的角色"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:383
+msgid "用户不存在"
+msgstr ""
+
+#: modules/role-manager/role-manager.php:391
+msgid "用户角色更改失败，请重试。"
+msgstr ""
+
+#: modules/search-push/admin/settings-page.php:27
+#: modules/search-push/search-push.php:30
+#: modules/search-push/search-push.php:133
+#: modules/search-push/search-push.php:134
+msgid "搜索推送"
+msgstr ""
+
+#: modules/search-push/admin/settings-page.php:37
+msgid "百度推送"
+msgstr ""
+
+#: modules/search-push/admin/settings-page.php:38
+msgid "文章发布时自动推送链接到百度普通收录"
+msgstr ""
+
+#: modules/search-push/admin/settings-page.php:48
+msgid "站点域名"
+msgstr ""
+
+#: modules/search-push/admin/settings-page.php:49
+msgid "百度搜索资源平台验证的站点域名。若与当前站点域名不同请手动填写。"
+msgstr ""
+
+#: modules/search-push/admin/settings-page.php:52
+msgid "如 www.example.com"
+msgstr ""
+
+#: modules/search-push/admin/settings-page.php:57
+msgid "推送 Token"
+msgstr ""
+
+#: modules/search-push/admin/settings-page.php:58
+msgid "百度搜索资源平台 → 普通收录 → 接口调用 → token 参数值。"
+msgstr ""
+
+#: modules/search-push/admin/settings-page.php:61
+msgid "在百度搜索资源平台获取"
+msgstr ""
+
+#: modules/search-push/admin/settings-page.php:66
+#: modules/search-push/admin/settings-page.php:69
+#: modules/search-push/admin/settings-page.php:100
+#: modules/search-push/admin/settings-page.php:103
+msgid "测试推送"
+msgstr ""
+
+#: modules/search-push/admin/settings-page.php:80
+msgid "Bing 推送"
+msgstr ""
+
+#: modules/search-push/admin/settings-page.php:81
+msgid "文章发布时自动推送链接到 Bing 站长平台"
+msgstr ""
+
+#: modules/search-push/admin/settings-page.php:92
+msgid "Bing Webmaster Tools → Settings → API Key。"
+msgstr ""
+
+#: modules/search-push/admin/settings-page.php:95
+msgid "在 Bing Webmaster Tools 获取"
+msgstr ""
+
+#: modules/search-push/search-push.php:37
+msgid "文章发布/更新时自动推送链接到百度、Bing，提升搜索引擎收录效率。"
+msgstr ""
+
+#: modules/search-push/search-push.php:176
+#: modules/search-push/search-push.php:285
+msgid "推送请求已发送，请在搜索资源平台查看结果。"
+msgstr ""
+
+#: modules/search-push/search-push.php:177
+msgid "推送失败，请检查配置是否正确。"
+msgstr ""
+
+#: modules/search-push/search-push.php:178
+#: modules/search-push/search-push.php:203
+msgid "已启用百度推送，请先填写推送 Token。"
+msgstr ""
+
+#: modules/search-push/search-push.php:179
+#: modules/search-push/search-push.php:206
+msgid "已启用百度推送，请先填写站点域名。"
+msgstr ""
+
+#: modules/search-push/search-push.php:180
+#: modules/search-push/search-push.php:210
+msgid "已启用 Bing 推送，请先填写 API Key。"
+msgstr ""
+
+#: modules/search-push/search-push.php:181
+msgid "当前设置可能尚未保存，测试将使用已保存的配置。是否继续？"
+msgstr ""
+
+#: modules/search-push/search-push.php:279
+msgid "未知的搜索引擎。"
+msgstr ""
+
+#: modules/search-push/search-push.php:360
+msgid "百度推送 Token 或站点域名未配置。"
+msgstr ""
+
+#. translators: 1: HTTP status code, 2: error message from the Baidu push API
+#: modules/search-push/search-push.php:380
+#, php-format
+msgid "百度推送失败 (%1$d): %2$s"
+msgstr ""
+
+#: modules/search-push/search-push.php:397
+msgid "Bing API Key 未配置。"
+msgstr ""
+
+#. translators: %d: error code returned by the Bing Webmaster API
+#: modules/search-push/search-push.php:426
+#, php-format
+msgid "Bing 推送失败: ErrorCode %1$d"
+msgstr ""
+
+#. translators: %d: HTTP status code
+#: modules/search-push/search-push.php:431
+#, php-format
+msgid "Bing 推送失败 (HTTP %1$d)"
+msgstr ""
+
+#. translators: %s: search engine name (百度/Bing)
+#: modules/search-push/search-push.php:449
+#, php-format
+msgid "%s推送请求超时，请稍后重试。"
+msgstr ""
+
+#. translators: %s: search engine name (百度/Bing)
+#: modules/search-push/search-push.php:456
+#, php-format
+msgid "%s推送无法连接服务器，请检查网络连接。"
+msgstr ""
+
+#. translators: %s: search engine name (百度/Bing)
+#: modules/search-push/search-push.php:460
+#, php-format
+msgid "%s推送 SSL 证书验证失败。"
+msgstr ""
+
+#. translators: %s: search engine name (百度/Bing)
+#: modules/search-push/search-push.php:467
+#, php-format
+msgid "%s推送失败，请检查网络连接或稍后重试。"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:46
+#: modules/site-enhance/site-enhance.php:33
+#: modules/site-enhance/site-enhance.php:186
+#: modules/site-enhance/site-enhance.php:187
+msgid "站点增强"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:56
+msgid "回到顶部按钮"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:57
+msgid "页面滚动后显示回到顶部按钮"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:66
+msgid "背景颜色"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:72
+msgid "图标颜色"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:78
+msgid "预览"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:94
+msgid "维护模式"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:95
+msgid "非管理员访问前台时显示 503 维护页面"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:105
+msgid "提示信息"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:106
+msgid "留空则使用默认提示信息。"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:109
+#: modules/site-enhance/site-enhance.php:447
+msgid "网站正在维护，请稍后访问。"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:119
+msgid "特色图片筛选器"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:120
+msgid "在文章列表添加缺失/有特色图筛选下拉框"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:130
+msgid "启用后，在文章列表页添加「缺失特色图/有特色图」筛选下拉框，方便快速找到未设置特色图片的文章。"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:140
+msgid "特色图片列"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:141
+msgid "在文章列表复选框后显示特色图缩略图"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:151
+msgid "启用后，在文章列表的复选框后添加特色图片缩略图列，直观查看每篇文章的特色图片设置情况。"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:161
+msgid "默认特色图片"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:162
+msgid "未设置特色图的文章自动使用此默认图片"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:171
+msgid "默认图片"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:177
+msgid "未设置"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:181
+msgid "选择图片"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:182
+msgid "移除"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:192
+msgid "摘要快速编辑"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:193
+msgid "在文章快速编辑面板中增加摘要编辑框"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:203
+msgid "启用后，在文章列表的快速编辑面板中增加摘要编辑框，无需进入编辑页面即可修改摘要。"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:213
+msgid "SMTP 发信"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:214
+msgid "通过外部 SMTP 服务器发送邮件"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:223
+msgid "SMTP 主机"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:229
+msgid "端口"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:235
+msgid "加密方式"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:238
+msgid "SSL"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:239
+msgid "TLS"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:240
+msgid "无"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:245
+msgid "用户名"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:252
+msgid "密码"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:254
+msgid "已保存密码。留空则保留现有密码。"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:262
+msgid "发件人名称"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:268
+msgid "发件人邮箱"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:274
+msgid "测试发信"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:277
+msgid "收件邮箱地址"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:278
+msgid "发送测试邮件"
+msgstr ""
+
+#: modules/site-enhance/admin/settings-page.php:288
+#: modules/site-optimize/admin/settings-page.php:49
+msgid "部分设置保存后需刷新页面生效"
+msgstr ""
+
+#: modules/site-enhance/site-enhance.php:40
+msgid "回到顶部按钮、维护模式、特色图片管理，每个功能独立开关。"
+msgstr ""
+
+#: modules/site-enhance/site-enhance.php:248
+#: modules/site-enhance/site-enhance.php:732
+msgid "请输入收件邮箱地址。"
+msgstr ""
+
+#: modules/site-enhance/site-enhance.php:249
+#: modules/site-enhance/site-enhance.php:746
+msgid "测试邮件已发送，请检查收件箱。"
+msgstr ""
+
+#: modules/site-enhance/site-enhance.php:250
+msgid "发送失败，请检查 SMTP 设置。"
+msgstr ""
+
+#: modules/site-enhance/site-enhance.php:251
+#: modules/site-enhance/site-enhance.php:298
+msgid "已启用 SMTP 发信，请先填写 SMTP 主机地址。"
+msgstr ""
+
+#: modules/site-enhance/site-enhance.php:252
+#: modules/site-enhance/site-enhance.php:301
+msgid "已启用 SMTP 发信，请先填写用户名。"
+msgstr ""
+
+#: modules/site-enhance/site-enhance.php:253
+msgid "SMTP 端口号需在 1-65535 之间。"
+msgstr ""
+
+#: modules/site-enhance/site-enhance.php:254
+msgid "请先启用 SMTP 发信并保存设置后再测试。"
+msgstr ""
+
+#: modules/site-enhance/site-enhance.php:255
+msgid "开启维护模式后，访客将看到维护页面，无法正常访问网站。是否确认开启？"
+msgstr ""
+
+#: modules/site-enhance/site-enhance.php:401
+msgid "回到顶部"
+msgstr ""
+
+#: modules/site-enhance/site-enhance.php:455
+#: modules/site-enhance/site-enhance.php:468
+msgid "维护中"
+msgstr ""
+
+#: modules/site-enhance/site-enhance.php:493
+msgid "所有特色图片"
+msgstr ""
+
+#: modules/site-enhance/site-enhance.php:494
+msgid "缺失特色图"
+msgstr ""
+
+#: modules/site-enhance/site-enhance.php:495
+msgid "有特色图"
+msgstr ""
+
+#: modules/site-enhance/site-enhance.php:558
+msgid "未设置特色图片"
+msgstr ""
+
+#: modules/site-enhance/site-enhance.php:728
+msgid "DM工具箱 SMTP 测试"
+msgstr ""
+
+#: modules/site-enhance/site-enhance.php:729
+msgid "这是一封测试邮件，由 Dreamanual Toolkit SMTP 功能发送。"
+msgstr ""
+
+#: modules/site-enhance/site-enhance.php:753
+msgid "发送失败，请检查 SMTP 主机、端口、用户名和密码是否正确。"
+msgstr ""
+
+#: modules/site-enhance/site-enhance.php:773
+msgid "无法连接到 SMTP 服务器，请检查主机地址和端口是否正确，以及服务器是否允许该端口连接。"
+msgstr ""
+
+#: modules/site-enhance/site-enhance.php:783
+msgid "认证失败，请检查 SMTP 用户名和密码是否正确。"
+msgstr ""
+
+#: modules/site-enhance/site-enhance.php:792
+msgid "加密连接失败，请检查加密方式（SSL/TLS/无加密）设置是否正确。"
+msgstr ""
+
+#: modules/site-enhance/site-enhance.php:800
+msgid "发件人地址被拒绝，请检查发件人邮箱设置是否与 SMTP 账号匹配。"
+msgstr ""
+
+#: modules/site-enhance/site-enhance.php:808
+msgid "收件人地址被拒绝，请检查收件邮箱是否正确。"
+msgstr ""
+
+#: modules/site-enhance/site-enhance.php:816
+msgid "发送频率超限，请稍后重试。"
+msgstr ""
+
+#: modules/site-enhance/site-enhance.php:824
+msgid "邮箱空间不足或超出配额。"
+msgstr ""
+
+#. translators: %s: original SMTP error message
+#: modules/site-enhance/site-enhance.php:829
+#, php-format
+msgid "发送失败，请检查 SMTP 设置是否正确。原始错误：%s"
+msgstr ""
+
+#: modules/site-optimize/admin/settings-page.php:15
+#: modules/site-optimize/site-optimize.php:30
+#: modules/site-optimize/site-optimize.php:298
+#: modules/site-optimize/site-optimize.php:299
+msgid "站点优化"
+msgstr ""
+
+#: modules/site-optimize/site-optimize.php:37
+msgid "WordPress 功能精简：屏蔽 Emoji、关闭修订、精简头部代码等，每项独立开关。"
+msgstr ""
+
+#: modules/site-optimize/site-optimize.php:88
+msgid "常规功能"
+msgstr ""
+
+#: modules/site-optimize/site-optimize.php:90
+msgid "屏蔽文章修订功能，精简文章表数据"
+msgstr ""
+
+#: modules/site-optimize/site-optimize.php:91
+msgid "彻底关闭 Trackback，防止垃圾留言"
+msgstr ""
+
+#: modules/site-optimize/site-optimize.php:92
+msgid "关闭 XML-RPC 功能，只在后台发布文章"
+msgstr ""
+
+#: modules/site-optimize/site-optimize.php:93
+msgid "屏蔽站点 Feed，防止文章被快速采集"
+msgstr ""
+
+#: modules/site-optimize/site-optimize.php:94
+msgid "屏蔽站点管理员邮箱定期验证功能"
+msgstr ""
+
+#: modules/site-optimize/site-optimize.php:98
+msgid "转换功能"
+msgstr ""
+
+#: modules/site-optimize/site-optimize.php:100
+msgid "屏蔽 Emoji 转换成图片功能，直接使用 Emoji"
+msgstr ""
+
+#: modules/site-optimize/site-optimize.php:101
+msgid "屏蔽字符转换成格式化的 HTML 实体功能"
+msgstr ""
+
+#: modules/site-optimize/site-optimize.php:102
+msgid "屏蔽 WordPress 大小写修正，自行决定如何书写"
+msgstr ""
+
+#: modules/site-optimize/site-optimize.php:106
+msgid "后台功能"
+msgstr ""
+
+#: modules/site-optimize/site-optimize.php:108
+msgid "移除为欧洲通用数据保护条例生成的页面"
+msgstr ""
+
+#: modules/site-optimize/site-optimize.php:109
+msgid "移除仪表盘的「WordPress 活动及新闻」"
+msgstr ""
+
+#: modules/site-optimize/site-optimize.php:110
+msgid "移除后台界面右上角的「帮助」标签"
+msgstr ""
+
+#: modules/site-optimize/site-optimize.php:111
+msgid "移除后台界面右上角的「选项」标签"
+msgstr ""
+
+#: modules/site-optimize/site-optimize.php:115
+msgid "页面功能"
+msgstr ""
+
+#: modules/site-optimize/site-optimize.php:117
+msgid "移除页面头部版本号和服务发现标签代码"
+msgstr ""
+
+#: modules/site-optimize/site-optimize.php:118
+msgid "移除工具栏和后台个人资料中工具栏相关选项"
+msgstr ""
+
+#: modules/site-optimize/site-optimize.php:122
+msgid "嵌入功能"
+msgstr ""
+
+#: modules/site-optimize/site-optimize.php:124
+msgid "禁用 Auto Embeds 功能，加快页面解析速度"
+msgstr ""
+
+#: modules/site-optimize/site-optimize.php:125
+msgid "屏蔽嵌入其他 WordPress 文章的 Embed 功能"
+msgstr ""
+
+#: modules/site-optimize/site-optimize.php:129
+msgid "性能优化"
+msgstr ""
+
+#: modules/site-optimize/site-optimize.php:131
+msgid "启用推测加载，浏览器预渲染链接页面（Chrome 121+）"
+msgstr ""
+
+#: modules/site-optimize/site-optimize.php:346
+msgid "操作失败。"
+msgstr ""

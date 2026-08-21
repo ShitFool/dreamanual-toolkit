@@ -335,7 +335,7 @@ class AI_Client {
             $cleaned = preg_replace( '/[^}]*$/', '', $cleaned );
             $data    = json_decode( $cleaned, true );
             if ( JSON_ERROR_NONE !== json_last_error() ) {
-                return new \WP_Error( 'parse_error', __( '无法解析 AI JSON 响应: ', 'dreamanual-toolkit' ) . json_last_error_msg() );
+                return new \WP_Error( 'parse_error', __( 'AI 返回的内容格式异常，无法解析。请重试或更换 AI 模型。', 'dreamanual-toolkit' ) );
             }
         }
 
@@ -381,10 +381,11 @@ class AI_Client {
         }
 
         if ( 400 === $status ) {
-            return __( 'AI 请求失败: ', 'dreamanual-toolkit' ) . $error_message;
+            return __( 'AI 请求参数有误，请检查模型名称和请求设置是否正确。', 'dreamanual-toolkit' );
         }
 
-        return __( 'AI 请求失败 (HTTP ', 'dreamanual-toolkit' ) . $status . '): ' . $error_message;
+        /* translators: %d: HTTP status code */
+        return sprintf( __( 'AI 请求失败（HTTP %1$d），请稍后重试。', 'dreamanual-toolkit' ), $status );
     }
 
     /**
@@ -404,6 +405,6 @@ class AI_Client {
             return new \WP_Error( 'network_error', __( '网络错误，请检查连接。', 'dreamanual-toolkit' ) );
         }
 
-        return new \WP_Error( 'request_failed', $msg );
+        return new \WP_Error( 'request_failed', __( '请求失败，请检查网络连接或稍后重试。', 'dreamanual-toolkit' ) );
     }
 }

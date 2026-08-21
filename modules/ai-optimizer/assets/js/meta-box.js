@@ -53,6 +53,13 @@
                 msg.style.opacity = '0';
                 setTimeout(function () { msg.remove(); }, 500);
             }, 8000);
+        } else {
+            // success/info 消息 4 秒后自动淡出
+            setTimeout(function () {
+                msg.style.transition = 'opacity .5s';
+                msg.style.opacity = '0';
+                setTimeout(function () { msg.remove(); }, 500);
+            }, 4000);
         }
     }
 
@@ -73,7 +80,15 @@
         formData.append('post_id', postId);
 
         fetch(ajaxUrl, { method: 'POST', body: formData, credentials: 'same-origin' })
-            .then(function (r) { return r.json(); })
+            .then(function (r) {
+                return r.text().then(function (text) {
+                    try { return JSON.parse(text); }
+                    catch (e) {
+                        console.error('[DREA] generate JSON parse error, raw:', text.substring(0, 500));
+                        throw e;
+                    }
+                });
+            })
             .then(function (res) {
                 showSpinner(btn, false);
                 if (res.success) {
@@ -137,7 +152,15 @@
         formData.append('excerpt', excerptEl ? excerptEl.value : '');
 
         fetch(ajaxUrl, { method: 'POST', body: formData, credentials: 'same-origin' })
-            .then(function (r) { return r.json(); })
+            .then(function (r) {
+                return r.text().then(function (text) {
+                    try { return JSON.parse(text); }
+                    catch (e) {
+                        console.error('[DREA] apply JSON parse error, raw:', text.substring(0, 500));
+                        throw e;
+                    }
+                });
+            })
             .then(function (res) {
                 if (res.success) {
                     // 应用成功后刷新页面，确保表单从数据库重新加载

@@ -1,50 +1,53 @@
 /**
  * Dreamanual Toolkit - 公共管理样式
- * 基于 WPMU DEV SUI (Shared UI) 风格
+ * 基于 Arco Design 风格，品牌色源自 dreamanual.com
  */
 
 /* ─── Design Tokens ─── */
 :root {
-    /* Primary */
-    --drea-primary: #571EE7;
-    --drea-primary-hover: rgba(87, 30, 231, 0.8);
+    /* Primary — dreamanual.com 品牌蓝 (Tailwind blue-700) */
+    --drea-primary: #1d4ed8;
+    --drea-primary-hover: #2563eb;
+    --drea-primary-active: #1e40af;
+    --drea-primary-light: rgba(29, 78, 216, 0.1);
+    --drea-primary-focus: rgba(29, 78, 216, 0.2);
 
-    /* Neutral */
-    --drea-gray-50: #f9fafb;
-    --drea-gray-100: #f3f4f6;
-    --drea-gray-200: #e5e7eb;
-    --drea-gray-300: #d1d5db;
-    --drea-gray-400: #9ca3af;
-    --drea-gray-500: #6b7280;
-    --drea-gray-600: #4b5563;
+    /* Neutral (Arco Design 灰度) */
+    --drea-gray-50: #f7f8fa;
+    --drea-gray-100: #f2f3f5;
+    --drea-gray-200: #e5e6eb;
+    --drea-gray-300: #c9cdd4;
+    --drea-gray-400: #86909c;
+    --drea-gray-500: #6b7785;
+    --drea-gray-600: #4e5969;
     --drea-gray-700: #374151;
-    --drea-gray-800: #1f2937;
+    --drea-gray-800: #1d2129;
     --drea-gray-900: #111827;
 
     /* Semantic */
-    --drea-success: #22c55e;
-    --drea-success-bg: #f0fdf4;
-    --drea-warning: #f59e0b;
-    --drea-warning-bg: #fffbeb;
-    --drea-error: #ef4444;
-    --drea-error-bg: #fef2f2;
-    --drea-info: #3b82f6;
+    --drea-success: #00b42a;
+    --drea-success-bg: #e8ffea;
+    --drea-warning: #ff7d00;
+    --drea-warning-bg: #fff7e8;
+    --drea-error: #f53f3f;
+    --drea-error-bg: #ffece8;
+    --drea-info: #1d4ed8;
 
     /* Surface */
-    --drea-bg: #f8f8f8;
+    --drea-bg: #f7f8fa;
     --drea-surface: #ffffff;
-    --drea-border: #e5e7eb;
+    --drea-border: #e5e6eb;
 
     /* Text */
-    --drea-text-primary: #1a1a1a;
-    --drea-text-secondary: #666666;
-    --drea-text-tertiary: #9ca3af;
+    --drea-text-primary: #1d2129;
+    --drea-text-secondary: #4e5969;
+    --drea-text-tertiary: #86909c;
 
-    /* Radius */
-    --drea-radius-sm: 4px;
-    --drea-radius-md: 8px;
-    --drea-radius-lg: 12px;
-    --drea-radius-xl: 20px;
+    /* Radius (Arco 规范) */
+    --drea-radius-sm: 2px;
+    --drea-radius-md: 4px;
+    --drea-radius-lg: 8px;
+    --drea-radius-xl: 12px;
 
     /* Spacing */
     --drea-space-1: 4px;
@@ -56,31 +59,31 @@
     --drea-space-8: 32px;
 
     /* Transition */
-    --drea-transition: 0.15s ease;
+    --drea-transition: 0.2s ease;
 
-    /* Toggle */
-    --drea-toggle-off: #666;
-    --drea-toggle-off-hover: #5c5c5c;
-    --drea-toggle-on: #00E448;
-    --drea-toggle-on-hover: #00cd41;
+    /* Switch (Arco 风格) */
+    --drea-switch-off: #c9cdd4;
+    --drea-switch-off-dot: #fff;
+    --drea-switch-on: #1d4ed8;
+    --drea-switch-on-hover: #2563eb;
 }
 
 /* ─── 页面容器 ─── */
 .drea-wrap {
     max-width: 960px;
     margin: 30px 30px 0 10px;
-    font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
     color: var(--drea-text-primary);
 }
 
-.drea-wrap__title {
+.drea-wrap .drea-wrap__title {
     display: flex;
     align-items: baseline;
     gap: var(--drea-space-2);
-    margin-bottom: var(--drea-space-6);
+    margin: 0 0 var(--drea-space-5);
     font-size: 22px;
     font-weight: 700;
-    color: var(--drea-gray-900);
+    color: var(--drea-gray-800);
     line-height: 1.5;
 }
 
@@ -89,6 +92,12 @@
     color: var(--drea-text-tertiary);
     font-weight: 400;
     letter-spacing: -0.25px;
+}
+
+.drea-wrap > .description {
+    color: var(--drea-text-secondary);
+    font-size: 14px;
+    margin-bottom: var(--drea-space-5);
 }
 
 /* ─── 通知条 ─── */
@@ -134,13 +143,14 @@
     border: 1px solid var(--drea-border);
     border-radius: var(--drea-radius-xl);
     overflow: hidden;
-    transition: box-shadow var(--drea-transition), border-color var(--drea-transition), transform var(--drea-transition);
+    transition: box-shadow var(--drea-transition), border-color var(--drea-transition);
+    display: flex;
+    flex-direction: column;
 }
 
 .drea-module-card:hover {
     border-color: var(--drea-gray-300);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
 }
 
 .drea-module-card--active {
@@ -148,23 +158,22 @@
 }
 
 .drea-module-card--active:hover {
-    border-color: var(--drea-primary);
+    border-color: var(--drea-primary-hover);
 }
 
 .drea-module-card__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: var(--drea-space-4) var(--drea-space-5);
+    padding: 10px var(--drea-space-5);
     border-bottom: 1px solid var(--drea-border);
-    min-height: 60px;
 }
 
 .drea-module-card__name {
     font-size: 16px;
     font-weight: 600;
     margin: 0;
-    color: var(--drea-gray-900);
+    color: var(--drea-gray-800);
     line-height: 1.4;
 }
 
@@ -172,19 +181,19 @@
     color: var(--drea-text-secondary);
     font-size: 13px;
     line-height: 22px;
-    letter-spacing: -0.25px;
     margin: 0;
     padding: var(--drea-space-4) var(--drea-space-5);
+    flex: 1;
 }
 
 .drea-module-card__footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: var(--drea-space-4) var(--drea-space-5);
+    padding: var(--drea-space-2) var(--drea-space-4);
     border-top: 1px solid var(--drea-border);
     background: var(--drea-gray-50);
-    min-height: 60px;
+    min-height: 40px;
 }
 
 .drea-module-card__status {
@@ -203,7 +212,6 @@
     font-weight: 500;
     color: var(--drea-primary);
     text-decoration: none;
-    letter-spacing: -0.25px;
     transition: color var(--drea-transition);
 }
 
@@ -211,13 +219,15 @@
     color: var(--drea-primary-hover);
 }
 
-/* ─── Toggle 开关 (SUI 风格) ─── */
+/* ─── Switch 开关 (Arco Design 精确风格) ─── */
 .drea-toggle {
     position: relative;
     display: inline-block;
     width: 40px;
     height: 20px;
     cursor: pointer;
+    vertical-align: middle;
+    flex-shrink: 0;
 }
 
 .drea-toggle__input,
@@ -231,8 +241,8 @@
 .drea-toggle__slider {
     position: absolute;
     inset: 0;
-    background: var(--drea-toggle-off);
-    border-radius: 100px;
+    background: var(--drea-switch-off);
+    border-radius: 10px;
     transition: background-color var(--drea-transition);
 }
 
@@ -243,24 +253,24 @@
     height: 16px;
     top: 2px;
     left: 2px;
-    background: #fff;
+    background: var(--drea-switch-off-dot);
     border-radius: 50%;
     transition: transform var(--drea-transition);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
 }
 
 .drea-toggle:hover .drea-toggle__slider {
-    background: var(--drea-toggle-off-hover);
+    background: var(--drea-gray-400);
 }
 
 .drea-toggle__input:checked + .drea-toggle__slider,
 .drea-toggle input[type="checkbox"]:checked + .drea-toggle__slider {
-    background: var(--drea-toggle-on);
+    background: var(--drea-switch-on);
 }
 
 .drea-toggle:hover .drea-toggle__input:checked + .drea-toggle__slider,
 .drea-toggle:hover input[type="checkbox"]:checked + .drea-toggle__slider {
-    background: var(--drea-toggle-on-hover);
+    background: var(--drea-switch-on-hover);
 }
 
 .drea-toggle__input:checked + .drea-toggle__slider::before,
@@ -268,91 +278,228 @@
     transform: translateX(20px);
 }
 
-.drea-toggle__input:focus + .drea-toggle__slider,
-.drea-toggle input[type="checkbox"]:focus + .drea-toggle__slider {
-    outline: 2px solid var(--drea-primary);
-    outline-offset: 2px;
+.drea-toggle__input:focus-visible + .drea-toggle__slider,
+.drea-toggle input[type="checkbox"]:focus-visible + .drea-toggle__slider {
+    box-shadow: 0 0 0 2px var(--drea-primary-focus);
 }
 
 .drea-toggle__input:disabled + .drea-toggle__slider,
 .drea-toggle input[type="checkbox"]:disabled + .drea-toggle__slider {
-    background: var(--drea-gray-300);
+    background: var(--drea-gray-200);
     cursor: not-allowed;
 }
 
-/* ─── 表单通用 ─── */
+.drea-toggle__input:disabled + .drea-toggle__slider::before,
+.drea-toggle input[type="checkbox"]:disabled + .drea-toggle__slider::before {
+    box-shadow: none;
+    background: var(--drea-gray-50);
+}
+
+/* ─── 表单通用 (Arco Design 风格) ─── */
 .drea-form-group {
     margin-bottom: var(--drea-space-4);
 }
 
 .drea-form-group label {
     display: block;
-    font-weight: 600;
+    font-weight: 500;
     margin-bottom: var(--drea-space-1);
-    font-size: 13px;
-    color: var(--drea-gray-900);
-    letter-spacing: -0.25px;
+    font-size: 14px;
+    color: var(--drea-gray-800);
 }
 
+/* 统一输入控件 — Arco Design 规范 */
 .drea-form-group select,
 .drea-form-group input[type="text"],
 .drea-form-group input[type="number"],
-.drea-form-group textarea {
+.drea-form-group input[type="email"],
+.drea-form-group input[type="password"],
+.drea-form-group input[type="url"],
+.drea-form-group textarea,
+.drea-settings-row__action select,
+.drea-settings-row__action input[type="text"],
+.drea-settings-row__action input[type="number"],
+.drea-settings-row__action input[type="email"],
+.drea-settings-row__action input[type="password"],
+.drea-settings-row__action input[type="url"],
+.drea-settings-row__action textarea,
+.drea-section__body select,
+.drea-section__body input[type="text"],
+.drea-section__body input[type="number"],
+.drea-section__body input[type="email"],
+.drea-section__body input[type="password"],
+.drea-section__body input[type="url"],
+.drea-section__body textarea,
+/* 覆盖 WordPress regular-text / small-text 类 */
+.drea-wrap .regular-text,
+.drea-wrap .small-text {
     width: 100%;
     max-width: 400px;
-    border: 1px solid #e6e6e6;
+    height: 32px;
+    min-height: 0;
+    border: 1px solid var(--drea-border);
     border-radius: var(--drea-radius-md);
-    height: 40px;
-    padding: 10px 14px;
-    font-size: 13px;
+    padding: 0 12px;
+    font-size: 14px;
+    line-height: normal;
     color: var(--drea-text-primary);
-    transition: border-color var(--drea-transition);
+    background: var(--drea-surface);
+    transition: border-color var(--drea-transition), box-shadow var(--drea-transition);
+    outline: none;
+    box-sizing: border-box;
+}
+
+.drea-form-group select:hover,
+.drea-form-group input[type="text"]:hover,
+.drea-form-group input[type="number"]:hover,
+.drea-form-group input[type="email"]:hover,
+.drea-form-group input[type="password"]:hover,
+.drea-form-group input[type="url"]:hover,
+.drea-settings-row__action select:hover,
+.drea-settings-row__action input[type="text"]:hover,
+.drea-settings-row__action input[type="number"]:hover,
+.drea-settings-row__action input[type="email"]:hover,
+.drea-settings-row__action input[type="password"]:hover,
+.drea-settings-row__action input[type="url"]:hover,
+.drea-section__body select:hover,
+.drea-section__body input[type="text"]:hover,
+.drea-section__body input[type="number"]:hover,
+.drea-section__body input[type="email"]:hover,
+.drea-section__body input[type="password"]:hover,
+.drea-section__body input[type="url"]:hover,
+.drea-wrap .regular-text:hover,
+.drea-wrap .small-text:hover {
+    border-color: var(--drea-gray-300);
 }
 
 .drea-form-group select:focus,
 .drea-form-group input[type="text"]:focus,
 .drea-form-group input[type="number"]:focus,
-.drea-form-group textarea:focus {
+.drea-form-group input[type="email"]:focus,
+.drea-form-group input[type="password"]:focus,
+.drea-form-group input[type="url"]:focus,
+.drea-form-group textarea:focus,
+.drea-settings-row__action select:focus,
+.drea-settings-row__action input[type="text"]:focus,
+.drea-settings-row__action input[type="number"]:focus,
+.drea-settings-row__action input[type="email"]:focus,
+.drea-settings-row__action input[type="password"]:focus,
+.drea-settings-row__action input[type="url"]:focus,
+.drea-settings-row__action textarea:focus,
+.drea-section__body select:focus,
+.drea-section__body input[type="text"]:focus,
+.drea-section__body input[type="number"]:focus,
+.drea-section__body input[type="email"]:focus,
+.drea-section__body input[type="password"]:focus,
+.drea-section__body input[type="url"]:focus,
+.drea-section__body textarea:focus,
+.drea-wrap .regular-text:focus,
+.drea-wrap .small-text:focus {
     border-color: var(--drea-primary);
-    outline: none;
-    box-shadow: 0 0 0 1px var(--drea-primary);
+    box-shadow: 0 0 0 2px var(--drea-primary-focus);
 }
 
-.drea-form-group textarea {
+/* Select 下拉框箭头 + 基础覆盖 */
+.drea-form-group select,
+.drea-settings-row__action select,
+.drea-section__body select,
+.drea-wrap select {
+    appearance: none;
+    -webkit-appearance: none;
+    height: 32px;
+    min-height: 0;
+    border: 1px solid var(--drea-border);
+    border-radius: var(--drea-radius-md);
+    padding: 0 28px 0 12px;
+    font-size: 14px;
+    line-height: normal;
+    color: var(--drea-text-primary);
+    background-color: var(--drea-surface);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2386909c' d='M2.5 4.5l3.5 3.5 3.5-3.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    transition: border-color var(--drea-transition), box-shadow var(--drea-transition);
+    outline: none;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.drea-form-group select:hover,
+.drea-settings-row__action select:hover,
+.drea-section__body select:hover,
+.drea-wrap select:hover {
+    border-color: var(--drea-gray-300);
+}
+
+.drea-form-group select:focus,
+.drea-settings-row__action select:focus,
+.drea-section__body select:focus,
+.drea-wrap select:focus {
+    border-color: var(--drea-primary);
+    box-shadow: 0 0 0 2px var(--drea-primary-focus);
+}
+
+/* Textarea */
+.drea-form-group textarea,
+.drea-settings-row__action textarea,
+.drea-section__body textarea {
     height: auto;
     min-height: 80px;
+    padding: 5px 12px;
+    line-height: 1.5;
+}
+
+/* Placeholder 灰度 */
+.drea-form-group input::placeholder,
+.drea-form-group textarea::placeholder,
+.drea-settings-row__action input::placeholder,
+.drea-settings-row__action textarea::placeholder,
+.drea-section__body input::placeholder,
+.drea-section__body textarea::placeholder,
+.drea-wrap .regular-text::placeholder {
+    color: var(--drea-gray-400);
 }
 
 .drea-form-group .description {
-    color: var(--drea-text-secondary);
-    font: 400 12px/1.5 "Roboto", sans-serif;
-    margin-top: 2px;
-    letter-spacing: -0.25px;
+    color: var(--drea-text-tertiary);
+    font-size: 13px;
+    line-height: 1.5;
+    margin-top: 4px;
 }
 
-/* ─── 按钮 (SUI 风格) ─── */
+/* ─── 按钮 (Arco Design 风格) ─── */
 .drea-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: var(--drea-space-1);
-    padding: 0 14px;
+    padding: 0 15px;
     min-width: 80px;
-    height: 30px;
-    border: 2px solid transparent;
+    height: 32px;
+    border: 1px solid transparent;
     border-radius: var(--drea-radius-md);
     background: var(--drea-primary);
     color: #fff;
-    font: 500 12px/1 "Roboto", sans-serif;
-    letter-spacing: -0.25px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
     cursor: pointer;
     text-decoration: none;
+    white-space: nowrap;
     transition: all var(--drea-transition);
+    outline: none;
 }
 
 .drea-btn:hover {
-    opacity: 0.8;
-    color: #fff;
+    /* 各变体通过 --primary / --secondary / --danger 自行覆盖 */
+}
+
+.drea-btn:active {
+    background: var(--drea-primary-active);
+}
+
+.drea-btn:focus-visible {
+    box-shadow: 0 0 0 2px var(--drea-primary-focus);
 }
 
 .drea-btn--primary {
@@ -363,76 +510,101 @@
 }
 
 .drea-btn--primary:hover {
-    opacity: 0.8;
+    background: var(--drea-primary-hover);
+    border-color: var(--drea-primary-hover);
+    color: #fff;
+}
+
+.drea-btn--primary:active {
+    background: var(--drea-primary-active);
+    border-color: var(--drea-primary-active);
     color: #fff;
 }
 
 .drea-btn--secondary {
     background: var(--drea-surface);
     color: var(--drea-text-primary);
-    border-color: rgba(26, 26, 26, 0.15);
+    border-color: var(--drea-border);
 }
 
 .drea-btn--secondary:hover {
-    background: var(--drea-gray-50);
-    opacity: 1;
+    background: var(--drea-surface);
+    border-color: var(--drea-primary);
+    color: var(--drea-primary);
+}
+
+.drea-btn--secondary:active {
+    background: var(--drea-primary-light);
+    border-color: var(--drea-primary-active);
+    color: var(--drea-primary-active);
 }
 
 .drea-btn--danger {
-    background: #D70015;
-    border-color: #D70015;
+    background: var(--drea-error);
+    border-color: var(--drea-error);
+    color: #fff;
 }
 
 .drea-btn--danger:hover {
-    opacity: 0.8;
+    background: #cb2634;
+    border-color: #cb2634;
+}
+
+.drea-btn--danger:active {
+    background: #b7212e;
+    border-color: #b7212e;
 }
 
 .drea-btn--small {
-    padding: 0 10px;
+    padding: 0 11px;
     min-width: auto;
-    font-size: 11px;
+    height: 24px;
+    font-size: 12px;
+    border-radius: var(--drea-radius-sm);
 }
 
 .drea-btn[disabled] {
-    background: #e6e6e6;
-    color: #aaa;
+    background: var(--drea-gray-50);
+    color: var(--drea-gray-300);
     cursor: not-allowed;
-    border-color: transparent;
-    opacity: 1;
+    border-color: var(--drea-gray-100);
 }
 
-/* ─── Section 卡片 (设置页共用) ─── */
+.drea-btn[disabled]:hover,
+.drea-btn[disabled]:active {
+    background: var(--drea-gray-50);
+    color: var(--drea-gray-300);
+    border-color: var(--drea-gray-100);
+}
+
+/* ─── Section 卡片 (Arco Design Collapse 风格) ─── */
 .drea-section {
     background: var(--drea-surface);
     border: 1px solid var(--drea-border);
     border-radius: var(--drea-radius-xl);
     overflow: hidden;
-    margin-bottom: var(--drea-space-5);
+    margin-bottom: var(--drea-space-3);
 }
 
 .drea-section__header {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
-    padding: var(--drea-space-4) var(--drea-space-5);
-    gap: var(--drea-space-2);
+    padding: var(--drea-space-3) var(--drea-space-5);
+    gap: var(--drea-space-3);
     cursor: pointer;
+    border-bottom: 1px solid var(--drea-border);
 }
 
-/* 折叠箭头指示器 */
+/* 折叠箭头指示器 — Arco 线性风格 */
 .drea-section__arrow {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: var(--drea-gray-100);
+    width: 16px;
+    height: 16px;
     color: var(--drea-gray-600);
-    font-size: 14px;
-    transition: transform var(--drea-transition), background var(--drea-transition);
     flex-shrink: 0;
-    margin-right: var(--drea-space-2);
 }
 
 .drea-section__arrow::before {
@@ -462,24 +634,26 @@
     display: flex;
     flex-direction: column;
     gap: 2px;
+    flex: 1;
+    min-width: 0;
 }
 
 .drea-section__title h2 {
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 500;
     margin: 0;
-    color: var(--drea-gray-900);
-    line-height: 1.4;
+    color: var(--drea-gray-800);
+    line-height: 1.5;
 }
 
 .drea-section__desc {
     font-size: 13px;
     color: var(--drea-text-tertiary);
-    letter-spacing: -0.25px;
+    line-height: 1.5;
 }
 
 .drea-section__body {
-    padding: 0 var(--drea-space-5) var(--drea-space-5);
+    padding: 0;
 }
 
 .drea-section__body--collapsed {
@@ -494,14 +668,14 @@
     display: none;
 }
 
-/* ─── 通用设置行 (form-table 替代) ─── */
+/* ─── 通用设置行 (Arco Design 风格) ─── */
 .drea-settings-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--drea-space-3-75, 15px) var(--drea-space-5);
-    border-bottom: 1px solid #f2f2f2;
-    min-height: 50px;
+    padding: var(--drea-space-3) var(--drea-space-5);
+    border-bottom: 1px solid var(--drea-gray-50);
+    min-height: 44px;
 }
 
 .drea-settings-row:last-child {
@@ -509,21 +683,217 @@
 }
 
 .drea-settings-row__label {
-    font-size: 13px;
-    color: var(--drea-gray-900);
-    letter-spacing: -0.25px;
+    font-size: 14px;
+    color: var(--drea-gray-800);
+    flex: 1;
+    min-width: 0;
+    line-height: 1.5;
 }
 
 .drea-settings-row__label small {
     display: block;
-    font-size: 12px;
+    font-size: 13px;
     color: var(--drea-text-tertiary);
     font-weight: 400;
     margin-top: 2px;
 }
 
+/* 纯描述行（无操作区） */
+.drea-settings-row__label:only-child {
+    color: var(--drea-text-secondary);
+    font-size: 13px;
+}
+
 .drea-settings-row__action {
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--drea-space-2);
+    min-width: 300px;
+    max-width: 420px;
+    justify-content: flex-end;
+}
+
+/* ─── InputGroup 输入组合 (Arco Design 风格) ─── */
+/* 输入框与按钮连为一体，整体右对齐 */
+.drea-input-group {
+    display: flex;
+    width: 100%;
+}
+
+.drea-input-group__input {
+    flex: 1;
+    min-width: 0;
+    border-radius: var(--drea-radius-sm) 0 0 var(--drea-radius-sm) !important;
+    border-right-width: 0 !important;
+}
+
+.drea-input-group__input:focus {
+    z-index: 1;
+    border-right-width: 1px !important;
+}
+
+.drea-input-group__btn {
+    flex-shrink: 0;
+    border-radius: 0 var(--drea-radius-sm) var(--drea-radius-sm) 0 !important;
+    white-space: nowrap;
+}
+
+/* ─── Table 表格 (Arco Design 风格) ─── */
+.drea-wrap .wp-list-table {
+    border: 1px solid var(--drea-border);
+    border-radius: var(--drea-radius-md);
+    overflow: hidden;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.drea-wrap .wp-list-table th {
+    background: var(--drea-gray-50);
+    color: var(--drea-gray-800);
+    font-weight: 500;
+    font-size: 14px;
+    padding: var(--drea-space-3) var(--drea-space-4);
+    border-bottom: 1px solid var(--drea-border);
+    white-space: nowrap;
+}
+
+.drea-wrap .wp-list-table td {
+    padding: var(--drea-space-3) var(--drea-space-4);
+    border-bottom: 1px solid var(--drea-gray-50);
+    font-size: 14px;
+    color: var(--drea-text-primary);
+    vertical-align: middle;
+}
+
+.drea-wrap .wp-list-table tr:last-child td {
+    border-bottom: none;
+}
+
+.drea-wrap .wp-list-table tr:hover td {
+    background: var(--drea-gray-50);
+}
+
+.drea-wrap .wp-list-table.striped td {
+    background: transparent;
+}
+
+.drea-wrap .wp-list-table.striped tr:nth-child(even) td {
+    background: var(--drea-gray-50);
+}
+
+.drea-wrap .wp-list-table.striped tr:hover td {
+    background: var(--drea-primary-light);
+}
+
+/* ─── Pagination 分页 (Arco Design 风格) ─── */
+.drea-ai-pagination {
+    margin-top: var(--drea-space-4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--drea-space-1);
+}
+
+.drea-ai-pagination-top {
+    margin-bottom: var(--drea-space-3);
+    margin-top: 0;
+}
+
+.drea-ai-pagination button {
+    min-width: 32px;
+    height: 32px;
+    padding: 0 8px;
+    border: 1px solid var(--drea-border);
+    border-radius: var(--drea-radius-md);
+    background: var(--drea-surface);
+    color: var(--drea-text-primary);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all var(--drea-transition);
+    outline: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.drea-ai-pagination button:hover {
+    border-color: var(--drea-primary);
+    color: var(--drea-primary);
+}
+
+.drea-ai-pagination button.active {
+    background: var(--drea-primary);
+    color: #fff;
+    border-color: var(--drea-primary);
+}
+
+.drea-ai-pagination button.active:hover {
+    background: var(--drea-primary-hover);
+    border-color: var(--drea-primary-hover);
+    color: #fff;
+}
+
+.drea-ai-pagination .page-info {
+    margin: 0 var(--drea-space-3);
+    color: var(--drea-text-tertiary);
+    font-size: 13px;
+}
+
+/* ─── Inline Checkbox (Arco Design 风格) ─── */
+.drea-wrap .drea-cb-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--drea-text-primary);
+    margin-right: var(--drea-space-4);
+    margin-bottom: var(--drea-space-1);
+}
+
+.drea-wrap .drea-cb-label:last-child {
+    margin-right: 0;
+}
+
+.drea-wrap .drea-cb-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    accent-color: var(--drea-primary);
+    cursor: pointer;
+}
+
+/* ─── WordPress form-table 覆盖（AI 设置页） ─── */
+.drea-wrap .form-table th {
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--drea-gray-800);
+    padding: var(--drea-space-3) var(--drea-space-4) var(--drea-space-3) 0;
+    vertical-align: top;
+    width: 140px;
+}
+
+.drea-wrap .form-table td {
+    padding: var(--drea-space-3) 0;
+    vertical-align: top;
+}
+
+.drea-wrap .form-table td p.description {
+    color: var(--drea-text-tertiary);
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+/* ─── 提交区域 ─── */
+.drea-wrap p.submit {
+    padding-top: var(--drea-space-4);
+}
+
+.drea-wrap .spinner {
+    float: none;
+    margin-top: 0;
+    margin-left: var(--drea-space-2);
 }
 
 /* ─── Toast 通知 ─── */
@@ -545,13 +915,13 @@
     background: var(--drea-surface);
     border: 1px solid var(--drea-border);
     border-radius: var(--drea-radius-lg);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    font-size: 13px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    font-size: 14px;
     color: var(--drea-text-primary);
     opacity: 0;
     transform: translateX(20px);
     transition: opacity 0.3s, transform 0.3s;
-    max-width: 320px;
+    max-width: 360px;
 }
 
 .drea-toast--show {
@@ -568,5 +938,5 @@
 }
 
 .drea-toast--info {
-    border-left: 3px solid var(--drea-info);
+    border-left: 3px solid var(--drea-primary);
 }

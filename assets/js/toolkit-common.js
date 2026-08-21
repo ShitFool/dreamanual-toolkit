@@ -9,8 +9,9 @@
     window.DreaToast = {
         icons: { success: '\u2705', error: '\u274C', info: '\u2139\uFE0F' },
 
-        show: function (message, type, containerId) {
+        show: function (message, type, containerId, duration) {
             type = type || 'info';
+            duration = duration || 3000;
             var container = containerId
                 ? document.getElementById(containerId)
                 : document.querySelector('.drea-toast-container, [id$="-toast-container"]');
@@ -28,7 +29,7 @@
             setTimeout(function () {
                 toast.classList.remove('drea-toast--show');
                 setTimeout(function () { toast.remove(); }, 300);
-            }, 3000);
+            }, duration);
         },
 
         _escapeHtml: function (text) {
@@ -36,6 +37,65 @@
             var div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
+        }
+    };
+
+    /* ─── 通用表单 dirty-state 工具 ─── */
+    window.DreaFormDirty = {
+        /**
+         * 监听表单输入，控制保存按钮的 disabled 状态。
+         * - 初始状态：按钮禁用（无修改）
+         * - 用户修改任意输入：按钮启用
+         * - 保存成功后调用 markClean()：按钮再次禁用
+         * - 保存失败后调用 markDirty()：按钮保持/恢复启用
+         *
+         * @param {string|NodeList|Array} inputs  CSS 选择器或元素列表。
+         * @param {HTMLElement}           saveBtn 保存按钮元素。
+         * @return {{markClean:Function,markDirty:Function}}
+         */
+        watch: function (inputs, saveBtn) {
+            if (!saveBtn) return { markClean: function(){}, markDirty: function(){} };
+
+            // 统一为元素数组
+            var els;
+            if (typeof inputs === 'string') {
+                els = Array.prototype.slice.call(document.querySelectorAll(inputs));
+            } else if (inputs && inputs.length !== undefined) {
+                els = Array.prototype.slice.call(inputs);
+            } else {
+                els = [];
+            }
+
+            var self = this;
+
+            // 初始禁用
+            saveBtn.disabled = true;
+
+            els.forEach(function (el) {
+                el.addEventListener('change', function () {
+                    self._markDirty(saveBtn);
+                });
+                if (el.type === 'text' || el.type === 'password' || el.type === 'textarea' ||
+                    el.tagName === 'TEXTAREA' || el.type === 'number' || el.type === 'email' ||
+                    el.type === 'color' || el.type === 'range') {
+                    el.addEventListener('input', function () {
+                        self._markDirty(saveBtn);
+                    });
+                }
+            });
+
+            return {
+                markClean: function () { self._markClean(saveBtn); },
+                markDirty: function () { self._markDirty(saveBtn); }
+            };
+        },
+
+        _markClean: function (btn) {
+            btn.disabled = true;
+        },
+
+        _markDirty: function (btn) {
+            btn.disabled = false;
         }
     };
 
@@ -137,8 +197,13 @@
         var actionType = checkbox.checked ? 'activate' : 'deactivate';
         var card      = checkbox.closest('.drea-module-card');
 
-        // 禁用交互
+        // 禁用交互 + loading 状态 (F-13)
         checkbox.disabled = true;
+        var statusEl = card.querySelector('.drea-module-card__status');
+        var originalText = statusEl ? statusEl.textContent : '';
+        if (statusEl) {
+            statusEl.textContent = checkbox.checked ? i18n.activating : i18n.deactivating;
+        }
 
         var formData = new FormData();
         formData.append('action', 'drea_toggle_module');
@@ -151,24 +216,33 @@
             body: formData,
             credentials: 'same-origin'
         })
-        .then(function (res) { return res.json(); })
+        .then(function (r) {
+            return r.text().then(function (text) {
+                try { return JSON.parse(text); }
+                catch (e) {
+                    console.error('[DREA Toolkit] toggle module JSON parse error, raw:', text.substring(0, 500));
+                    throw e;
+                }
+            });
+        })
         .then(function (data) {
             if (data.success) {
                 // 更新卡片状态
                 var isActive = data.data.active;
                 card.classList.toggle('drea-module-card--active', isActive);
-                var statusEl = card.querySelector('.drea-module-card__status');
                 if (statusEl) {
                     statusEl.textContent = isActive ? i18n.activated : i18n.deactivated;
                 }
             } else {
                 // 回滚开关
                 checkbox.checked = !checkbox.checked;
+                if (statusEl) statusEl.textContent = originalText;
                 alert(data.data && data.data.message ? data.data.message : i18n.error);
             }
         })
         .catch(function () {
             checkbox.checked = !checkbox.checked;
+            if (statusEl) statusEl.textContent = originalText;
             alert(i18n.error);
         })
         .finally(function () {

@@ -199,20 +199,6 @@ class Core {
         add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_assets' ] );
         add_action( 'wp_ajax_drea_toggle_module', [ $this, 'ajax_toggle_module' ] );
         add_filter( 'plugin_action_links_' . DREA_BASENAME, [ $this, 'plugin_action_links' ] );
-        add_action( 'plugins_loaded', [ $this, 'load_textdomain' ] );
-    }
-
-    /**
-     * 加载国际化翻译
-     *
-     * @return void
-     */
-    public function load_textdomain(): void {
-        load_plugin_textdomain(
-            'dreamanual-toolkit',
-            false,
-            dirname( DREA_BASENAME ) . '/languages'
-        );
     }
 
     /**
@@ -264,8 +250,13 @@ class Core {
      * @return void
      */
     public function enqueue_admin_assets( string $hook ): void {
-        // 仅在 Toolkit 相关页面加载
-        if ( strpos( $hook, 'dreamanual-toolkit' ) === false && strpos( $hook, 'drea-' ) === false ) {
+        $screen    = get_current_screen();
+        $is_editor = $screen && in_array( $screen->id, [ 'post', 'page' ], true );
+
+        // 仅在 Toolkit 相关页面或文章/页面编辑器加载
+        if ( strpos( $hook, 'dreamanual-toolkit' ) === false
+            && strpos( $hook, 'drea-' ) === false
+            && ! $is_editor ) {
             return;
         }
 
@@ -273,14 +264,14 @@ class Core {
             'drea-toolkit-common',
             DREA_URL . 'assets/css/toolkit-common.css',
             [],
-            filemtime( DREA_PATH . 'assets/css/toolkit-common.css' )
+            $this->asset_version( DREA_PATH . 'assets/css/toolkit-common.css' )
         );
 
         wp_enqueue_script(
             'drea-toolkit-common',
             DREA_URL . 'assets/js/toolkit-common.js',
             [],
-            filemtime( DREA_PATH . 'assets/js/toolkit-common.js' ),
+            $this->asset_version( DREA_PATH . 'assets/js/toolkit-common.js' ),
             true
         );
 
@@ -295,6 +286,17 @@ class Core {
                 'error'        => __( '操作失败，请重试', 'dreamanual-toolkit' ),
             ],
         ] );
+    }
+
+    /**
+     * 获取资源版本号（filemtime 失败时回退到插件版本号）
+     *
+     * @param string $path 资源文件路径。
+     * @return string|int 版本号。
+     */
+    private function asset_version( string $path ) {
+        $mtime = filemtime( $path );
+        return false === $mtime ? DREA_VERSION : $mtime;
     }
 
     /**

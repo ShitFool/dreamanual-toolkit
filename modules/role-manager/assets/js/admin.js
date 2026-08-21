@@ -37,8 +37,23 @@
                 body.append(key, data[key]);
             }
         }
+        // postAjax 需要 HTTP 状态校验
         return fetch(ajaxUrl, { method: 'POST', body: body, credentials: 'same-origin' })
-            .then(function (r) { return r.json(); });
+            .then(function (r) {
+                if (!r.ok) {
+                    return r.text().then(function (text) {
+                        console.error('[DREA] HTTP ' + r.status, text.substring(0, 200));
+                        throw new Error('HTTP ' + r.status);
+                    });
+                }
+                return r.text().then(function (text) {
+                    try { return JSON.parse(text); }
+                    catch (e) {
+                        console.error('[DREA] JSON parse error, raw:', text.substring(0, 500));
+                        throw e;
+                    }
+                });
+            });
     }
 
     // ─── 加载角色列表 ───
@@ -46,7 +61,10 @@
     function loadRoles() {
         postAjax({ action: 'drea_rm_get_roles' })
             .then(function (res) {
-                if (!res.success) { showToast(i18n.failed, 'error'); return; }
+                if (!res.success) {
+                    showToast(res.data && res.data.message ? res.data.message : i18n.loadRolesFailed, 'error');
+                    return;
+                }
                 renderRoles(res.data.roles);
 
                 // 收集所有能力用于编辑
@@ -56,7 +74,7 @@
                 });
                 wpCapabilities = Object.keys(capsSet).sort();
             })
-            .catch(function () { showToast(i18n.error, 'error'); });
+            .catch(function () { showToast(i18n.networkError, 'error'); });
     }
 
     function renderRoles(roles) {
@@ -82,7 +100,7 @@
                 '<td>' +
                     '<button type="button" class="button button-small drea-rm-edit-btn" data-role="' + escapeHtml(role.name) + '">' + escapeHtml(i18n.edit) + '</button> ' +
                     '<button type="button" class="button button-small drea-rm-copy-btn" data-role="' + escapeHtml(role.name) + '" data-display="' + escapeHtml(role.display_name) + '">' + escapeHtml(i18n.copy) + '</button>' +
-                    (!role.is_protected ? ' <button type="button" class="button button-small drea-rm-delete-btn" data-role="' + escapeHtml(role.name) + '" data-display="' + escapeHtml(role.display_name) + '">' + escapeHtml(i18n.delete) + '</button>' : '') +
+                    (!role.is_protected ? ' <button type="button" class="button button-small drea-rm-delete-btn" data-role="' + escapeHtml(role.name) + '" data-display="' + escapeHtml(role.display_name) + '" data-user-count="' + role.user_count + '">' + escapeHtml(i18n.delete) + '</button>' : '') +
                 '</td>';
             tbody.appendChild(tr);
         });
@@ -113,6 +131,17 @@
             return;
         }
 
+        // slug 格式校验：只允许小写字母、数字、下划线
+        var slugPattern = /^[a-z0-9_]+$/;
+        if (!slugPattern.test(slug)) {
+            showToast(i18n.invalidSlug, 'error');
+            return;
+        }
+
+        var confirmBtn = $('#drea-rm-dialog-confirm');
+        // F-17/F-32: 防重复提交
+        if (confirmBtn) { confirmBtn.disabled = true; confirmBtn.textContent = '...'; }
+
         var action = source ? 'drea_rm_copy_role' : 'drea_rm_add_role';
         var data = { action: action, display_name: name, role_slug: slug };
         if (source) {
@@ -123,6 +152,7 @@
 
         postAjax(data)
             .then(function (res) {
+                if (confirmBtn) { confirmBtn.disabled = false; confirmBtn.textContent = source ? i18n.copyRole : i18n.addRole; }
                 if (res.success) {
                     showToast(source ? i18n.roleCopied : i18n.roleAdded, 'success');
                     hideDialog();
@@ -131,14 +161,22 @@
                     showToast(res.data && res.data.message ? res.data.message : i18n.failed, 'error');
                 }
             })
-            .catch(function () { showToast(i18n.error, 'error'); });
+            .catch(function () {
+                if (confirmBtn) { confirmBtn.disabled = false; confirmBtn.textContent = source ? i18n.copyRole : i18n.addRole; }
+                showToast(i18n.error, 'error');
+            });
     }
 
     // ─── 删除角色 ───
 
-    function deleteRole(roleName, displayName) {
+    function deleteRole(roleName, displayName, userCount) {
         var msg = i18n.confirmDelete.replace('%s', displayName);
-        if (!confirm(msg)) return;
+        if (parseInt(userCount) > 0) {
+            msg += '\n\n' + i18n.deleteRoleWithUsers.replace('%d', userCount);
+        }
+        if (!confirm(msg)) {
+            return;
+        }
 
         postAjax({ action: 'drea_rm_delete_role', role: roleName })
             .then(function (res) {
@@ -202,12 +240,17 @@
             caps.push(cb.dataset.cap);
         });
 
+        var saveBtn = $('#drea-rm-save-caps');
+        // F-17: 防重复提交
+        if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = '...'; }
+
         postAjax({
             action: 'drea_rm_update_role',
             role: currentEditRole.name,
             capabilities: JSON.stringify(caps)
         })
         .then(function (res) {
+            if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = i18n.roleUpdated; }
             if (res.success) {
                 showToast(i18n.roleUpdated, 'success');
                 loadRoles();
@@ -215,7 +258,10 @@
                 showToast(res.data && res.data.message ? res.data.message : i18n.failed, 'error');
             }
         })
-        .catch(function () { showToast(i18n.error, 'error'); });
+        .catch(function () {
+            if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = i18n.roleUpdated; }
+            showToast(i18n.error, 'error');
+        });
     }
 
     function closeDetail() {
@@ -265,7 +311,11 @@
             }
 
             btn = e.target.closest('.drea-rm-delete-btn');
-            if (btn) { deleteRole(btn.dataset.role, btn.dataset.display); return; }
+            if (btn) { 
+                var userCount = btn.getAttribute('data-user-count') || '0';
+                deleteRole(btn.dataset.role, btn.dataset.display, userCount); 
+                return; 
+            }
         });
 
         loadRoles();

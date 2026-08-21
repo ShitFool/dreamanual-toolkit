@@ -18,6 +18,8 @@
         if (!container.id) container.id = 'drea-so-toast-container';
     }
 
+    var dirtyCtrl = null;
+
     function saveSettings() {
         var btn = document.getElementById('drea-so-save-btn');
         if (!btn) return;
@@ -33,18 +35,27 @@
         });
 
         fetch(ajaxUrl, { method: 'POST', body: formData, credentials: 'same-origin' })
-            .then(function (r) { return r.json(); })
+            .then(function (r) {
+                return r.text().then(function (text) {
+                    try { return JSON.parse(text); }
+                    catch (e) {
+                        console.error('[DREA SO] saveSettings JSON parse error, raw:', text.substring(0, 500));
+                        throw e;
+                    }
+                });
+            })
             .then(function (res) {
                 if (res.success) {
                     showToast(i18n.saved, 'success');
+                    if (dirtyCtrl) dirtyCtrl.markClean();
                 } else {
                     showToast(res.data && res.data.message ? res.data.message : i18n.failed, 'error');
+                    if (dirtyCtrl) dirtyCtrl.markDirty();
                 }
-                btn.disabled = false;
             })
             .catch(function () {
                 showToast(i18n.error, 'error');
-                btn.disabled = false;
+                if (dirtyCtrl) dirtyCtrl.markDirty();
             });
     }
 
@@ -58,6 +69,10 @@
         if (saveBtn) {
             saveBtn.addEventListener('click', saveSettings);
         }
+
+        // dirty-state 跟踪
+        var soInputs = document.querySelectorAll('.drea-toggle__input[data-key]');
+        dirtyCtrl = DreaFormDirty.watch(soInputs, saveBtn);
     }
 
     if (document.readyState === 'loading') {

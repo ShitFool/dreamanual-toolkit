@@ -8,6 +8,16 @@
     max-width: 800px;
 }
 
+/* ─── Color 输入框 ─── */
+.drea-color-input {
+    width: 48px;
+    height: 32px;
+    padding: 2px;
+    border: 1px solid var(--drea-border);
+    border-radius: var(--drea-radius-md);
+    cursor: pointer;
+}
+
 /* ─── 文章列表 — 特色图片列 ─── */
 
 /* 窄列宽 */
@@ -66,7 +76,36 @@
     color: var(--drea-text-tertiary);
 }
 
+/* ─── BTT 预览 ─── */
+.drea-btt-preview {
+    display: inline-flex;
+    padding: var(--drea-space-3);
+    background: var(--drea-gray-100);
+    border-radius: var(--drea-radius-md);
+}
+
+.drea-btt-preview__btn {
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 50%;
+    cursor: default;
+    box-shadow: 0 2px 8px rgba(0,0,0,.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.drea-btt-preview__btn svg {
+    width: 22px;
+    height: 22px;
+}
+
 /* ─── SMTP 测试状态 ─── */
 #smtp-test-status {
     margin-left: var(--drea-space-2);
+}
+
+#smtp-test-status:empty {
+    display: none;
 }

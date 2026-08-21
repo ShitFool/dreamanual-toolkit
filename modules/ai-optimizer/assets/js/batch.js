@@ -162,11 +162,13 @@
                     } else {
                         loadPosts(1);
                     }
+                } else {
+                    showToast(i18n.loadSettingsFailed, 'error');
                 }
             })
             .catch(function (err) {
                 console.error('[DREA] loadSettings failed:', err);
-                showToast(i18n.failedToLoadSettings, 'error');
+                showToast(i18n.loadSettingsFailed, 'error');
             });
     }
 
@@ -236,10 +238,15 @@
     function loadExistingTags() {
         postAjax({ action: 'drea_ai_get_existing_tags' })
             .then(function (res) {
-                if (res.success) state.existingTags = res.data.tags || [];
+                if (res.success) {
+                    state.existingTags = res.data.tags || [];
+                } else {
+                    showToast(i18n.loadTagsFailed, 'info');
+                }
             })
             .catch(function (err) {
                 console.error('[DREA] loadExistingTags failed:', err);
+                showToast(i18n.loadTagsFailed, 'info');
             });
     }
 
@@ -444,15 +451,14 @@
         }).then(function (res) {
             if (res.success) {
                 state.suggestions[postId] = res.data;
-                showToast('"' + post.title + '"' + i18n.generatedSuccessfully, 'success', 2000);
             } else {
                 showToast('"' + post.title + '"' + i18n.failed + (res.data || i18n.unknownError), 'error');
             }
-            if (btn) { btn.disabled = false; btn.textContent = res.success ? i18n.regenerate : 'Retry'; }
+            if (btn) { btn.disabled = false; btn.textContent = res.success ? i18n.regenerate : i18n.retry; }
             if (render) { renderPosts(); renderApplyPanel(); }
         }).catch(function () {
             showToast('"' + post.title + '" ' + i18n.networkError, 'error');
-            if (btn) { btn.disabled = false; btn.textContent = 'Retry'; }
+            if (btn) { btn.disabled = false; btn.textContent = i18n.retry; }
         });
     }
 
@@ -472,13 +478,21 @@
         if (panel) panel.style.display = '';
 
         var i = 0;
+        var successCount = 0;
+        var failCount = 0;
         function next() {
             if (i >= withSuggestions.length) {
                 var pt = document.querySelector('.drea-ai-progress-text');
-                if (pt) pt.textContent = i18n.allChangesApplied;
+                if (pt) pt.textContent = i18n.done;
                 btn.disabled = false;
                 if (spinner) spinner.classList.remove('is-active');
-                showToast(i18n.allChangesApplied, 'success', 5000);
+                // F-06: 根据成功/失败数给差异化汇总提示
+                if (failCount === 0) {
+                    showToast(i18n.allChangesApplied, 'success', 5000);
+                } else {
+                    var summary = i18n.batchSummary.replace('{0}', successCount).replace('{1}', failCount);
+                    showToast(summary + ' ' + i18n.batchPartialFail, 'error', 6000);
+                }
                 return;
             }
             var p = withSuggestions[i];
@@ -488,7 +502,10 @@
             var pt = document.querySelector('.drea-ai-progress-text');
             if (pt) pt.textContent = i18n.applying + (i + 1) + ' / ' + withSuggestions.length + '...';
 
-            applySingle(p.id, false).then(function () { i++; next(); });
+            applySingle(p.id, false).then(function (ok) {
+                if (ok) successCount++; else failCount++;
+                i++; next();
+            });
         }
         next();
     }
@@ -499,8 +516,12 @@
         if (!s) return Promise.resolve();
         var post = state.posts.find(function (p) { return p.id === postId; });
 
-        if (confirmApply && !window.confirm('Apply changes to "' + post.title + '"?\n\nTags: ' + (s.tags || []).join(', ') + '\nSlug: ' + (s.slug || '') + (s.excerpt ? '\n\nExcerpt: ' + s.excerpt.substring(0, 50) + '...' : ''))) {
-            return Promise.resolve();
+        if (confirmApply) {
+            var detail = i18n.applyConfirmTags + (s.tags || []).join(', ') + '\n' + i18n.applyConfirmSlug + (s.slug || '');
+            if (s.excerpt) detail += '\n\n' + i18n.applyConfirmExcerpt + s.excerpt.substring(0, 50) + '...';
+            if (!window.confirm(i18n.applyConfirmTitle.replace('{title}', post.title) + '\n\n' + detail)) {
+                return Promise.resolve();
+            }
         }
 
         return postAjax({
@@ -515,11 +536,14 @@
                 delete state.suggestions[postId];
                 renderPosts();
                 renderApplyPanel();
+                return true;
             } else {
                 showToast('"' + post.title + '"' + i18n.applyFailed + (res.data || i18n.unknownError), 'error');
+                return false;
             }
         }).catch(function () {
             showToast('"' + post.title + '"' + i18n.networkErrorShort, 'error');
+            return false;
         });
     }
 

@@ -7,12 +7,12 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$categories = get_categories( [ 'hide_empty' => false, 'orderby' => 'name' ] );
-$all_roles  = wp_roles()->roles;
-$rules      = $this->get_rules(); // 模板在实例方法 render_settings_page() 内 include，$this 可用
-$channels   = \DREA\Content_Visibility::CHANNELS;
+$drea_categories = get_categories( [ 'hide_empty' => false, 'orderby' => 'name' ] );
+$drea_all_roles  = wp_roles()->roles;
+$drea_rules      = $this->get_rules(); // 模板在实例方法 render_settings_page() 内 include，$this 可用
+$drea_channels   = \DREA\Content_Visibility::CHANNELS;
 
-$channel_labels = [
+$drea_channel_labels = [
     'frontend' => __( '前端页面', 'dreamanual-toolkit' ),
     'rss'      => __( 'RSS 订阅', 'dreamanual-toolkit' ),
     'rest_api' => __( 'REST API', 'dreamanual-toolkit' ),
@@ -44,51 +44,59 @@ $channel_labels = [
     <div class="drea-cv-rules-panel">
         <div class="drea-cv-rules-header">
             <h2><?php echo esc_html__( '分类可见性规则', 'dreamanual-toolkit' ); ?></h2>
-            <button type="button" class="drea-btn drea-btn--primary" id="drea-cv-save-btn"><?php echo esc_html__( '保存规则', 'dreamanual-toolkit' ); ?></button>
+            <button type="button" class="drea-btn drea-btn--primary" id="drea-cv-save-btn" disabled><?php echo esc_html__( '保存规则', 'dreamanual-toolkit' ); ?></button>
         </div>
 
         <table class="wp-list-table widefat fixed striped drea-cv-rules-table">
             <thead>
                 <tr>
                     <th class="drea-cv-col-cat"><?php echo esc_html__( '分类', 'dreamanual-toolkit' ); ?></th>
-                    <?php foreach ( $channels as $ch ) : ?>
-                        <th class="drea-cv-col-channel"><?php echo esc_html( $channel_labels[ $ch ] ?? $ch ); ?></th>
+                    <?php foreach ( $drea_channels as $drea_ch ) : ?>
+                        <th class="drea-cv-col-channel"><?php echo esc_html( $drea_channel_labels[ $drea_ch ] ?? $drea_ch ); ?></th>
                     <?php endforeach; ?>
                     <th class="drea-cv-col-roles"><?php echo esc_html__( '隐藏后仍可见角色', 'dreamanual-toolkit' ); ?></th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ( $categories as $cat ) :
-                    $rule        = $rules[ $cat->term_id ] ?? null;
-                    $hidden_chs  = $rule ? ( $rule['channels'] ?? [] ) : [];
-                    $ro_active   = $rule ? ( $rule['roles'] ?? [] ) : [];
+                <?php if ( empty( $drea_categories ) ) : ?>
+                    <tr>
+                        <td colspan="<?php echo esc_attr( count( $drea_channels ) + 2 ); ?>" class="drea-cv-empty">
+                            <?php echo esc_html__( '暂无分类。请先在「文章 → 分类」中创建分类后再配置可见性规则。', 'dreamanual-toolkit' ); ?>
+                        </td>
+                    </tr>
+                <?php else : ?>
+                <?php foreach ( $drea_categories as $drea_cat ) :
+                    $drea_rule        = $drea_rules[ $drea_cat->term_id ] ?? null;
+                    $drea_hidden_chs  = $drea_rule ? ( $drea_rule['channels'] ?? [] ) : [];
+                    $drea_ro_active   = $drea_rule ? ( $drea_rule['roles'] ?? [] ) : [];
                 ?>
-                <tr data-cat-id="<?php echo esc_attr( $cat->term_id ); ?>">
-                    <td><strong><?php echo esc_html( $cat->name ); ?></strong> <span class="drea-cv-cat-count">(<?php echo intval( $cat->count ); ?>)</span></td>
-                    <?php foreach ( $channels as $ch ) : ?>
+                <tr data-cat-id="<?php echo esc_attr( $drea_cat->term_id ); ?>">
+                    <td><strong><?php echo esc_html( $drea_cat->name ); ?></strong> <span class="drea-cv-cat-count">(<?php echo intval( $drea_cat->count ); ?>)</span></td>
+                    <?php foreach ( $drea_channels as $drea_ch ) : ?>
                         <td class="drea-cv-cell-center">
                             <input type="checkbox"
                                    class="drea-cv-channel"
-                                   data-cat-id="<?php echo esc_attr( $cat->term_id ); ?>"
-                                   data-channel="<?php echo esc_attr( $ch ); ?>"
-                                   <?php checked( ! in_array( $ch, $hidden_chs, true ) ); ?> />
+                                   data-cat-id="<?php echo esc_attr( $drea_cat->term_id ); ?>"
+                                   data-channel="<?php echo esc_attr( $drea_ch ); ?>"
+                                   <?php checked( ! in_array( $drea_ch, $drea_hidden_chs, true ) ); ?> />
                         </td>
                     <?php endforeach; ?>
                     <td>
                         <select class="drea-cv-roles"
-                                data-cat-id="<?php echo esc_attr( $cat->term_id ); ?>"
+                                data-cat-id="<?php echo esc_attr( $drea_cat->term_id ); ?>"
                                 multiple
                                 style="width:100%;min-height:60px;">
-                            <?php foreach ( $all_roles as $role_name => $role_info ) : ?>
-                                <option value="<?php echo esc_attr( $role_name ); ?>"
-                                        <?php echo in_array( $role_name, $ro_active, true ) ? 'selected' : ''; ?>>
-                                    <?php echo esc_html( translate_user_role( $role_info['name'] ) ); ?>
+                            <?php foreach ( $drea_all_roles as $drea_role_name => $drea_role_info ) : ?>
+                                <option value="<?php echo esc_attr( $drea_role_name ); ?>"
+                                        <?php echo in_array( $drea_role_name, $drea_ro_active, true ) ? 'selected' : ''; ?>>
+                                    <?php echo esc_html( translate_user_role( $drea_role_info['name'] ) ); ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
                     </td>
                 </tr>
                 <?php endforeach; ?>
+                <?php endif; ?>
             </tbody>
         </table>
     </div>

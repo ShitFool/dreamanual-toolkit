@@ -170,11 +170,15 @@ class Search_Push extends Module_Base {
             'ajaxUrl' => admin_url( 'admin-ajax.php' ),
             'nonce'   => wp_create_nonce( 'drea_sp_nonce' ),
             'i18n'    => [
-                'saved'    => __( '设置已保存。', 'dreamanual-toolkit' ),
-                'failed'   => __( '保存失败，请重试。', 'dreamanual-toolkit' ),
-                'error'    => __( '操作失败。', 'dreamanual-toolkit' ),
-                'testOk'   => __( '推送成功。', 'dreamanual-toolkit' ),
-                'testFail' => __( '推送失败，请检查设置。', 'dreamanual-toolkit' ),
+                'saved'              => __( '设置已保存。', 'dreamanual-toolkit' ),
+                'failed'             => __( '保存失败，请重试。', 'dreamanual-toolkit' ),
+                'error'              => __( '操作失败，请稍后重试。', 'dreamanual-toolkit' ),
+                'testOk'             => __( '推送请求已发送，请在搜索资源平台查看结果。', 'dreamanual-toolkit' ),
+                'testFail'           => __( '推送失败，请检查配置是否正确。', 'dreamanual-toolkit' ),
+                'baiduTokenRequired' => __( '已启用百度推送，请先填写推送 Token。', 'dreamanual-toolkit' ),
+                'baiduSiteRequired'  => __( '已启用百度推送，请先填写站点域名。', 'dreamanual-toolkit' ),
+                'bingKeyRequired'    => __( '已启用 Bing 推送，请先填写 API Key。', 'dreamanual-toolkit' ),
+                'testUnsaved'        => __( '当前设置可能尚未保存，测试将使用已保存的配置。是否继续？', 'dreamanual-toolkit' ),
             ],
         ] );
     }
@@ -193,11 +197,39 @@ class Search_Push extends Module_Base {
         $bing_enabled  = isset( $_POST['bing_enabled'] ) ? boolval( $_POST['bing_enabled'] ) : false;
         $bing_key      = isset( $_POST['bing_key'] ) ? sanitize_text_field( wp_unslash( $_POST['bing_key'] ) ) : '';
 
-        update_option( 'drea_search_push_baidu_enabled', $baidu_enabled );
-        update_option( 'drea_search_push_baidu_token', $baidu_token );
-        update_option( 'drea_search_push_baidu_site', $baidu_site );
-        update_option( 'drea_search_push_bing_enabled', $bing_enabled );
-        update_option( 'drea_search_push_bing_key', $bing_key );
+        // 后端配置完整性校验 (F-10)
+        if ( $baidu_enabled ) {
+            if ( '' === $baidu_token ) {
+                wp_send_json_error( [ 'message' => __( '已启用百度推送，请先填写推送 Token。', 'dreamanual-toolkit' ) ] );
+            }
+            if ( '' === $baidu_site ) {
+                wp_send_json_error( [ 'message' => __( '已启用百度推送，请先填写站点域名。', 'dreamanual-toolkit' ) ] );
+            }
+        }
+        if ( $bing_enabled && '' === $bing_key ) {
+            wp_send_json_error( [ 'message' => __( '已启用 Bing 推送，请先填写 API Key。', 'dreamanual-toolkit' ) ] );
+        }
+
+        // 保存设置 (F-07: 检查返回值)
+        $settings_to_save = [
+            'drea_search_push_baidu_enabled' => $baidu_enabled,
+            'drea_search_push_baidu_token'   => $baidu_token,
+            'drea_search_push_baidu_site'    => $baidu_site,
+            'drea_search_push_bing_enabled'  => $bing_enabled,
+            'drea_search_push_bing_key'      => $bing_key,
+        ];
+
+        $save_failed = false;
+        foreach ( $settings_to_save as $key => $value ) {
+            $result = update_option( $key, $value );
+            if ( false === $result && get_option( $key ) != $value ) {
+                $save_failed = true;
+            }
+        }
+
+        if ( $save_failed ) {
+            wp_send_json_error( [ 'message' => __( '保存失败，请重试。', 'dreamanual-toolkit' ) ] );
+        }
 
         wp_send_json_success( [ 'message' => __( '设置已保存。', 'dreamanual-toolkit' ) ] );
     }
@@ -227,7 +259,13 @@ class Search_Push extends Module_Base {
         }
 
         $engine   = isset( $_POST['engine'] ) ? sanitize_text_field( wp_unslash( $_POST['engine'] ) ) : '';
-        $test_url = home_url( '/' );
+
+        // 测试推送使用用户配置的站点域名，而非 home_url
+        $baidu_site = $this->get_option( 'baidu_site', '' );
+        if ( ! $baidu_site ) {
+            $baidu_site = wp_parse_url( home_url(), PHP_URL_HOST );
+        }
+        $test_url = ( 0 === strpos( $baidu_site, 'http' ) ? $baidu_site : 'https://' . $baidu_site ) . '/';
 
         $result = false;
         switch ( $engine ) {
@@ -244,7 +282,7 @@ class Search_Push extends Module_Base {
         if ( is_wp_error( $result ) ) {
             wp_send_json_error( [ 'message' => $result->get_error_message() ] );
         }
-        wp_send_json_success( [ 'message' => __( '推送请求已发送。', 'dreamanual-toolkit' ) ] );
+        wp_send_json_success( [ 'message' => __( '推送请求已发送，请在搜索资源平台查看结果。', 'dreamanual-toolkit' ) ] );
     }
 
     // ─── 推送触发 ─────────────────────────────────────
@@ -265,7 +303,11 @@ class Search_Push extends Module_Base {
         if ( 'publish' === $old_status && 'publish' === $new_status ) return;
 
         // 延迟 30 秒推送，避免阻塞发布流程
-        wp_schedule_single_event( time() + 30, 'drea_sp_delayed_push', [ $post->ID ] );
+        $scheduled = wp_schedule_single_event( time() + 30, 'drea_sp_delayed_push', [ $post->ID ] );
+        if ( false === $scheduled ) {
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- 记录调度失败到服务器日志，用于运维排查
+            error_log( sprintf( '[DREA Search Push] 无法调度延迟推送任务 (文章 ID %d)', $post->ID ) );
+        }
     }
 
     /**
@@ -283,10 +325,18 @@ class Search_Push extends Module_Base {
         $urls = [ $url ];
 
         if ( $this->get_option( 'baidu_enabled', false ) ) {
-            $this->push_baidu( $urls );
+            $result = $this->push_baidu( $urls );
+            if ( is_wp_error( $result ) ) {
+                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- 记录推送失败到服务器日志，用于运维排查
+                error_log( sprintf( '[DREA Search Push] 百度推送失败 (文章 ID %d): %s', $post_id, $result->get_error_message() ) );
+            }
         }
         if ( $this->get_option( 'bing_enabled', false ) ) {
-            $this->push_bing( $urls );
+            $result = $this->push_bing( $urls );
+            if ( is_wp_error( $result ) ) {
+                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- 记录推送失败到服务器日志，用于运维排查
+                error_log( sprintf( '[DREA Search Push] Bing 推送失败 (文章 ID %d): %s', $post_id, $result->get_error_message() ) );
+            }
         }
     }
 
@@ -318,7 +368,7 @@ class Search_Push extends Module_Base {
         ] );
 
         if ( is_wp_error( $response ) ) {
-            return new \WP_Error( 'drea_sp_baidu', $response->get_error_message() );
+            return new \WP_Error( 'drea_sp_baidu', $this->translate_push_error( $response->get_error_message(), '百度' ) );
         }
 
         $code = wp_remote_retrieve_response_code( $response );
@@ -326,7 +376,8 @@ class Search_Push extends Module_Base {
 
         if ( 200 !== $code ) {
             $msg = isset( $body['message'] ) ? $body['message'] : __( '未知错误', 'dreamanual-toolkit' );
-            return new \WP_Error( 'drea_sp_baidu', sprintf( __( '百度推送失败 (%d): %s', 'dreamanual-toolkit' ), $code, $msg ) );
+            /* translators: 1: HTTP status code, 2: error message from the Baidu push API */
+            return new \WP_Error( 'drea_sp_baidu', sprintf( __( '百度推送失败 (%1$d): %2$s', 'dreamanual-toolkit' ), $code, $msg ) );
         }
 
         return true;
@@ -364,21 +415,56 @@ class Search_Push extends Module_Base {
         ] );
 
         if ( is_wp_error( $response ) ) {
-            return new \WP_Error( 'drea_sp_bing', $response->get_error_message() );
+            return new \WP_Error( 'drea_sp_bing', $this->translate_push_error( $response->get_error_message(), 'Bing' ) );
         }
 
         $code = wp_remote_retrieve_response_code( $response );
         $res  = json_decode( wp_remote_retrieve_body( $response ), true );
 
         if ( isset( $res['ErrorCode'] ) && 0 !== (int) $res['ErrorCode'] ) {
-            return new \WP_Error( 'drea_sp_bing', sprintf( __( 'Bing 推送失败: ErrorCode %d', 'dreamanual-toolkit' ), (int) $res['ErrorCode'] ) );
+            /* translators: %d: error code returned by the Bing Webmaster API */
+            return new \WP_Error( 'drea_sp_bing', sprintf( __( 'Bing 推送失败: ErrorCode %1$d', 'dreamanual-toolkit' ), (int) $res['ErrorCode'] ) );
         }
 
         if ( $code >= 400 ) {
-            return new \WP_Error( 'drea_sp_bing', sprintf( __( 'Bing 推送失败 (HTTP %d)', 'dreamanual-toolkit' ), $code ) );
+            /* translators: %d: HTTP status code */
+            return new \WP_Error( 'drea_sp_bing', sprintf( __( 'Bing 推送失败 (HTTP %1$d)', 'dreamanual-toolkit' ), $code ) );
         }
 
         return true;
+    }
+
+    /**
+     * 将推送网络错误翻译为用户友好的中文提示
+     *
+     * @param string $error   原始错误信息。
+     * @param string $engine  搜索引擎名称（百度/Bing）。
+     * @return string 友好的中文错误提示。
+     */
+    private function translate_push_error( string $error, string $engine ): string {
+        $lower = strtolower( $error );
+
+        if ( false !== strpos( $lower, 'timed out' ) || false !== strpos( $lower, 'timeout' ) ) {
+            /* translators: %s: search engine name (百度/Bing) */
+            return sprintf( __( '%s推送请求超时，请稍后重试。', 'dreamanual-toolkit' ), $engine );
+        }
+        if ( false !== strpos( $lower, 'could not resolve host' )
+            || false !== strpos( $lower, 'connection refused' )
+            || false !== strpos( $lower, 'network is unreachable' )
+        ) {
+            /* translators: %s: search engine name (百度/Bing) */
+            return sprintf( __( '%s推送无法连接服务器，请检查网络连接。', 'dreamanual-toolkit' ), $engine );
+        }
+        if ( false !== strpos( $lower, 'ssl' ) || false !== strpos( $lower, 'certificate' ) ) {
+            /* translators: %s: search engine name (百度/Bing) */
+            return sprintf( __( '%s推送 SSL 证书验证失败。', 'dreamanual-toolkit' ), $engine );
+        }
+
+        // 兜底：记录原始错误到日志，返回友好提示
+        // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- 记录原始错误到服务器日志，用于运维排查
+        error_log( sprintf( '[DREA Search Push] %s 推送原始错误: %s', $engine, $error ) );
+        /* translators: %s: search engine name (百度/Bing) */
+        return sprintf( __( '%s推送失败，请检查网络连接或稍后重试。', 'dreamanual-toolkit' ), $engine );
     }
 }
 

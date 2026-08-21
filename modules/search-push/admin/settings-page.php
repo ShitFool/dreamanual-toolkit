@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$settings = [
+$drea_settings = [
     'baidu_enabled' => (bool) get_option( 'drea_search_push_baidu_enabled', false ),
     'baidu_token'   => get_option( 'drea_search_push_baidu_token', '' ),
     'baidu_site'    => get_option( 'drea_search_push_baidu_site', '' ),
@@ -31,25 +31,25 @@ function drea_sp_body_class( bool $enabled ): void {
     <div class="drea-toast-container" id="drea-sp-toast-container"></div>
 
     <!-- 百度推送 -->
-    <div class="drea-section<?php echo $settings['baidu_enabled'] ? '' : ' drea-section--collapsed'; ?>">
+    <div class="drea-section<?php echo $drea_settings['baidu_enabled'] ? '' : ' drea-section--collapsed'; ?>">
         <div class="drea-section__header">
             <div class="drea-section__title">
                 <h2><?php echo esc_html__( '百度推送', 'dreamanual-toolkit' ); ?></h2>
                 <span class="drea-section__desc"><?php echo esc_html__( '文章发布时自动推送链接到百度普通收录', 'dreamanual-toolkit' ); ?></span>
             </div>
             <label class="drea-toggle">
-                <input type="checkbox" id="baidu-enabled" <?php checked( $settings['baidu_enabled'] ); ?>>
+                <input type="checkbox" id="baidu-enabled" <?php checked( $drea_settings['baidu_enabled'] ); ?>>
                 <span class="drea-toggle__slider"></span>
             </label>
         </div>
-        <div class="drea-section__body<?php drea_sp_body_class( $settings['baidu_enabled'] ); ?>" id="baidu-settings">
+        <div class="drea-section__body<?php drea_sp_body_class( $drea_settings['baidu_enabled'] ); ?>" id="baidu-settings">
             <div class="drea-settings-row">
                 <div class="drea-settings-row__label">
                     <?php echo esc_html__( '站点域名', 'dreamanual-toolkit' ); ?>
                     <small><?php echo esc_html__( '百度搜索资源平台验证的站点域名。若与当前站点域名不同请手动填写。', 'dreamanual-toolkit' ); ?></small>
                 </div>
                 <div class="drea-settings-row__action">
-                    <input type="text" id="baidu-site" value="<?php echo esc_attr( $settings['baidu_site'] ); ?>" class="drea-form-group__input" placeholder="<?php echo esc_attr__( '如 www.example.com', 'dreamanual-toolkit' ); ?>" style="max-width:300px;">
+                    <input type="text" id="baidu-site" value="<?php echo esc_attr( $drea_settings['baidu_site'] ); ?>" class="drea-form-group__input" placeholder="<?php echo esc_attr__( '如 www.example.com', 'dreamanual-toolkit' ); ?>" style="max-width:300px;">
                 </div>
             </div>
             <div class="drea-settings-row">
@@ -58,7 +58,7 @@ function drea_sp_body_class( bool $enabled ): void {
                     <small><?php echo esc_html__( '百度搜索资源平台 → 普通收录 → 接口调用 → token 参数值。', 'dreamanual-toolkit' ); ?></small>
                 </div>
                 <div class="drea-settings-row__action">
-                    <input type="text" id="baidu-token" value="<?php echo esc_attr( $settings['baidu_token'] ); ?>" class="drea-form-group__input" placeholder="<?php echo esc_attr__( '在百度搜索资源平台获取', 'dreamanual-toolkit' ); ?>" style="max-width:300px;">
+                    <input type="text" id="baidu-token" value="<?php echo esc_attr( $drea_settings['baidu_token'] ); ?>" class="drea-form-group__input" placeholder="<?php echo esc_attr__( '在百度搜索资源平台获取', 'dreamanual-toolkit' ); ?>" style="max-width:300px;">
                 </div>
             </div>
             <div class="drea-settings-row">
@@ -74,25 +74,25 @@ function drea_sp_body_class( bool $enabled ): void {
     </div>
 
     <!-- Bing 推送 -->
-    <div class="drea-section<?php echo $settings['bing_enabled'] ? '' : ' drea-section--collapsed'; ?>">
+    <div class="drea-section<?php echo $drea_settings['bing_enabled'] ? '' : ' drea-section--collapsed'; ?>">
         <div class="drea-section__header">
             <div class="drea-section__title">
                 <h2><?php echo esc_html__( 'Bing 推送', 'dreamanual-toolkit' ); ?></h2>
                 <span class="drea-section__desc"><?php echo esc_html__( '文章发布时自动推送链接到 Bing 站长平台', 'dreamanual-toolkit' ); ?></span>
             </div>
             <label class="drea-toggle">
-                <input type="checkbox" id="bing-enabled" <?php checked( $settings['bing_enabled'] ); ?>>
+                <input type="checkbox" id="bing-enabled" <?php checked( $drea_settings['bing_enabled'] ); ?>>
                 <span class="drea-toggle__slider"></span>
             </label>
         </div>
-        <div class="drea-section__body<?php drea_sp_body_class( $settings['bing_enabled'] ); ?>" id="bing-settings">
+        <div class="drea-section__body<?php drea_sp_body_class( $drea_settings['bing_enabled'] ); ?>" id="bing-settings">
             <div class="drea-settings-row">
                 <div class="drea-settings-row__label">
                     API Key
                     <small><?php echo esc_html__( 'Bing Webmaster Tools → Settings → API Key。', 'dreamanual-toolkit' ); ?></small>
                 </div>
                 <div class="drea-settings-row__action">
-                    <input type="text" id="bing-key" value="<?php echo esc_attr( $settings['bing_key'] ); ?>" class="drea-form-group__input" placeholder="<?php echo esc_attr__( '在 Bing Webmaster Tools 获取', 'dreamanual-toolkit' ); ?>" style="max-width:300px;">
+                    <input type="text" id="bing-key" value="<?php echo esc_attr( $drea_settings['bing_key'] ); ?>" class="drea-form-group__input" placeholder="<?php echo esc_attr__( '在 Bing Webmaster Tools 获取', 'dreamanual-toolkit' ); ?>" style="max-width:300px;">
                 </div>
             </div>
             <div class="drea-settings-row">
@@ -108,6 +108,6 @@ function drea_sp_body_class( bool $enabled ): void {
     </div>
 
     <p class="submit">
-        <button type="button" class="drea-btn drea-btn--primary" id="drea-sp-save-btn"><?php echo esc_html__( '保存设置', 'dreamanual-toolkit' ); ?></button>
+        <button type="button" class="drea-btn drea-btn--primary" id="drea-sp-save-btn" disabled><?php echo esc_html__( '保存设置', 'dreamanual-toolkit' ); ?></button>
     </p>
 </div>

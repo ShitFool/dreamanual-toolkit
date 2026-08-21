@@ -20,6 +20,7 @@
     padding: var(--drea-space-5);
     margin-bottom: var(--drea-space-5);
     border-radius: var(--drea-radius-xl);
+    max-width: 800px;
 }
 
 .drea-ai-settings-panel h2 {
@@ -338,6 +339,35 @@
     vertical-align: middle;
     margin-right: 5px;
     transition: transform .2s;
+}
+
+.drea-gen-toggle-hint {
+    font-size: 12px;
+    color: var(--drea-text-tertiary);
+    font-weight: normal;
+    margin-left: 8px;
+}
+
+.drea-text-success {
+    color: var(--drea-success);
+}
+
+.drea-monospace-textarea {
+    width: 100%;
+    font-family: monospace;
+    font-size: 13px;
+}
+
+.drea-unit-text {
+    margin-left: 5px;
+    color: var(--drea-text-tertiary);
+    font-size: 13px;
+}
+
+/* ─── 分页分隔符 ─── */
+.drea-ai-separator {
+    color: var(--drea-gray-300);
+    margin-right: var(--drea-space-3);
 }
 
 /* ─── 响应式 ─── */

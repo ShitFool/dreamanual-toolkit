@@ -359,9 +359,21 @@ class Site_Optimize extends Module_Base {
             wp_send_json_error( [ 'message' => __( '权限不足', 'dreamanual-toolkit' ) ] );
         }
 
+        $save_failed = false;
         foreach ( array_keys( self::get_features() ) as $key ) {
-            $value = isset( $_POST[ $key ] ) ? boolval( $_POST[ $key ] ) : false;
-            update_option( 'drea_site_optimize_' . $key, $value );
+            // F-16: 只更新表单中明确提交的字段，缺失字段不覆盖为 false
+            if ( ! isset( $_POST[ $key ] ) ) {
+                continue;
+            }
+            $value  = boolval( $_POST[ $key ] );
+            $result = update_option( 'drea_site_optimize_' . $key, $value );
+            if ( false === $result && get_option( 'drea_site_optimize_' . $key ) != $value ) {
+                $save_failed = true;
+            }
+        }
+
+        if ( $save_failed ) {
+            wp_send_json_error( [ 'message' => __( '保存失败，请重试。', 'dreamanual-toolkit' ) ] );
         }
 
         wp_send_json_success( [ 'message' => __( '设置已保存。', 'dreamanual-toolkit' ) ] );
@@ -425,12 +437,13 @@ class Site_Optimize extends Module_Base {
      * 移除 Emoji DNS 预解析
      */
     public function remove_emoji_dns( array $urls, string $relation_type ): array {
-        if ( 'dns-prefetch' === $relation_type ) {
-            $emoji_svg_url = 'https://s.w.org/images/core/emoji/';
-            foreach ( $urls as $key => $url ) {
-                if ( strpos( $url, $emoji_svg_url ) === 0 ) {
-                    unset( $urls[ $key ] );
-                }
+        if ( 'dns-prefetch' !== $relation_type ) {
+            return $urls;
+        }
+        // 匹配核心 emoji 资源路径（wp-includes/images/core/emoji/），避免构造完整 URL
+        foreach ( $urls as $key => $url ) {
+            if ( false !== strpos( $url, '/images/core/emoji/' ) ) {
+                unset( $urls[ $key ] );
             }
         }
         return $urls;

@@ -1,7 +1,14 @@
+# 临时工作文件
+.temp/
+
+# WordPress.org 发布资产（素材+脚本，SVN 专用，不进 Git）
+wordpress-org/
+
+# macOS
 .DS_Store
-Thumbs.db
-*.swp
-*.swo
-*~
-.env
-.env.*
+
+# 打包产物
+*.zip
+
+# SVN 工作副本（如有并存）
+.svn/

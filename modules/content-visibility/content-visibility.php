@@ -81,7 +81,6 @@ class Content_Visibility extends Module_Base {
 
         // AJAX
         add_action( 'wp_ajax_drea_cv_save_rules', [ $this, 'ajax_save_rules' ] );
-        add_action( 'wp_ajax_drea_cv_get_rules', [ $this, 'ajax_get_rules' ] );
         add_action( 'wp_ajax_drea_cv_toggle_post', [ $this, 'ajax_toggle_post' ] );
 
         // 文章列表: 可见性筛选器 + 快速操作
@@ -127,8 +126,9 @@ class Content_Visibility extends Module_Base {
      */
     public function uninstall(): void {
         delete_option( self::RULES_OPTION );
-        // 清理 post meta
+        // 清理 post meta（卸载时一次性清理，非常规查询路径）
         global $wpdb;
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- 卸载清理，一次性操作无需缓存
         $wpdb->delete( $wpdb->postmeta, [ 'meta_key' => self::POST_HIDDEN_META ] );
     }
 
@@ -227,6 +227,7 @@ class Content_Visibility extends Module_Base {
         if ( ! is_user_logged_in() || ! current_user_can( 'manage_options' ) ) {
             $hidden_ids = $this->get_hidden_post_ids();
             if ( ! empty( $hidden_ids ) ) {
+                // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- 内容可见性是插件核心功能，post__not_in 为必要手段
                 $current = $query->get( 'post__not_in', [] );
                 $query->set( 'post__not_in', array_merge( (array) $current, $hidden_ids ) );
             }
@@ -284,7 +285,14 @@ class Content_Visibility extends Module_Base {
         $wp_query->set_404();
         status_header( 404 );
         nocache_headers();
-        include get_404_template();
+        $template = get_404_template();
+        // 防御：模板路径必须是字符串且文件存在 (F-29)
+        if ( is_string( $template ) && file_exists( $template ) ) {
+            include $template;
+        } else {
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- 纯文本 404 提示
+            echo '<p>' . esc_html__( '页面不存在。', 'dreamanual-toolkit' ) . '</p>';
+        }
         exit;
     }
 
@@ -306,8 +314,8 @@ class Content_Visibility extends Module_Base {
         if ( ! is_user_logged_in() || ! current_user_can( 'manage_options' ) ) {
             $hidden_ids = $this->get_hidden_post_ids();
             if ( ! empty( $hidden_ids ) ) {
-                $existing = $args['post__not_in'] ?? [];
-                $args['post__not_in'] = array_merge( (array) $existing, $hidden_ids );
+                // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- 内容可见性是插件核心功能，post__not_in 为必要手段
+                $args['post__not_in'] = array_merge( (array) ( $args['post__not_in'] ?? [] ), $hidden_ids );
             }
         }
 
@@ -327,8 +335,8 @@ class Content_Visibility extends Module_Base {
         // 文章级隐藏
         $hidden_ids = $this->get_hidden_post_ids();
         if ( ! empty( $hidden_ids ) ) {
-            $existing = $args['post__not_in'] ?? [];
-            $args['post__not_in'] = array_merge( (array) $existing, $hidden_ids );
+            // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- 内容可见性是插件核心功能，post__not_in 为必要手段
+            $args['post__not_in'] = array_merge( (array) ( $args['post__not_in'] ?? [] ), $hidden_ids );
         }
 
         return $args;
@@ -340,8 +348,8 @@ class Content_Visibility extends Module_Base {
     public function filter_sitemap_taxonomies( array $args ): array {
         $excluded_cats = $this->get_excluded_cats_for_channel( 'sitemap' );
         if ( ! empty( $excluded_cats ) ) {
-            $existing = $args['exclude'] ?? [];
-            $args['exclude'] = array_merge( (array) $existing, $excluded_cats );
+            // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- 站点地图必须排除隐藏分类
+            $args['exclude'] = array_merge( (array) ( $args['exclude'] ?? [] ), $excluded_cats );
         }
         return $args;
     }
@@ -359,6 +367,7 @@ class Content_Visibility extends Module_Base {
         }
 
         global $wpdb;
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- meta 数据无法用标准 WP_Query 高效获取，已配合 wp_cache 缓存
         $ids = $wpdb->get_col( $wpdb->prepare(
             "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = %s AND meta_value = '1'",
             self::POST_HIDDEN_META
@@ -430,10 +439,13 @@ class Content_Visibility extends Module_Base {
             'ajaxUrl' => admin_url( 'admin-ajax.php' ),
             'nonce'   => wp_create_nonce( 'drea_cv_nonce' ),
             'i18n'    => [
-                'saved'  => __( '规则已保存。', 'dreamanual-toolkit' ),
-                'failed' => __( '保存失败，请重试。', 'dreamanual-toolkit' ),
-                'error'  => __( '操作失败。', 'dreamanual-toolkit' ),
-                'toggleError' => __( '切换可见性失败，请重试。', 'dreamanual-toolkit' ),
+                'saved'         => __( '规则已保存。', 'dreamanual-toolkit' ),
+                'failed'        => __( '保存失败，请重试。', 'dreamanual-toolkit' ),
+                'error'         => __( '操作失败，请稍后重试。', 'dreamanual-toolkit' ),
+                'toggleError'   => __( '切换可见性失败，请重试。', 'dreamanual-toolkit' ),
+                'confirmHide'   => __( '确定要隐藏这篇文章吗？隐藏后文章不会出现在列表中，直链访问也会返回 404。', 'dreamanual-toolkit' ),
+                'confirmShow'   => __( '确定要显示这篇文章吗？', 'dreamanual-toolkit' ),
+                'noRolesWarning'=> __( '警告：有分类隐藏了渠道但未选择可见角色，这些分类将对所有非管理员用户隐藏（包括管理员本人也可能无法在前台查看）。确认保存？', 'dreamanual-toolkit' ),
             ],
         ] );
     }
@@ -477,7 +489,10 @@ class Content_Visibility extends Module_Base {
             }
         }
 
-        update_option( self::RULES_OPTION, $clean );
+        $result = update_option( self::RULES_OPTION, $clean );
+        if ( false === $result && get_option( self::RULES_OPTION ) != $clean ) {
+            wp_send_json_error( [ 'message' => __( '保存失败，请重试。', 'dreamanual-toolkit' ) ] );
+        }
         $this->rules_cache = $clean; // 更新缓存
 
         wp_cache_delete( 'drea_content_visibility_hidden_ids' );
@@ -488,18 +503,6 @@ class Content_Visibility extends Module_Base {
         }
 
         wp_send_json_success( [ 'message' => __( '规则已保存。', 'dreamanual-toolkit' ) ] );
-    }
-
-    /**
-     * AJAX: 获取可见性规则
-     */
-    public function ajax_get_rules(): void {
-        check_ajax_referer( 'drea_cv_nonce', 'nonce' );
-        if ( ! current_user_can( 'manage_options' ) ) {
-            wp_send_json_error( [ 'message' => __( '权限不足', 'dreamanual-toolkit' ) ] );
-        }
-
-        wp_send_json_success( [ 'rules' => $this->get_rules() ] );
     }
 
     /**
@@ -518,10 +521,22 @@ class Content_Visibility extends Module_Base {
             wp_send_json_error( [ 'message' => __( '无效的文章 ID', 'dreamanual-toolkit' ) ] );
         }
 
+        // 校验文章存在 (F-14)
+        $post = get_post( $post_id );
+        if ( ! $post || 'post' !== $post->post_type ) {
+            wp_send_json_error( [ 'message' => __( '文章不存在或已被删除。', 'dreamanual-toolkit' ) ] );
+        }
+
         if ( $hidden ) {
-            update_post_meta( $post_id, self::POST_HIDDEN_META, 1 );
+            $result = update_post_meta( $post_id, self::POST_HIDDEN_META, 1 );
+            if ( false === $result ) {
+                wp_send_json_error( [ 'message' => __( '保存失败，请重试。', 'dreamanual-toolkit' ) ] );
+            }
         } else {
-            delete_post_meta( $post_id, self::POST_HIDDEN_META );
+            $result = delete_post_meta( $post_id, self::POST_HIDDEN_META );
+            if ( false === $result ) {
+                wp_send_json_error( [ 'message' => __( '保存失败，请重试。', 'dreamanual-toolkit' ) ] );
+            }
         }
 
         wp_cache_delete( 'drea_content_visibility_hidden_ids' );
@@ -546,6 +561,7 @@ class Content_Visibility extends Module_Base {
         global $typenow;
         if ( 'post' !== $typenow ) return;
 
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- 文章列表只读筛选参数，不修改数据
         $current = isset( $_GET['drea_cv_visibility'] ) ? sanitize_text_field( wp_unslash( $_GET['drea_cv_visibility'] ) ) : '';
         echo '<select name="drea_cv_visibility">';
         echo '<option value="">' . esc_html__( '所有可见性', 'dreamanual-toolkit' ) . '</option>';
@@ -560,14 +576,18 @@ class Content_Visibility extends Module_Base {
     public function parse_post_filter( \WP_Query $query ): void {
         if ( ! is_admin() || ! $query->is_main_query() ) return;
 
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- 文章列表只读筛选参数，不修改数据
         $filter = isset( $_GET['drea_cv_visibility'] ) ? sanitize_text_field( wp_unslash( $_GET['drea_cv_visibility'] ) ) : '';
         if ( ! $filter ) return;
 
         global $wpdb;
         if ( 'hidden' === $filter ) {
-            $query->query_vars['meta_key']     = self::POST_HIDDEN_META;
-            $query->query_vars['meta_value']   = '1';
+            // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- 后台列表筛选，受分页限制
+            $query->query_vars['meta_key'] = self::POST_HIDDEN_META;
+            // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- 后台列表筛选，受分页限制
+            $query->query_vars['meta_value'] = '1';
         } elseif ( 'visible' === $filter ) {
+            // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- 后台列表筛选，受分页限制
             $query->query_vars['meta_query'] = [
                 [
                     'key'     => self::POST_HIDDEN_META,

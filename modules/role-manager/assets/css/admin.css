@@ -69,15 +69,30 @@
 
 .drea-rm-form-group label {
     display: block;
-    font-weight: 600;
+    font-weight: 500;
     margin-bottom: var(--drea-space-1);
-    font-size: 13px;
-    color: var(--drea-gray-900);
-    letter-spacing: -0.25px;
+    font-size: 14px;
+    color: var(--drea-gray-800);
 }
 
 .drea-rm-form-group input {
     width: 100%;
+}
+
+/* ─── 工具类 ─── */
+.drea-text-center-muted {
+    text-align: center;
+    color: var(--drea-text-tertiary);
+}
+
+.drea-rm-caps-heading {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.drea-rm-caps-desc {
+    margin-bottom: var(--drea-space-2);
 }
 
 /* ─── 角色详情面板 ─── */

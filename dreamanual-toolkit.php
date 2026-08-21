@@ -2,8 +2,8 @@
 /**
  * Plugin Name: Dreamanual Toolkit
  * Plugin URI:  https://github.com/ShitFool/dreamanual-toolkit
- * Description: 模块化 WordPress 工具箱，整合 AI 优化、内容可见性、角色管理、站点增强等功能。
- * Version:     1.0.0
+ * Description: Modular WordPress toolbox consolidating AI optimization, content visibility, role management, site enhancement, and more into independent modules.
+ * Version:     1.2.2
  * Author:      Dreamanual
  * Author URI:  https://dreamanual.com
  * License:     GPL-2.0+
@@ -18,7 +18,7 @@ namespace DREA;
 defined( 'ABSPATH' ) || exit;
 
 // 插件常量
-define( 'DREA_VERSION', '1.0.0' );
+define( 'DREA_VERSION', '1.2.2' );
 define( 'DREA_PATH', plugin_dir_path( __FILE__ ) );
 define( 'DREA_URL', plugin_dir_url( __FILE__ ) );
 define( 'DREA_BASENAME', plugin_basename( __FILE__ ) );

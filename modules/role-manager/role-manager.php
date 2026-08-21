@@ -62,7 +62,6 @@ class Role_Manager extends Module_Base {
         add_action( 'wp_ajax_drea_rm_copy_role', [ $this, 'ajax_copy_role' ] );
         add_action( 'wp_ajax_drea_rm_delete_role', [ $this, 'ajax_delete_role' ] );
         add_action( 'wp_ajax_drea_rm_update_role', [ $this, 'ajax_update_role' ] );
-        add_action( 'wp_ajax_drea_rm_get_users_by_role', [ $this, 'ajax_get_users_by_role' ] );
         add_action( 'wp_ajax_drea_rm_change_user_role', [ $this, 'ajax_change_user_role' ] );
     }
 
@@ -137,6 +136,8 @@ class Role_Manager extends Module_Base {
             'i18n'    => [
                 /* translators: %s: Role name */
                 'confirmDelete'       => __( '确定要删除角色"%s"吗？此操作不可撤销。', 'dreamanual-toolkit' ),
+                /* translators: %d: Number of users with this role */
+                'deleteRoleWithUsers' => __( '警告：该角色下有 %d 个用户，删除后这些用户将失去该角色，可能无法正常访问后台。请在删除前先为这些用户分配新角色。', 'dreamanual-toolkit' ),
                 'cannotDelete'        => __( '无法删除内置角色。', 'dreamanual-toolkit' ),
                 'roleAdded'           => __( '角色已添加。', 'dreamanual-toolkit' ),
                 'roleCopied'          => __( '角色已复制。', 'dreamanual-toolkit' ),
@@ -144,7 +145,10 @@ class Role_Manager extends Module_Base {
                 'roleUpdated'         => __( '角色能力已更新。', 'dreamanual-toolkit' ),
                 'userRoleChanged'     => __( '用户角色已更改。', 'dreamanual-toolkit' ),
                 'failed'              => __( '操作失败，请重试。', 'dreamanual-toolkit' ),
-                'error'               => __( '请求失败。', 'dreamanual-toolkit' ),
+                'error'               => __( '请求失败，请稍后重试。', 'dreamanual-toolkit' ),
+                'loadRolesFailed'     => __( '加载角色列表失败，可能是网络问题或权限不足，请刷新页面重试。', 'dreamanual-toolkit' ),
+                'networkError'        => __( '网络错误，请检查连接后重试。', 'dreamanual-toolkit' ),
+                'invalidSlug'         => __( '角色标识只能使用小写字母、数字和下划线。', 'dreamanual-toolkit' ),
                 'noRoles'             => __( '暂无角色', 'dreamanual-toolkit' ),
                 'builtIn'             => __( '内置', 'dreamanual-toolkit' ),
                 'edit'                => __( '编辑', 'dreamanual-toolkit' ),
@@ -228,7 +232,11 @@ class Role_Manager extends Module_Base {
             wp_send_json_error( [ 'message' => __( '角色标识已存在', 'dreamanual-toolkit' ) ] );
         }
 
-        add_role( $role_slug, $display_name, [ 'read' => true ] );
+        $result = add_role( $role_slug, $display_name, [ 'read' => true ] );
+
+        if ( ! $result ) {
+            wp_send_json_error( [ 'message' => __( '角色添加失败，请重试。', 'dreamanual-toolkit' ) ] );
+        }
 
         wp_send_json_success( [ 'message' => __( '角色已添加。', 'dreamanual-toolkit' ) ] );
     }
@@ -246,6 +254,10 @@ class Role_Manager extends Module_Base {
         $new_slug = sanitize_key( $_POST['new_role_slug'] ?? '' );
         $new_name = sanitize_text_field( wp_unslash( $_POST['new_role_name'] ?? '' ) );
 
+        if ( ! $new_slug || ! $new_name ) {
+            wp_send_json_error( [ 'message' => __( '角色名称和标识不能为空', 'dreamanual-toolkit' ) ] );
+        }
+
         $source_role = get_role( $source );
         if ( ! $source_role ) {
             wp_send_json_error( [ 'message' => __( '源角色不存在', 'dreamanual-toolkit' ) ] );
@@ -255,7 +267,11 @@ class Role_Manager extends Module_Base {
             wp_send_json_error( [ 'message' => __( '角色标识已存在', 'dreamanual-toolkit' ) ] );
         }
 
-        add_role( $new_slug, $new_name, $source_role->capabilities );
+        $result = add_role( $new_slug, $new_name, $source_role->capabilities );
+
+        if ( ! $result ) {
+            wp_send_json_error( [ 'message' => __( '角色复制失败，请重试。', 'dreamanual-toolkit' ) ] );
+        }
 
         wp_send_json_success( [ 'message' => __( '角色已复制。', 'dreamanual-toolkit' ) ] );
     }
@@ -276,6 +292,11 @@ class Role_Manager extends Module_Base {
         }
 
         remove_role( $role_name );
+
+        // 验证角色确实已被移除
+        if ( get_role( $role_name ) ) {
+            wp_send_json_error( [ 'message' => __( '角色删除失败，请重试。', 'dreamanual-toolkit' ) ] );
+        }
 
         wp_send_json_success( [ 'message' => __( '角色已删除。', 'dreamanual-toolkit' ) ] );
     }
@@ -302,6 +323,9 @@ class Role_Manager extends Module_Base {
             wp_send_json_error( [ 'message' => __( '角色不存在', 'dreamanual-toolkit' ) ] );
         }
 
+        // F-18: 先备份旧能力，更新失败时回滚
+        $old_caps = $role->capabilities;
+
         // 先移除所有能力
         foreach ( $role->capabilities as $cap => $val ) {
             $role->remove_cap( $cap );
@@ -312,32 +336,20 @@ class Role_Manager extends Module_Base {
             $role->add_cap( sanitize_text_field( $cap ) );
         }
 
+        // 验证更新结果：重新获取角色确认能力已写入
+        $check_role = get_role( $role_name );
+        if ( ! $check_role || count( array_keys( $check_role->capabilities ) ) === 0 && count( $caps ) > 0 ) {
+            // 回滚
+            foreach ( $check_role ? $check_role->capabilities : [] as $cap => $val ) {
+                $check_role->remove_cap( $cap );
+            }
+            foreach ( $old_caps as $cap => $val ) {
+                $role->add_cap( $cap );
+            }
+            wp_send_json_error( [ 'message' => __( '角色能力更新失败，请重试。', 'dreamanual-toolkit' ) ] );
+        }
+
         wp_send_json_success( [ 'message' => __( '角色能力已更新。', 'dreamanual-toolkit' ) ] );
-    }
-
-    /**
-     * AJAX: 获取角色下的用户列表
-     */
-    public function ajax_get_users_by_role(): void {
-        check_ajax_referer( 'drea_rm_nonce', 'nonce' );
-        if ( ! current_user_can( 'manage_options' ) ) {
-            wp_send_json_error( [ 'message' => __( '权限不足', 'dreamanual-toolkit' ) ] );
-        }
-
-        $role_name = sanitize_text_field( wp_unslash( $_POST['role'] ?? '' ) );
-        $users     = get_users( [ 'role' => $role_name ] );
-
-        $result = [];
-        foreach ( $users as $user ) {
-            $result[] = [
-                'id'           => $user->ID,
-                'display_name' => $user->display_name,
-                'user_email'   => $user->user_email,
-                'roles'        => $user->roles,
-            ];
-        }
-
-        wp_send_json_success( [ 'users' => $result ] );
     }
 
     /**
@@ -356,6 +368,11 @@ class Role_Manager extends Module_Base {
             wp_send_json_error( [ 'message' => __( '参数无效', 'dreamanual-toolkit' ) ] );
         }
 
+        // F-03: 校验目标角色确实存在，防止用户失去所有角色
+        if ( ! get_role( $new_role ) ) {
+            wp_send_json_error( [ 'message' => __( '目标角色不存在', 'dreamanual-toolkit' ) ] );
+        }
+
         // 不允许修改自己的角色（防止锁死）
         if ( $user_id === get_current_user_id() ) {
             wp_send_json_error( [ 'message' => __( '不能修改自己的角色', 'dreamanual-toolkit' ) ] );
@@ -367,6 +384,12 @@ class Role_Manager extends Module_Base {
         }
 
         $user->set_role( $new_role );
+
+        // 验证角色确实已变更
+        $updated_user = get_userdata( $user_id );
+        if ( ! $updated_user || ! in_array( $new_role, $updated_user->roles, true ) ) {
+            wp_send_json_error( [ 'message' => __( '用户角色更改失败，请重试。', 'dreamanual-toolkit' ) ] );
+        }
 
         wp_send_json_success( [ 'message' => __( '用户角色已更改。', 'dreamanual-toolkit' ) ] );
     }

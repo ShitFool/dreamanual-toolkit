@@ -34,7 +34,7 @@ defined( 'ABSPATH' ) || exit;
                 </tr>
             </thead>
             <tbody id="drea-rm-roles-tbody">
-                <tr><td colspan="5" style="text-align:center;color:var(--drea-text-tertiary);"><?php echo esc_html__( '加载中...', 'dreamanual-toolkit' ); ?></td></tr>
+                <tr><td colspan="5" class="drea-text-center-muted"><?php echo esc_html__( '加载中...', 'dreamanual-toolkit' ); ?></td></tr>
             </tbody>
         </table>
     </div>
@@ -69,8 +69,8 @@ defined( 'ABSPATH' ) || exit;
             <button type="button" class="drea-btn drea-btn--secondary" id="drea-rm-detail-close"><?php echo esc_html__( '关闭', 'dreamanual-toolkit' ); ?></button>
         </div>
         <div class="drea-rm-detail-body">
-            <h3 style="font-size:14px;font-weight:600;margin-bottom:4px;"><?php echo esc_html__( '能力矩阵', 'dreamanual-toolkit' ); ?></h3>
-            <p class="description" style="margin-bottom:var(--drea-space-2);"><?php echo esc_html__( '勾选该角色应具备的能力。', 'dreamanual-toolkit' ); ?></p>
+            <h3 class="drea-rm-caps-heading"><?php echo esc_html__( '能力矩阵', 'dreamanual-toolkit' ); ?></h3>
+            <p class="description drea-rm-caps-desc"><?php echo esc_html__( '勾选该角色应具备的能力。', 'dreamanual-toolkit' ); ?></p>
             <div id="drea-rm-caps-grid" class="drea-rm-caps-grid"></div>
             <p class="submit">
                 <button type="button" class="drea-btn drea-btn--primary" id="drea-rm-save-caps"><?php echo esc_html__( '保存能力', 'dreamanual-toolkit' ); ?></button>
