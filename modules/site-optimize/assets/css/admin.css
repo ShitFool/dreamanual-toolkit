@@ -17,3 +17,32 @@
     vertical-align: middle;
     letter-spacing: -0.25px;
 }
+
+/* ─── 广告拦截规则 textarea ─── */
+.drea-settings-row--textarea .drea-settings-row__label small {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--drea-text-secondary);
+}
+
+.drea-adblock-rules {
+    width: 100%;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--drea-text-primary, #1d2129);
+    background: var(--drea-bg-elevated, #fff);
+    border: 1px solid var(--drea-border, #e5e6eb);
+    border-radius: var(--drea-radius, 4px);
+    padding: 8px 12px;
+    resize: vertical;
+    transition: border-color var(--drea-transition, 0.2s), box-shadow var(--drea-transition, 0.2s);
+}
+
+.drea-adblock-rules:focus {
+    outline: none;
+    border-color: var(--drea-primary, #165dff);
+    box-shadow: 0 0 0 2px var(--drea-primary-focus, rgba(22, 93, 255, 0.15));
+}

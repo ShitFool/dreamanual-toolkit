@@ -27,14 +27,14 @@ class Site_Optimize extends Module_Base {
      * {@inheritdoc}
      */
     public function get_name(): string {
-        return __( '站点优化', 'dreamanual-toolkit' );
+        return __('Site Optimization', 'dreamanual-toolkit' );
     }
 
     /**
      * {@inheritdoc}
      */
     public function get_description(): string {
-        return __( 'WordPress 功能精简：屏蔽 Emoji、关闭修订、精简头部代码等，每项独立开关。', 'dreamanual-toolkit' );
+        return __('WordPress feature slimming, Chinese typography, admin ad blocker — each with independent toggle.', 'dreamanual-toolkit' );
     }
 
     /**
@@ -74,7 +74,110 @@ class Site_Optimize extends Module_Base {
             'disable_wp_embed'        => true,
             // 性能优化
             'enable_speculative'      => true,
+
+            // ─── 内容排版（源自 wp-china-yes，纯本地实现） ───
+            'typography_space'        => true,
+            'typography_align'        => true,
+            'typography_quotes'       => false,
+            'typography_indent'       => false,
+
+            // ─── 后台广告拦截（源自 wp-china-yes） ───
+            'adblock_enabled'         => true,
         ];
+    }
+
+    /**
+     * 获取默认广告拦截规则（CSS 选择器列表）
+     *
+     * 复用 wp-china-yes 默认规则集，覆盖 Yoast / RankMath / Smush / Elementor
+     * 等常见插件的升级推销与广告横幅。
+     *
+     * @return string[]
+     */
+    public static function get_default_adblock_rules(): array {
+        return [
+            '.wpseo_content_wrapper #sidebar-container',
+            '.yoast_premium_upsell',
+            '#wpseo-local-seo-upsell',
+            '.yoast-settings-section-upsell',
+            '#rank_math_review_plugin_notice',
+            '#bwp-get-social',
+            '.bwp-button-paypal',
+            '#bwp-sidebar-right',
+            '#duplicate-post-notice #newsletter-subscribe-form',
+            'div[id^="dnh-wrm"]',
+            '.notice-info.dst-notice',
+            '.fw-brz-dismiss',
+            'div.elementor-message[data-notice_id="elementor_dev_promote"]',
+            '.notice-success.wpcf7r-notice',
+            '#ws_sidebar_pro_ad',
+            '.pa-new-feature-notice',
+            '#redux-connect-message',
+            '.frash-notice-email',
+            '.frash-notice-rate',
+            '#smush-box-pro-features',
+            '#wp-smush-bulk-smush-upsell-row',
+            '#easy-updates-manager-dashnotice',
+            '#metaslider-optin-notice',
+            '#extendifysdk_announcement',
+            '.ml-discount-ad',
+            '.mo-admin-notice',
+            '.post-smtp-donation',
+            '.neve-notice-upsell',
+            '#pagelayer_promo',
+            '.sfsi_new_prmium_follw',
+            '.tribe-notice-event-tickets-install',
+            '.webpLoader__popup.webpPopup',
+            '.put-dismiss-notice',
+            '.wp-mail-smtp-review-notice',
+            '#wp-mail-smtp-pro-banner',
+            '.analytify-review-thumbnail',
+            '.analytify-review-notice',
+            '.jitm-banner.is-upgrade-premium',
+            'div[data-name*="wbcr_factory_notice_adverts"]',
+            '.sui-subscription-notice',
+            '#sui-cross-sell-footer',
+            '.forminator-rating-notice',
+            '.cff-settings-cta',
+            '.cff-header-upgrade-notice',
+            '#elementskit-lite-go-pro-noti2ce',
+            '.yarpp-review-notice',
+            '.villatheme-dashboard.updated',
+            '#njt-FileBird-review',
+            '.wpdeveloper-review-notice',
+            '#sg-backup-review-wrapper',
+            '.notice-getgenie-go-pro-noti2ce',
+            'div.notice.bundle-notice',
+            '.edac-review-notice',
+            '.notice-iworks-rate',
+            '#monterinsights-admin-menu-tooltip',
+            '.monsterinsights-floating-bar',
+            '#metform-unsupported-metform-pro-version',
+            '.lwptocRate',
+            '.iworks-rate-notice',
+            '[id^="wpmet-jhanda-"]',
+            '#wpmet-stories',
+            '#ti-optml-notice-helper',
+            '.catch-bells-admin-notice',
+            '.wpdt-bundles-notice',
+            '.td-admin-web-services',
+            '.cf-plugin-popup',
+            '.wpzinc-review-media-library-organizer',
+            '.oxi-image-notice',
+        ];
+    }
+
+    /**
+     * 获取广告拦截规则（合并默认规则与用户自定义）
+     *
+     * @return string[]
+     */
+    public static function get_adblock_rules(): array {
+        $rules = get_option( 'drea_site_optimize_adblock_rules', [] );
+        if ( ! is_array( $rules ) || empty( $rules ) ) {
+            return self::get_default_adblock_rules();
+        }
+        return array_values( array_filter( array_map( 'trim', $rules ) ) );
     }
 
     /**
@@ -85,50 +188,65 @@ class Site_Optimize extends Module_Base {
     public static function get_groups(): array {
         return [
             'general' => [
-                'label'    => __( '常规功能', 'dreamanual-toolkit' ),
+                'label'    => __('General', 'dreamanual-toolkit' ),
                 'features' => [
-                    'disable_revisions'       => __( '屏蔽文章修订功能，精简文章表数据', 'dreamanual-toolkit' ),
-                    'disable_trackback'       => __( '彻底关闭 Trackback，防止垃圾留言', 'dreamanual-toolkit' ),
-                    'disable_xmlrpc'          => __( '关闭 XML-RPC 功能，只在后台发布文章', 'dreamanual-toolkit' ),
-                    'disable_feed'            => __( '屏蔽站点 Feed，防止文章被快速采集', 'dreamanual-toolkit' ),
-                    'disable_admin_email_ver' => __( '屏蔽站点管理员邮箱定期验证功能', 'dreamanual-toolkit' ),
+                    'disable_revisions'       => __('Disable post revisions, slim post table data', 'dreamanual-toolkit' ),
+                    'disable_trackback'       => __('Completely disable Trackback to prevent spam', 'dreamanual-toolkit' ),
+                    'disable_xmlrpc'          => __('Disable XML-RPC, only publish posts via admin', 'dreamanual-toolkit' ),
+                    'disable_feed'            => __('Disable site Feed to prevent content scraping', 'dreamanual-toolkit' ),
+                    'disable_admin_email_ver' => __('Disable periodic admin email verification', 'dreamanual-toolkit' ),
                 ],
             ],
             'transform' => [
-                'label'    => __( '转换功能', 'dreamanual-toolkit' ),
+                'label'    => __('Conversion', 'dreamanual-toolkit' ),
                 'features' => [
-                    'disable_emoji'          => __( '屏蔽 Emoji 转换成图片功能，直接使用 Emoji', 'dreamanual-toolkit' ),
-                    'disable_text_transform' => __( '屏蔽字符转换成格式化的 HTML 实体功能', 'dreamanual-toolkit' ),
-                    'disable_capital_p'      => __( '屏蔽 WordPress 大小写修正，自行决定如何书写', 'dreamanual-toolkit' ),
+                    'disable_emoji'          => __('Disable Emoji-to-image conversion, use Emoji directly', 'dreamanual-toolkit' ),
+                    'disable_text_transform' => __('Disable character-to-formatted HTML entity conversion', 'dreamanual-toolkit' ),
+                    'disable_capital_p'      => __('Disable WordPress capitalization correction, write as you prefer', 'dreamanual-toolkit' ),
                 ],
             ],
             'admin' => [
-                'label'    => __( '后台功能', 'dreamanual-toolkit' ),
+                'label'    => __('Admin', 'dreamanual-toolkit' ),
                 'features' => [
-                    'remove_gdpr_page'      => __( '移除为欧洲通用数据保护条例生成的页面', 'dreamanual-toolkit' ),
-                    'remove_dashboard_news' => __( '移除仪表盘的「WordPress 活动及新闻」', 'dreamanual-toolkit' ),
-                    'remove_help_tabs'      => __( '移除后台界面右上角的「帮助」标签', 'dreamanual-toolkit' ),
-                    'remove_screen_options' => __( '移除后台界面右上角的「选项」标签', 'dreamanual-toolkit' ),
+                    'remove_gdpr_page'      => __('Remove pages generated for European GDPR', 'dreamanual-toolkit' ),
+                    'remove_dashboard_news' => __('Remove "WordPress Events and News" from dashboard', 'dreamanual-toolkit' ),
+                    'remove_help_tabs'      => __('Remove "Help" tab in top-right of admin', 'dreamanual-toolkit' ),
+                    'remove_screen_options' => __('Remove "Screen Options" tab in top-right of admin', 'dreamanual-toolkit' ),
                 ],
             ],
             'page' => [
-                'label'    => __( '页面功能', 'dreamanual-toolkit' ),
+                'label'    => __('Page', 'dreamanual-toolkit' ),
                 'features' => [
-                    'remove_wp_version'     => __( '移除页面头部版本号和服务发现标签代码', 'dreamanual-toolkit' ),
-                    'remove_toolbar_option' => __( '移除工具栏和后台个人资料中工具栏相关选项', 'dreamanual-toolkit' ),
+                    'remove_wp_version'     => __('Remove version number and service discovery tags from page head', 'dreamanual-toolkit' ),
+                    'remove_toolbar_option' => __('Remove toolbar-related options from admin bar and profile', 'dreamanual-toolkit' ),
                 ],
             ],
             'embed' => [
-                'label'    => __( '嵌入功能', 'dreamanual-toolkit' ),
+                'label'    => __('Embeds', 'dreamanual-toolkit' ),
                 'features' => [
-                    'disable_auto_embeds' => __( '禁用 Auto Embeds 功能，加快页面解析速度', 'dreamanual-toolkit' ),
-                    'disable_wp_embed'    => __( '屏蔽嵌入其他 WordPress 文章的 Embed 功能', 'dreamanual-toolkit' ),
+                    'disable_auto_embeds' => __('Disable Auto Embeds to speed up page parsing', 'dreamanual-toolkit' ),
+                    'disable_wp_embed'    => __('Disable Embed for other WordPress posts', 'dreamanual-toolkit' ),
                 ],
             ],
             'performance' => [
-                'label'    => __( '性能优化', 'dreamanual-toolkit' ),
+                'label'    => __('Performance', 'dreamanual-toolkit' ),
                 'features' => [
-                    'enable_speculative' => __( '启用推测加载，浏览器预渲染链接页面（Chrome 121+）', 'dreamanual-toolkit' ),
+                    'enable_speculative' => __('Enable speculative loading, browser pre-renders linked pages (Chrome 121+)', 'dreamanual-toolkit' ),
+                ],
+            ],
+            'typography' => [
+                'label'    => __('Chinese Typography', 'dreamanual-toolkit' ),
+                'features' => [
+                    'typography_space'   => __('Insert space between Chinese and Latin/digits for better readability', 'dreamanual-toolkit' ),
+                    'typography_align'   => __('Justify text in single posts (text-align: justify)', 'dreamanual-toolkit' ),
+                    'typography_quotes'  => __('Convert straight quotes to Chinese corner brackets 「」『』', 'dreamanual-toolkit' ),
+                    'typography_indent'  => __('Indent first line of paragraphs by 2em', 'dreamanual-toolkit' ),
+                ],
+            ],
+            'adblock' => [
+                'label'    => __('Admin Ad Blocker', 'dreamanual-toolkit' ),
+                'features' => [
+                    'adblock_enabled' => __('Hide third-party plugin advertisement banners in admin', 'dreamanual-toolkit' ),
                 ],
             ],
         ];
@@ -262,6 +380,28 @@ class Site_Optimize extends Module_Base {
                 case 'enable_speculative':
                     add_action( 'wp_head', [ $this, 'output_speculation_rules' ], 99 );
                     break;
+
+                // ─── 内容排版 ───
+                case 'typography_space':
+                    add_action( 'template_redirect', [ $this, 'typography_space' ] );
+                    break;
+
+                case 'typography_align':
+                    add_action( 'wp_head', [ $this, 'typography_align_css' ], 99 );
+                    break;
+
+                case 'typography_quotes':
+                    add_action( 'template_redirect', [ $this, 'typography_quotes' ] );
+                    break;
+
+                case 'typography_indent':
+                    add_action( 'wp_head', [ $this, 'typography_indent_css' ], 99 );
+                    break;
+
+                // ─── 后台广告拦截 ───
+                case 'adblock_enabled':
+                    add_action( 'admin_head', [ $this, 'admin_adblock_css' ], 99 );
+                    break;
             }
         }
     }
@@ -285,6 +425,34 @@ class Site_Optimize extends Module_Base {
         foreach ( array_keys( self::get_features() ) as $key ) {
             delete_option( 'drea_site_optimize_' . $key );
         }
+        delete_option( 'drea_site_optimize_adblock_rules' );
+    }
+
+    /**
+     * 清洗广告拦截规则输入（textarea 逐行 → 字符串数组）
+     *
+     * 每行一个 CSS 选择器；去除行首尾空白、空行与明显不可信字符，
+     * 仅保留 CSS 选择器常用字符集。
+     *
+     * @param string $raw 原始 textarea 内容。
+     * @return string[]
+     */
+    private function sanitize_adblock_rules( string $raw ): array {
+        $lines = preg_split( '/\r\n|\r|\n/', $raw );
+        $rules = [];
+        foreach ( $lines as $line ) {
+            $line = trim( $line );
+            if ( '' === $line ) {
+                continue;
+            }
+            // 与 admin_adblock_css() 保持一致的字符白名单
+            $safe = preg_replace( '/[^\w\s.#\[\]="\'\-_:>+,*()~|]/u', '', $line );
+            if ( '' === $safe ) {
+                continue;
+            }
+            $rules[] = $safe;
+        }
+        return array_values( array_unique( $rules ) );
     }
 
     // ─── 管理菜单 ─────────────────────────────────────
@@ -295,8 +463,8 @@ class Site_Optimize extends Module_Base {
     public function add_admin_menu(): void {
         add_submenu_page(
             'dreamanual-toolkit',
-            __( '站点优化', 'dreamanual-toolkit' ),
-            __( '站点优化', 'dreamanual-toolkit' ),
+            __('Site Optimization', 'dreamanual-toolkit' ),
+            __('Site Optimization', 'dreamanual-toolkit' ),
             'manage_options',
             'drea-so',
             [ $this, 'render_page' ]
@@ -308,7 +476,7 @@ class Site_Optimize extends Module_Base {
      */
     public function render_page(): void {
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_die( esc_html__( '您没有权限访问此页面。', 'dreamanual-toolkit' ) );
+            wp_die( esc_html__('You do not have permission to access this page.', 'dreamanual-toolkit' ) );
         }
         include __DIR__ . '/admin/settings-page.php';
     }
@@ -341,9 +509,9 @@ class Site_Optimize extends Module_Base {
             'ajaxUrl' => admin_url( 'admin-ajax.php' ),
             'nonce'   => wp_create_nonce( 'drea_so_nonce' ),
             'i18n'    => [
-                'saved'  => __( '设置已保存。', 'dreamanual-toolkit' ),
-                'failed' => __( '保存失败，请重试。', 'dreamanual-toolkit' ),
-                'error'  => __( '操作失败。', 'dreamanual-toolkit' ),
+                'saved'  => __('Settings saved.', 'dreamanual-toolkit' ),
+                'failed' => __('Save failed, please retry.', 'dreamanual-toolkit' ),
+                'error'  => __('Operation failed.', 'dreamanual-toolkit' ),
             ],
         ] );
     }
@@ -356,7 +524,7 @@ class Site_Optimize extends Module_Base {
     public function ajax_save_settings(): void {
         check_ajax_referer( 'drea_so_nonce', 'nonce' );
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_send_json_error( [ 'message' => __( '权限不足', 'dreamanual-toolkit' ) ] );
+            wp_send_json_error( [ 'message' => __('Insufficient permissions', 'dreamanual-toolkit' ) ] );
         }
 
         $save_failed = false;
@@ -372,11 +540,21 @@ class Site_Optimize extends Module_Base {
             }
         }
 
-        if ( $save_failed ) {
-            wp_send_json_error( [ 'message' => __( '保存失败，请重试。', 'dreamanual-toolkit' ) ] );
+        // 广告拦截规则（textarea，非 bool feature，单独处理）
+        if ( isset( $_POST['adblock_rules'] ) ) {
+            // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitized via sanitize_adblock_rules() below
+            $rules = $this->sanitize_adblock_rules( wp_unslash( $_POST['adblock_rules'] ) );
+            $result = update_option( 'drea_site_optimize_adblock_rules', $rules );
+            if ( false === $result && get_option( 'drea_site_optimize_adblock_rules' ) != $rules ) {
+                $save_failed = true;
+            }
         }
 
-        wp_send_json_success( [ 'message' => __( '设置已保存。', 'dreamanual-toolkit' ) ] );
+        if ( $save_failed ) {
+            wp_send_json_error( [ 'message' => __('Save failed, please retry.', 'dreamanual-toolkit' ) ] );
+        }
+
+        wp_send_json_success( [ 'message' => __('Settings saved.', 'dreamanual-toolkit' ) ] );
     }
 
     /**
@@ -385,7 +563,7 @@ class Site_Optimize extends Module_Base {
     public function ajax_get_settings(): void {
         check_ajax_referer( 'drea_so_nonce', 'nonce' );
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_send_json_error( [ 'message' => __( '权限不足', 'dreamanual-toolkit' ) ] );
+            wp_send_json_error( [ 'message' => __('Insufficient permissions', 'dreamanual-toolkit' ) ] );
         }
 
         $data = [];
@@ -511,6 +689,111 @@ class Site_Optimize extends Module_Base {
             ],
         ];
         echo '<script type="speculationrules">' . wp_json_encode( $rules ) . '</script>' . "\n";
+    }
+
+    // ─── 内容排版 ────────────────────────────────────────
+
+    /**
+     * 中英文/数字间自动加空格（模板渲染时输出缓冲替换）
+     *
+     * @return void
+     */
+    public function typography_space(): void {
+        if ( php_sapi_name() === 'cli' ) {
+            return;
+        }
+        ob_start( function ( $buffer ) {
+            $buffer = preg_replace( '~(\p{Han})([a-zA-Z0-9\p{Ps}\p{Pi}])(?![^<]*>)~u', '\1 \2', $buffer );
+            $buffer = preg_replace( '~([a-zA-Z0-9\p{Pe}\p{Pf}])(\p{Han})(?![^<]*>)~u', '\1 \2', $buffer );
+            $buffer = preg_replace( '~([!?‽:;,.%])(\p{Han})~u', '\1 \2', $buffer );
+            $buffer = preg_replace( '~(\p{Han})([@$#])~u', '\1 \2', $buffer );
+            return $buffer;
+        } );
+    }
+
+    /**
+     * 文章正文两端对齐（仅 single 页面注入 CSS）
+     *
+     * @return void
+     */
+    public function typography_align_css(): void {
+        if ( ! is_single() ) {
+            return;
+        }
+        $css = '.entry-content p{text-align:justify;}'
+            . '.entry-content .wp-block-group p,.entry-content .wp-block-columns p,'
+            . '.entry-content .wp-block-media-text p,.entry-content .wp-block-quote p{text-align:unset!important;}'
+            . '.entry-content .wp-block-columns .has-text-align-center{text-align:center!important;}';
+        wp_register_style( 'drea-typography-align', false, [], DREA_VERSION );
+        wp_add_inline_style( 'drea-typography-align', $css );
+        wp_enqueue_style( 'drea-typography-align' );
+    }
+
+    /**
+     * 弯引号：直引号转「」『』（模板渲染输出缓冲替换）
+     *
+     * @return void
+     */
+    public function typography_quotes(): void {
+        if ( php_sapi_name() === 'cli' ) {
+            return;
+        }
+        ob_start( function ( $buffer ) {
+            // 英文缩写撇号保留 's 't 're 've 'd 'll
+            $buffer = str_replace( [ 'n’t', '’s', '’m', '’re', '’ve', '’d', '’ll' ], [ "n&rsquo;t", '&rsquo;s', '&rsquo;m', '&rsquo;re', '&rsquo;ve', '&rsquo;d', '&rsquo;ll' ], $buffer );
+            $buffer = str_replace( '“', '&#12300;', $buffer );
+            $buffer = str_replace( '”', '&#12301;', $buffer );
+            $buffer = str_replace( '‘', '&#12302;', $buffer );
+            $buffer = str_replace( '’', '&#12303;', $buffer );
+            return $buffer;
+        } );
+    }
+
+    /**
+     * 段首缩进 2em（注入 CSS，排除 Gutenberg 版式区块）
+     *
+     * @return void
+     */
+    public function typography_indent_css(): void {
+        $css = '.entry-content p{text-indent:2em;}'
+            . '.entry-content .wp-block-group p,.entry-content .wp-block-columns p,'
+            . '.entry-content .wp-block-media-text p,.entry-content .wp-block-quote p{text-indent:0;}';
+        wp_register_style( 'drea-typography-indent', false, [], DREA_VERSION );
+        wp_add_inline_style( 'drea-typography-indent', $css );
+        wp_enqueue_style( 'drea-typography-indent' );
+    }
+
+    // ─── 后台广告拦截 ─────────────────────────────────────
+
+    /**
+     * 输出广告拦截 CSS（admin_head）
+     *
+     * @return void
+     */
+    public function admin_adblock_css(): void {
+        $rules = self::get_adblock_rules();
+        if ( empty( $rules ) ) {
+            return;
+        }
+        $css = '';
+        foreach ( $rules as $rule ) {
+            $selector = trim( $rule );
+            if ( '' === $selector ) {
+                continue;
+            }
+            // 使用 CSS.escape 友好的简单转义：去掉潜在注入风险字符
+            $safe = preg_replace( '/[^\w\s.#\[\]="\'\-_:>+,*()~|]/u', '', $selector );
+            if ( '' === $safe ) {
+                continue;
+            }
+            $css .= $safe . '{display:none!important;}';
+        }
+        if ( '' === $css ) {
+            return;
+        }
+        wp_register_style( 'drea-admin-adblock', false, [], DREA_VERSION );
+        wp_add_inline_style( 'drea-admin-adblock', $css );
+        wp_enqueue_style( 'drea-admin-adblock' );
     }
 }
 

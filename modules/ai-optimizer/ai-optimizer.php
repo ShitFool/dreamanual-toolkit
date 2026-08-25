@@ -30,14 +30,14 @@ class AI_Optimizer extends Module_Base {
      * {@inheritdoc}
      */
     public function get_name(): string {
-        return __( 'AI 优化', 'dreamanual-toolkit' );
+        return __('AI Optimizer', 'dreamanual-toolkit' );
     }
 
     /**
      * {@inheritdoc}
      */
     public function get_description(): string {
-        return __( 'AI 自动生成标签、Slug、摘要，支持 DeepSeek / Kimi / OpenAI / Claude。', 'dreamanual-toolkit' );
+        return __('AI auto-generates tags, slugs, and excerpts. Supports DeepSeek / Kimi / OpenAI / Claude.', 'dreamanual-toolkit' );
     }
 
     /**
@@ -126,8 +126,8 @@ class AI_Optimizer extends Module_Base {
         // 批量处理页
         add_submenu_page(
             'dreamanual-toolkit',
-            __( 'AI 优化 — 批量处理', 'dreamanual-toolkit' ),
-            __( 'AI 优化', 'dreamanual-toolkit' ),
+            __('AI Optimizer — Batch Process', 'dreamanual-toolkit' ),
+            __('AI Optimizer', 'dreamanual-toolkit' ),
             'manage_options',
             'drea-ai-batch',
             [ $this, 'render_batch_page' ]
@@ -136,8 +136,8 @@ class AI_Optimizer extends Module_Base {
         // 设置页
         add_submenu_page(
             'dreamanual-toolkit',
-            __( 'AI 优化 — 设置', 'dreamanual-toolkit' ),
-            __( 'AI 设置', 'dreamanual-toolkit' ),
+            __('AI Optimizer — Settings', 'dreamanual-toolkit' ),
+            __('AI Settings', 'dreamanual-toolkit' ),
             'manage_options',
             'drea-ai-settings',
             [ $this, 'render_settings_page' ]
@@ -149,7 +149,7 @@ class AI_Optimizer extends Module_Base {
      */
     public function render_batch_page(): void {
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_die( esc_html__( '您没有权限访问此页面。', 'dreamanual-toolkit' ) );
+            wp_die( esc_html__('You do not have permission to access this page.', 'dreamanual-toolkit' ) );
         }
         include __DIR__ . '/admin/batch-page.php';
     }
@@ -159,7 +159,7 @@ class AI_Optimizer extends Module_Base {
      */
     public function render_settings_page(): void {
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_die( esc_html__( '您没有权限访问此页面。', 'dreamanual-toolkit' ) );
+            wp_die( esc_html__('You do not have permission to access this page.', 'dreamanual-toolkit' ) );
         }
         include __DIR__ . '/admin/settings-page.php';
     }
@@ -172,7 +172,7 @@ class AI_Optimizer extends Module_Base {
     public function add_meta_box(): void {
         add_meta_box(
             'drea_ai_meta',
-            __( 'AI 优化', 'dreamanual-toolkit' ),
+            __('AI Optimizer', 'dreamanual-toolkit' ),
             [ $this, 'render_meta_box' ],
             [ 'post', 'page' ],
             'side',
@@ -264,78 +264,78 @@ class AI_Optimizer extends Module_Base {
      */
     private function localize_script( string $handle, string $context ): void {
         $common_i18n = [
-            'unknownError' => __( '未知错误', 'dreamanual-toolkit' ),
-            'networkError' => __( '网络错误，请检查连接。', 'dreamanual-toolkit' ),
+            'unknownError' => __('Unknown error', 'dreamanual-toolkit' ),
+            'networkError' => __('Network error, please check connection.', 'dreamanual-toolkit' ),
         ];
 
         $context_i18n = [];
 
         if ( 'batch' === $context ) {
             $context_i18n = [
-                'pleaseConfigureApiKey' => __( '请先在设置中配置 API Key。', 'dreamanual-toolkit' ),
-                'failedToLoadSettings'  => __( '加载设置失败，请刷新。', 'dreamanual-toolkit' ),
-                'postsLoaded'           => __( ' 篇文章已加载', 'dreamanual-toolkit' ),
-                'noPostsInCategory'     => __( '该分类下无文章。', 'dreamanual-toolkit' ),
-                'loadFailed'            => __( '加载失败: ', 'dreamanual-toolkit' ),
-                'noPosts'               => __( '暂无文章', 'dreamanual-toolkit' ),
-                'noTags'                => __( '无标签', 'dreamanual-toolkit' ),
-                'notGenerated'          => __( '未生成', 'dreamanual-toolkit' ),
-                'generate'              => __( '生成', 'dreamanual-toolkit' ),
-                'regenerate'            => __( '重新生成', 'dreamanual-toolkit' ),
-                'apply'                 => __( '应用', 'dreamanual-toolkit' ),
-                'processing'            => __( '处理中...', 'dreamanual-toolkit' ),
-                'done'                  => __( '完成!', 'dreamanual-toolkit' ),
-                'generating'            => __( '生成中...', 'dreamanual-toolkit' ),
-                'generatedSuccessfully' => __( ' 生成成功', 'dreamanual-toolkit' ),
-                'failed'                => __( ' 失败: ', 'dreamanual-toolkit' ),
-                'retry'                 => __( '重试', 'dreamanual-toolkit' ),
-                'loadTagsFailed'        => __( '加载已有标签失败，将无法进行标签去重。', 'dreamanual-toolkit' ),
-                'applyConfirmTitle'     => __( '确认将 AI 建议应用到「{title}」？', 'dreamanual-toolkit' ),
-                'applyConfirmTags'      => __( '标签：', 'dreamanual-toolkit' ),
-                'applyConfirmSlug'      => __( 'Slug：', 'dreamanual-toolkit' ),
-                'applyConfirmExcerpt'   => __( '摘要：', 'dreamanual-toolkit' ),
-                'noPendingChanges'      => __( '无待应用更改。', 'dreamanual-toolkit' ),
-                'applyAiSuggestionsTo'  => __( '将 AI 建议应用到 ', 'dreamanual-toolkit' ),
-                'postsQuestion'         => __( ' 篇文章？', 'dreamanual-toolkit' ),
-                'slugChangeNote'        => __( '注意：更改 Slug 会导致旧 URL 404，请确保有正确的重定向。', 'dreamanual-toolkit' ),
-                'excerptOverwriteNote'  => __( '摘要更改将覆盖当前内容。', 'dreamanual-toolkit' ),
-                'applying'              => __( '正在应用 ', 'dreamanual-toolkit' ),
-                'allChangesApplied'     => __( '所有更改已应用！刷新页面查看更新。', 'dreamanual-toolkit' ),
-                'changesApplied'        => __( ' 项更改已应用', 'dreamanual-toolkit' ),
-                'applyFailed'           => __( ' 应用失败: ', 'dreamanual-toolkit' ),
-                'networkErrorShort'     => __( ' 网络错误', 'dreamanual-toolkit' ),
-                'loadSettingsFailed'    => __( '加载设置失败，请刷新页面重试。', 'dreamanual-toolkit' ),
-                'invalidTagLimit'       => __( '标签数量必须在 1-20 之间。', 'dreamanual-toolkit' ),
-                'invalidExcerptLength'  => __( '摘要长度必须在 50-500 之间。', 'dreamanual-toolkit' ),
-                'prev'                  => __( '上一页', 'dreamanual-toolkit' ),
-                'next'                  => __( '下一页', 'dreamanual-toolkit' ),
-                'page'                  => __( '第 ', 'dreamanual-toolkit' ),
-                'generateForSelected'   => __( '为选中的 ', 'dreamanual-toolkit' ),
-                'selected'              => __( ' 篇生成 AI 建议', 'dreamanual-toolkit' ),
-                'batchSummary'          => __( '成功 {0} 篇，失败 {1} 篇', 'dreamanual-toolkit' ),
-                'batchPartialFail'      => __( '部分文章应用失败，请查看上方详情。', 'dreamanual-toolkit' ),
+                'pleaseConfigureApiKey' => __('Please configure API Key in settings first.', 'dreamanual-toolkit' ),
+                'failedToLoadSettings'  => __('Failed to load settings, please refresh.', 'dreamanual-toolkit' ),
+                'postsLoaded'           => __(' posts loaded', 'dreamanual-toolkit' ),
+                'noPostsInCategory'     => __('No posts in this category.', 'dreamanual-toolkit' ),
+                'loadFailed'            => __('Load failed: ', 'dreamanual-toolkit' ),
+                'noPosts'               => __('No posts', 'dreamanual-toolkit' ),
+                'noTags'                => __('No tags', 'dreamanual-toolkit' ),
+                'notGenerated'          => __('Not generated', 'dreamanual-toolkit' ),
+                'generate'              => __('Generate', 'dreamanual-toolkit' ),
+                'regenerate'            => __('Regenerate', 'dreamanual-toolkit' ),
+                'apply'                 => __('Apply', 'dreamanual-toolkit' ),
+                'processing'            => __('Processing...', 'dreamanual-toolkit' ),
+                'done'                  => __('Done!', 'dreamanual-toolkit' ),
+                'generating'            => __('Generating...', 'dreamanual-toolkit' ),
+                'generatedSuccessfully' => __(' generated successfully', 'dreamanual-toolkit' ),
+                'failed'                => __(' failed: ', 'dreamanual-toolkit' ),
+                'retry'                 => __('Retry', 'dreamanual-toolkit' ),
+                'loadTagsFailed'        => __('Failed to load existing tags, tag deduplication will not work.', 'dreamanual-toolkit' ),
+                'applyConfirmTitle'     => __('Apply AI suggestions to "{title}"?', 'dreamanual-toolkit' ),
+                'applyConfirmTags'      => __('Tags:', 'dreamanual-toolkit' ),
+                'applyConfirmSlug'      => __('Slug:', 'dreamanual-toolkit' ),
+                'applyConfirmExcerpt'   => __('Excerpt:', 'dreamanual-toolkit' ),
+                'noPendingChanges'      => __('No pending changes.', 'dreamanual-toolkit' ),
+                'applyAiSuggestionsTo'  => __('Apply AI suggestions to ', 'dreamanual-toolkit' ),
+                'postsQuestion'         => __(' posts?', 'dreamanual-toolkit' ),
+                'slugChangeNote'        => __('Note: Changing the Slug will cause old URLs to return 404. Ensure proper redirects are in place.', 'dreamanual-toolkit' ),
+                'excerptOverwriteNote'  => __('Excerpt changes will overwrite current content.', 'dreamanual-toolkit' ),
+                'applying'              => __('applying ', 'dreamanual-toolkit' ),
+                'allChangesApplied'     => __('All changes applied! Refresh page to see updates.', 'dreamanual-toolkit' ),
+                'changesApplied'        => __(' changes applied', 'dreamanual-toolkit' ),
+                'applyFailed'           => __(' apply failed: ', 'dreamanual-toolkit' ),
+                'networkErrorShort'     => __(' network error', 'dreamanual-toolkit' ),
+                'loadSettingsFailed'    => __('Failed to load settings, please refresh and retry.', 'dreamanual-toolkit' ),
+                'invalidTagLimit'       => __('Tag count must be between 1-20.', 'dreamanual-toolkit' ),
+                'invalidExcerptLength'  => __('Excerpt length must be between 50-500.', 'dreamanual-toolkit' ),
+                'prev'                  => __('Previous', 'dreamanual-toolkit' ),
+                'next'                  => __('Next', 'dreamanual-toolkit' ),
+                'page'                  => __('page ', 'dreamanual-toolkit' ),
+                'generateForSelected'   => __('for selected ', 'dreamanual-toolkit' ),
+                'selected'              => __(' posts to generate AI suggestions', 'dreamanual-toolkit' ),
+                'batchSummary'          => __('Succeeded {0}, failed {1}', 'dreamanual-toolkit' ),
+                'batchPartialFail'      => __('Some posts failed to apply, please check details above.', 'dreamanual-toolkit' ),
             ];
         } elseif ( 'settings' === $context ) {
             $context_i18n = [
-                'settingsSaved'       => __( '设置已保存。', 'dreamanual-toolkit' ),
-                'saveFailed'          => __( '保存失败: ', 'dreamanual-toolkit' ),
-                'loadSettingsFailed'  => __( '加载设置失败，请刷新页面重试。', 'dreamanual-toolkit' ),
-                'networkError'        => __( '网络错误，请检查连接。', 'dreamanual-toolkit' ),
-                'invalidTagLimit'     => __( '标签数量必须在 1-20 之间。', 'dreamanual-toolkit' ),
-                'invalidExcerptLength'=> __( '摘要长度必须在 50-500 之间。', 'dreamanual-toolkit' ),
-                'collapse'            => __( '（点击收起）', 'dreamanual-toolkit' ),
-                'expand'              => __( '（点击展开）', 'dreamanual-toolkit' ),
+                'settingsSaved'       => __('Settings saved.', 'dreamanual-toolkit' ),
+                'saveFailed'          => __('Save failed: ', 'dreamanual-toolkit' ),
+                'loadSettingsFailed'  => __('Failed to load settings, please refresh and retry.', 'dreamanual-toolkit' ),
+                'networkError'        => __('Network error, please check connection.', 'dreamanual-toolkit' ),
+                'invalidTagLimit'     => __('Tag count must be between 1-20.', 'dreamanual-toolkit' ),
+                'invalidExcerptLength'=> __('Excerpt length must be between 50-500.', 'dreamanual-toolkit' ),
+                'collapse'            => __('(click to collapse)', 'dreamanual-toolkit' ),
+                'expand'              => __('(click to expand)', 'dreamanual-toolkit' ),
             ];
         } elseif ( 'meta' === $context ) {
             $context_i18n = [
-                'pleaseSaveDraft'      => __( '请先保存文章草稿。', 'dreamanual-toolkit' ),
-                'generationFailed'     => __( '生成失败: ', 'dreamanual-toolkit' ),
-                'noTagsGenerated'      => __( '无标签生成', 'dreamanual-toolkit' ),
-                'applying'             => __( '应用中...', 'dreamanual-toolkit' ),
-                'applied'              => __( '已应用！页面将刷新。', 'dreamanual-toolkit' ),
-                'applyChanges'         => __( '应用更改', 'dreamanual-toolkit' ),
-                'applyFailed'          => __( '应用失败: ', 'dreamanual-toolkit' ),
-                'notGenerated'         => __( '未生成', 'dreamanual-toolkit' ),
+                'pleaseSaveDraft'      => __('Please save the post draft first.', 'dreamanual-toolkit' ),
+                'generationFailed'     => __('Generation failed: ', 'dreamanual-toolkit' ),
+                'noTagsGenerated'      => __('No tags generated', 'dreamanual-toolkit' ),
+                'applying'             => __('Applying...', 'dreamanual-toolkit' ),
+                'applied'              => __('Applied! Page will refresh.', 'dreamanual-toolkit' ),
+                'applyChanges'         => __('Apply Changes', 'dreamanual-toolkit' ),
+                'applyFailed'          => __('Apply failed: ', 'dreamanual-toolkit' ),
+                'notGenerated'         => __('Not generated', 'dreamanual-toolkit' ),
             ];
         }
 
@@ -354,7 +354,7 @@ class AI_Optimizer extends Module_Base {
     public function ajax_get_posts(): void {
         check_ajax_referer( 'drea_ai_nonce', 'nonce' );
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_send_json_error( __( '权限不足。', 'dreamanual-toolkit' ) );
+            wp_send_json_error( __('Insufficient permissions.', 'dreamanual-toolkit' ) );
         }
 
         $page     = isset( $_POST['page'] ) ? max( 1, intval( $_POST['page'] ) ) : 1;
@@ -402,7 +402,7 @@ class AI_Optimizer extends Module_Base {
     public function ajax_generate(): void {
         check_ajax_referer( 'drea_ai_nonce', 'nonce' );
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_send_json_error( __( '权限不足。', 'dreamanual-toolkit' ) );
+            wp_send_json_error( __('Insufficient permissions.', 'dreamanual-toolkit' ) );
         }
 
         $post_id        = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : 0;
@@ -422,15 +422,15 @@ class AI_Optimizer extends Module_Base {
         $excerpt_prompt = isset( $_POST['excerpt_prompt'] ) ? sanitize_textarea_field( wp_unslash( $_POST['excerpt_prompt'] ) ) : '';
 
         if ( ! $post_id ) {
-            wp_send_json_error( __( '无效的文章 ID。', 'dreamanual-toolkit' ) );
+            wp_send_json_error( __('Invalid post ID.', 'dreamanual-toolkit' ) );
         }
         if ( ! $api_key ) {
-            wp_send_json_error( __( '请输入 API Key。', 'dreamanual-toolkit' ) );
+            wp_send_json_error( __('Please enter API Key.', 'dreamanual-toolkit' ) );
         }
 
         $post = get_post( $post_id );
         if ( ! $post ) {
-            wp_send_json_error( __( '文章未找到。', 'dreamanual-toolkit' ) );
+            wp_send_json_error( __('Post not found.', 'dreamanual-toolkit' ) );
         }
 
         $content = wp_strip_all_tags( $post->post_content );
@@ -457,22 +457,22 @@ class AI_Optimizer extends Module_Base {
     public function ajax_generate_single(): void {
         check_ajax_referer( 'drea_ai_nonce', 'nonce' );
         if ( ! current_user_can( 'edit_posts' ) ) {
-            wp_send_json_error( __( '权限不足。', 'dreamanual-toolkit' ) );
+            wp_send_json_error( __('Insufficient permissions.', 'dreamanual-toolkit' ) );
         }
 
         $post_id = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : 0;
         if ( ! $post_id ) {
-            wp_send_json_error( __( '无效的文章 ID。', 'dreamanual-toolkit' ) );
+            wp_send_json_error( __('Invalid post ID.', 'dreamanual-toolkit' ) );
         }
 
         $settings = $this->get_settings_array();
         if ( empty( $settings['api_key'] ) ) {
-            wp_send_json_error( __( '请先在"AI 优化 → 设置"中配置 API Key。', 'dreamanual-toolkit' ) );
+            wp_send_json_error( __('Please configure API Key in "AI Optimizer → Settings" first.', 'dreamanual-toolkit' ) );
         }
 
         $post = get_post( $post_id );
         if ( ! $post ) {
-            wp_send_json_error( __( '文章未找到。', 'dreamanual-toolkit' ) );
+            wp_send_json_error( __('Post not found.', 'dreamanual-toolkit' ) );
         }
 
         $content = wp_strip_all_tags( $post->post_content );
@@ -510,7 +510,7 @@ class AI_Optimizer extends Module_Base {
     public function ajax_apply(): void {
         check_ajax_referer( 'drea_ai_nonce', 'nonce' );
         if ( ! current_user_can( 'edit_posts' ) ) {
-            wp_send_json_error( __( '权限不足。', 'dreamanual-toolkit' ) );
+            wp_send_json_error( __('Insufficient permissions.', 'dreamanual-toolkit' ) );
         }
 
         $post_id = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : 0;
@@ -519,12 +519,12 @@ class AI_Optimizer extends Module_Base {
         $excerpt = isset( $_POST['excerpt'] ) ? sanitize_textarea_field( wp_unslash( $_POST['excerpt'] ) ) : '';
 
         if ( ! $post_id ) {
-            wp_send_json_error( __( '无效的文章 ID。', 'dreamanual-toolkit' ) );
+            wp_send_json_error( __('Invalid post ID.', 'dreamanual-toolkit' ) );
         }
 
         $post = get_post( $post_id );
         if ( ! $post ) {
-            wp_send_json_error( __( '文章未找到。', 'dreamanual-toolkit' ) );
+            wp_send_json_error( __('Post not found.', 'dreamanual-toolkit' ) );
         }
 
         $update_data = [ 'ID' => $post_id ];
@@ -532,7 +532,7 @@ class AI_Optimizer extends Module_Base {
         if ( ! empty( $tags ) ) {
             $tag_result = wp_set_post_tags( $post_id, $tags );
             if ( is_wp_error( $tag_result ) ) {
-                wp_send_json_error( __( '标签保存失败，请重试。', 'dreamanual-toolkit' ) );
+                wp_send_json_error( __('Tag save failed, please retry.', 'dreamanual-toolkit' ) );
             }
         }
 
@@ -548,12 +548,12 @@ class AI_Optimizer extends Module_Base {
         if ( count( $update_data ) > 1 ) {
             $updated = wp_update_post( $update_data );
             if ( is_wp_error( $updated ) || 0 === $updated ) {
-                wp_send_json_error( __( '文章更新失败，请重试。', 'dreamanual-toolkit' ) );
+                wp_send_json_error( __('Post update failed, please retry.', 'dreamanual-toolkit' ) );
             }
         }
 
         wp_send_json_success( [
-            'message' => __( '更改已应用。', 'dreamanual-toolkit' ),
+            'message' => __('Changes applied.', 'dreamanual-toolkit' ),
             'tags'    => $tags,
             'slug'    => $slug,
             'excerpt' => $excerpt,
@@ -566,7 +566,7 @@ class AI_Optimizer extends Module_Base {
     public function ajax_get_existing_tags(): void {
         check_ajax_referer( 'drea_ai_nonce', 'nonce' );
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_send_json_error( __( '权限不足。', 'dreamanual-toolkit' ) );
+            wp_send_json_error( __('Insufficient permissions.', 'dreamanual-toolkit' ) );
         }
 
         $tags = get_terms( [
@@ -576,7 +576,7 @@ class AI_Optimizer extends Module_Base {
         ] );
 
         if ( is_wp_error( $tags ) ) {
-            wp_send_json_error( [ 'message' => __( '加载标签列表失败，请重试。', 'dreamanual-toolkit' ) ] );
+            wp_send_json_error( __('Failed to load tag list, please retry.', 'dreamanual-toolkit' ) );
         }
 
         wp_send_json_success( [
@@ -597,9 +597,9 @@ class AI_Optimizer extends Module_Base {
         $msg = $error->get_error_message();
         // 简单判断：如果消息中包含常见英文错误标记，使用通用兜底
         if ( preg_match( '/^[[:print:]\s]*$/', $msg ) && preg_match( '/\b(error|failed|invalid|not found|unable|denied)\b/i', $msg ) ) {
-            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- 记录原始错误到服务器日志，用于运维排查
-            error_log( '[DREA AI] 原始错误: ' . $msg );
-            return __( 'AI 处理失败，请稍后重试。如问题持续，请检查 AI 优化设置。', 'dreamanual-toolkit' );
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Log original error to server log for debugging
+            error_log( '[DREA AI] Original error: ' . $msg );
+            return __('AI processing failed, please retry later. If the issue persists, check AI Optimizer settings.', 'dreamanual-toolkit' );
         }
         return $msg;
     }
@@ -610,7 +610,7 @@ class AI_Optimizer extends Module_Base {
     public function ajax_save_settings(): void {
         check_ajax_referer( 'drea_ai_nonce', 'nonce' );
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_send_json_error( __( '权限不足。', 'dreamanual-toolkit' ) );
+            wp_send_json_error( __('Insufficient permissions.', 'dreamanual-toolkit' ) );
         }
 
         $provider       = isset( $_POST['provider'] ) ? sanitize_text_field( wp_unslash( $_POST['provider'] ) ) : 'deepseek';
@@ -626,7 +626,7 @@ class AI_Optimizer extends Module_Base {
         // F-05: provider 白名单校验
         $valid_providers = [ 'deepseek', 'kimi', 'openai', 'claude' ];
         if ( ! in_array( $provider, $valid_providers, true ) ) {
-            wp_send_json_error( [ 'message' => __( '不支持的 AI 提供商，请选择 DeepSeek / Kimi / OpenAI / Claude。', 'dreamanual-toolkit' ) ] );
+            wp_send_json_error( __('Unsupported AI provider, please choose DeepSeek / Kimi / OpenAI / Claude.', 'dreamanual-toolkit' ) );
         }
 
         // 批量保存，任一失败则报错
@@ -651,7 +651,7 @@ class AI_Optimizer extends Module_Base {
         }
 
         if ( $save_failed ) {
-            wp_send_json_error( [ 'message' => __( '保存失败，请重试。', 'dreamanual-toolkit' ) ] );
+            wp_send_json_error( __('Save failed, please retry.', 'dreamanual-toolkit' ) );
         }
 
         // API Key：空值表示清除已存储的 Key
@@ -662,7 +662,7 @@ class AI_Optimizer extends Module_Base {
         }
 
         wp_send_json_success( [
-            'message' => __( '设置已保存。', 'dreamanual-toolkit' ),
+            'message' => __('Settings saved.', 'dreamanual-toolkit' ),
         ] );
     }
 
@@ -672,7 +672,7 @@ class AI_Optimizer extends Module_Base {
     public function ajax_get_settings(): void {
         check_ajax_referer( 'drea_ai_nonce', 'nonce' );
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_send_json_error( __( '权限不足。', 'dreamanual-toolkit' ) );
+            wp_send_json_error( __('Insufficient permissions.', 'dreamanual-toolkit' ) );
         }
 
         wp_send_json_success( $this->get_settings_array() );

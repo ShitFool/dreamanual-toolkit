@@ -13,29 +13,29 @@ $drea_rules      = $this->get_rules(); // 模板在实例方法 render_settings_
 $drea_channels   = \DREA\Content_Visibility::CHANNELS;
 
 $drea_channel_labels = [
-    'frontend' => __( '前端页面', 'dreamanual-toolkit' ),
-    'rss'      => __( 'RSS 订阅', 'dreamanual-toolkit' ),
+    'frontend' => __('Frontend Pages', 'dreamanual-toolkit' ),
+    'rss'      => __('RSS Feed', 'dreamanual-toolkit' ),
     'rest_api' => __( 'REST API', 'dreamanual-toolkit' ),
-    'search'   => __( '站内搜索', 'dreamanual-toolkit' ),
-    'sitemap'  => __( '站点地图', 'dreamanual-toolkit' ),
+    'search'   => __('Site Search', 'dreamanual-toolkit' ),
+    'sitemap'  => __('Sitemap', 'dreamanual-toolkit' ),
 ];
 ?>
 <div class="wrap drea-wrap drea-cv-wrap">
     <h1 class="drea-wrap__title">
-        <?php echo esc_html__( '内容可见性', 'dreamanual-toolkit' ); ?>
+        <?php echo esc_html__('Content Visibility', 'dreamanual-toolkit' ); ?>
     </h1>
-    <p class="description"><?php echo esc_html__( '按分类配置内容显示渠道和可见角色。未配置的分类在所有渠道正常显示。', 'dreamanual-toolkit' ); ?></p>
+    <p class="description"><?php echo esc_html__('Configure display channels and visible roles per category. Uncategorized posts display normally on all channels.', 'dreamanual-toolkit' ); ?></p>
 
     <!-- 使用说明 -->
     <div class="drea-cv-guide">
-        <h3><?php echo esc_html__( '使用说明', 'dreamanual-toolkit' ); ?></h3>
+        <h3><?php echo esc_html__('Instructions', 'dreamanual-toolkit' ); ?></h3>
         <ol>
-            <li><?php echo esc_html__( '渠道列勾选 = 该分类内容在此渠道显示；取消勾选 = 在此渠道隐藏。默认全勾选（全部显示）。', 'dreamanual-toolkit' ); ?></li>
-            <li><?php echo esc_html__( '「隐藏后仍可见角色」决定：渠道被隐藏时，哪些登录角色仍能看见。不选则仅管理员可见。', 'dreamanual-toolkit' ); ?></li>
-            <li><?php echo esc_html__( '所有渠道都勾选（默认状态）= 该分类不做任何处理。', 'dreamanual-toolkit' ); ?></li>
+            <li><?php echo esc_html__('Channel column checked = category content shown on that channel; unchecked = hidden. All checked by default (show everywhere).', 'dreamanual-toolkit' ); ?></li>
+            <li><?php echo esc_html__('"Visible After Hiding" determines which logged-in roles can still see content when a channel is hidden. If none selected, only administrators can see it.', 'dreamanual-toolkit' ); ?></li>
+            <li><?php echo esc_html__('All channels checked (default) = no processing for this category.', 'dreamanual-toolkit' ); ?></li>
         </ol>
-        <p><strong><?php echo esc_html__( '示例：', 'dreamanual-toolkit' ); ?></strong><?php echo esc_html__( '"日记"分类，取消所有渠道勾选 + 可见角色选「管理员」= 全站隐藏，只有管理员能看（包括直链也会 404）。', 'dreamanual-toolkit' ); ?></p>
-        <p><strong><?php echo esc_html__( '示例：', 'dreamanual-toolkit' ); ?></strong><?php echo esc_html__( '"小程序精选"分类，只勾选 REST API，其他取消 + 可见角色选「管理员」= 前台不显示且直链 404，但小程序通过 API 仍能读取。', 'dreamanual-toolkit' ); ?></p>
+        <p><strong><?php echo esc_html__('Examples:', 'dreamanual-toolkit' ); ?></strong><?php echo esc_html__('"Diary" category: uncheck all channels + set visible role to "Administrator" = hidden site-wide, only administrators can see (direct links also return 404).', 'dreamanual-toolkit' ); ?></p>
+        <p><strong><?php echo esc_html__('Examples:', 'dreamanual-toolkit' ); ?></strong><?php echo esc_html__('"Mini-Program Picks" category: check only REST API, uncheck others + set visible role to "Administrator" = hidden on frontend and direct link returns 404, but mini-program can still read via API.', 'dreamanual-toolkit' ); ?></p>
     </div>
 
     <!-- Toast -->
@@ -43,25 +43,25 @@ $drea_channel_labels = [
 
     <div class="drea-cv-rules-panel">
         <div class="drea-cv-rules-header">
-            <h2><?php echo esc_html__( '分类可见性规则', 'dreamanual-toolkit' ); ?></h2>
-            <button type="button" class="drea-btn drea-btn--primary" id="drea-cv-save-btn" disabled><?php echo esc_html__( '保存规则', 'dreamanual-toolkit' ); ?></button>
+            <h2><?php echo esc_html__('Category Visibility Rules', 'dreamanual-toolkit' ); ?></h2>
+            <button type="button" class="drea-btn drea-btn--primary" id="drea-cv-save-btn" disabled><?php echo esc_html__('Save Rules', 'dreamanual-toolkit' ); ?></button>
         </div>
 
         <table class="wp-list-table widefat fixed striped drea-cv-rules-table">
             <thead>
                 <tr>
-                    <th class="drea-cv-col-cat"><?php echo esc_html__( '分类', 'dreamanual-toolkit' ); ?></th>
+                    <th class="drea-cv-col-cat"><?php echo esc_html__('Category', 'dreamanual-toolkit' ); ?></th>
                     <?php foreach ( $drea_channels as $drea_ch ) : ?>
                         <th class="drea-cv-col-channel"><?php echo esc_html( $drea_channel_labels[ $drea_ch ] ?? $drea_ch ); ?></th>
                     <?php endforeach; ?>
-                    <th class="drea-cv-col-roles"><?php echo esc_html__( '隐藏后仍可见角色', 'dreamanual-toolkit' ); ?></th>
+                    <th class="drea-cv-col-roles"><?php echo esc_html__('Visible After Hiding', 'dreamanual-toolkit' ); ?></th>
                 </tr>
             </thead>
             <tbody>
                 <?php if ( empty( $drea_categories ) ) : ?>
                     <tr>
                         <td colspan="<?php echo esc_attr( count( $drea_channels ) + 2 ); ?>" class="drea-cv-empty">
-                            <?php echo esc_html__( '暂无分类。请先在「文章 → 分类」中创建分类后再配置可见性规则。', 'dreamanual-toolkit' ); ?>
+                            <?php echo esc_html__('No categories yet. Please create categories in "Posts → Categories" before configuring visibility rules.', 'dreamanual-toolkit' ); ?>
                         </td>
                     </tr>
                 <?php else : ?>
@@ -103,7 +103,7 @@ $drea_channel_labels = [
 
     <!-- 文章级隐藏说明 -->
     <div class="drea-cv-posts-info">
-        <h2><?php echo esc_html__( '文章级隐藏', 'dreamanual-toolkit' ); ?></h2>
-        <p><?php echo esc_html__( '在文章列表页，可通过"可见性"列或行操作快速隐藏单篇文章。隐藏的文章不会出现在列表中，直链访问也会返回 404。', 'dreamanual-toolkit' ); ?></p>
+        <h2><?php echo esc_html__('Post-Level Hide', 'dreamanual-toolkit' ); ?></h2>
+        <p><?php echo esc_html__('On the post list page, quickly hide individual posts via the "Visibility" column or row actions. Hidden posts won\'t appear in lists, and direct links return 404.', 'dreamanual-toolkit' ); ?></p>
     </div>
 </div>

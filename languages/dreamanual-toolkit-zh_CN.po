@@ -2,139 +2,143 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Dreamanual Toolkit 1.4.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/dreamanual-toolkit\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Project-Id-Version: Dreamanual Toolkit 1.3.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/dreamanual-"
+"toolkit\n"
+"POT-Creation-Date: 2026-08-25T01:53:09+00:00\n"
+"PO-Revision-Date: 2026-08-21T10:05:26+00:00\n"
+"Last-Translator: Dreamanual <wuyifa001@users.noreply.wordpress.org>\n"
+"Language-Team: Chinese (Simplified) <https://translate.wordpress.org/"
+"projects/wp-plugins/dreamanual-toolkit>\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-25T01:53:09+00:00\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.12.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Domain: dreamanual-toolkit\n"
 
 #. Plugin Name of the plugin
 #: dreamanual-toolkit.php
 msgid "Dreamanual Toolkit"
-msgstr ""
+msgstr "Dreamanual Toolkit"
 
 #. Plugin URI of the plugin
 #: dreamanual-toolkit.php
 msgid "https://github.com/ShitFool/dreamanual-toolkit"
-msgstr ""
+msgstr "https://github.com/ShitFool/dreamanual-toolkit"
 
 #. Description of the plugin
 #: dreamanual-toolkit.php
-msgid "Modular WordPress toolbox consolidating AI optimization, content visibility, role management, site enhancement, and more into independent modules."
+msgid ""
+"Modular WordPress toolbox consolidating AI optimization, content visibility, "
+"role management, site enhancement, and more into independent modules."
 msgstr ""
+"模块化 WordPress 工具箱，整合 AI 优化、内容可见性、角色管理、站点增强等功能。"
 
 #. Author of the plugin
 #: dreamanual-toolkit.php
 msgid "Dreamanual"
-msgstr ""
+msgstr "Dreamanual"
 
 #. Author URI of the plugin
 #: dreamanual-toolkit.php
 msgid "https://dreamanual.com"
-msgstr ""
+msgstr "https://dreamanual.com"
 
 #: includes/admin-modules-page.php:22
 msgid "No available modules found."
-msgstr ""
+msgstr "未发现可用模块。"
 
-#: includes/admin-modules-page.php:45
-#: includes/class-core.php:284
+#: includes/admin-modules-page.php:45 includes/class-core.php:284
 msgid "Enabled"
-msgstr ""
+msgstr "已启用"
 
 #: includes/admin-modules-page.php:46
 msgid "Inactive"
-msgstr ""
+msgstr "未启用"
 
-#: includes/admin-modules-page.php:51
-#: includes/class-core.php:347
+#: includes/admin-modules-page.php:51 includes/class-core.php:347
 msgid "Settings"
-msgstr ""
+msgstr "设置"
 
 #: includes/class-ai-client.php:92
 msgid "Unsupported AI provider."
-msgstr ""
+msgstr "不支持的 AI 提供商。"
 
-#: includes/class-ai-client.php:266
-#: includes/class-ai-client.php:314
+#: includes/class-ai-client.php:266 includes/class-ai-client.php:314
 msgid "Invalid API response format."
-msgstr ""
+msgstr "API 响应格式无效。"
 
 #: includes/class-ai-client.php:340
-msgid "AI response format abnormal, cannot parse. Please retry or switch AI model."
-msgstr ""
+msgid ""
+"AI response format abnormal, cannot parse. Please retry or switch AI model."
+msgstr "AI 返回的内容格式异常，无法解析。请重试或更换 AI 模型。"
 
 #: includes/class-ai-client.php:345
 msgid "No valid fields in AI response."
-msgstr ""
+msgstr "AI 响应中无有效字段。"
 
 #: includes/class-ai-client.php:370
 msgid "API Key invalid or expired, please check AI Optimizer settings."
-msgstr ""
+msgstr "API Key 无效或已过期，请检查 AI 优化设置。"
 
 #: includes/class-ai-client.php:374
-msgid "AI API quota insufficient, balance too low, or rate limited. Please check your account or retry later."
-msgstr ""
+msgid ""
+"AI API quota insufficient, balance too low, or rate limited. Please check "
+"your account or retry later."
+msgstr "AI API 配额不足、余额不够或触发限流，请检查账户或稍后重试。"
 
 #: includes/class-ai-client.php:378
-msgid "Content blocked by AI provider's safety policy, please modify content or switch provider."
-msgstr ""
+msgid ""
+"Content blocked by AI provider's safety policy, please modify content or "
+"switch provider."
+msgstr "内容被 AI 提供商安全策略拦截，请修改内容或更换提供商。"
 
 #: includes/class-ai-client.php:382
 msgid "AI service temporarily unavailable, please retry later."
-msgstr ""
+msgstr "AI 服务暂时不可用，请稍后重试。"
 
 #: includes/class-ai-client.php:386
-msgid "AI request parameters invalid, please check model name and request settings."
-msgstr ""
+msgid ""
+"AI request parameters invalid, please check model name and request settings."
+msgstr "AI 请求参数有误，请检查模型名称和请求设置是否正确。"
 
 #. translators: %d: HTTP status code
 #: includes/class-ai-client.php:390
 #, php-format
 msgid "AI request failed (HTTP %1$d), please retry later."
-msgstr ""
+msgstr "AI 请求失败（HTTP %1$d），请稍后重试。"
 
 #: includes/class-ai-client.php:402
 msgid "AI request timed out, please retry later."
-msgstr ""
+msgstr "AI 请求超时，请稍后重试。"
 
 #: includes/class-ai-client.php:405
 msgid "Cannot connect to AI service, please check network."
-msgstr ""
+msgstr "无法连接 AI 服务，请检查网络。"
 
-#: includes/class-ai-client.php:407
-#: modules/ai-optimizer/ai-optimizer.php:268
+#: includes/class-ai-client.php:407 modules/ai-optimizer/ai-optimizer.php:268
 #: modules/ai-optimizer/ai-optimizer.php:323
 msgid "Network error, please check connection."
-msgstr ""
+msgstr "网络错误，请检查连接。"
 
 #: includes/class-ai-client.php:410
 msgid "Request failed, please check network connection or retry later."
-msgstr ""
+msgstr "请求失败，请检查网络连接或稍后重试。"
 
-#: includes/class-core.php:97
-#: includes/class-core.php:126
+#: includes/class-core.php:97 includes/class-core.php:126
 msgid "Unknown module"
-msgstr ""
+msgstr "未知模块"
 
-#: includes/class-core.php:212
-#: includes/class-core.php:213
+#: includes/class-core.php:212 includes/class-core.php:213
 msgid "DM Toolkit"
-msgstr ""
+msgstr "DM工具箱"
 
-#: includes/class-core.php:224
-#: includes/class-core.php:225
+#: includes/class-core.php:224 includes/class-core.php:225
 msgid "Modules"
-msgstr ""
+msgstr "模块管理"
 
-#: includes/class-core.php:239
-#: modules/ai-optimizer/ai-optimizer.php:152
+#: includes/class-core.php:239 modules/ai-optimizer/ai-optimizer.php:152
 #: modules/ai-optimizer/ai-optimizer.php:162
 #: modules/content-visibility/content-visibility.php:402
 #: modules/role-manager/role-manager.php:104
@@ -142,23 +146,23 @@ msgstr ""
 #: modules/site-enhance/site-enhance.php:222
 #: modules/site-optimize/site-optimize.php:479
 msgid "You do not have permission to access this page."
-msgstr ""
+msgstr "您没有权限访问此页面。"
 
 #: includes/class-core.php:282
 msgid "Enabling…"
-msgstr ""
+msgstr "启用中…"
 
 #: includes/class-core.php:283
 msgid "Disabling…"
-msgstr ""
+msgstr "停用中…"
 
 #: includes/class-core.php:285
 msgid "Disabled"
-msgstr ""
+msgstr "已停用"
 
 #: includes/class-core.php:286
 msgid "Operation failed, please retry"
-msgstr ""
+msgstr "操作失败，请重试"
 
 #: includes/class-core.php:311
 #: modules/content-visibility/content-visibility.php:461
@@ -179,117 +183,118 @@ msgstr ""
 #: modules/site-optimize/site-optimize.php:527
 #: modules/site-optimize/site-optimize.php:566
 msgid "Insufficient permissions"
-msgstr ""
+msgstr "权限不足"
 
-#: includes/class-core.php:318
-#: modules/role-manager/role-manager.php:368
+#: includes/class-core.php:318 modules/role-manager/role-manager.php:368
 msgid "Invalid parameter"
-msgstr ""
+msgstr "参数无效"
 
 #: modules/ai-optimizer/admin/batch-page.php:12
 #: modules/ai-optimizer/ai-optimizer.php:129
 msgid "AI Optimizer — Batch Process"
-msgstr ""
+msgstr "AI 优化 — 批量处理"
 
 #: modules/ai-optimizer/admin/batch-page.php:14
-msgid "Select posts to auto-generate tags, slug, and excerpt. Please configure API Key in settings first."
-msgstr ""
+msgid ""
+"Select posts to auto-generate tags, slug, and excerpt. Please configure API "
+"Key in settings first."
+msgstr "选择文章自动生成标签、Slug 和摘要。请先在设置中配置 API Key。"
 
 #: modules/ai-optimizer/admin/batch-page.php:24
 #: modules/ai-optimizer/ai-optimizer.php:286
 msgid "Processing..."
-msgstr ""
+msgstr "处理中..."
 
 #: modules/ai-optimizer/admin/batch-page.php:30
 msgid "Pending Changes"
-msgstr ""
+msgstr "待应用更改"
 
 #: modules/ai-optimizer/admin/batch-page.php:31
 msgid "Apply All Changes"
-msgstr ""
+msgstr "应用所有更改"
 
 #: modules/ai-optimizer/admin/batch-page.php:38
 msgid "Post Title"
-msgstr ""
+msgstr "文章标题"
 
 #: modules/ai-optimizer/admin/batch-page.php:39
 #: modules/ai-optimizer/admin/batch-page.php:86
 #: modules/ai-optimizer/admin/settings-page.php:98
 msgid "Current Tags"
-msgstr ""
+msgstr "当前标签"
 
 #: modules/ai-optimizer/admin/batch-page.php:40
 msgid "New Tags"
-msgstr ""
+msgstr "新标签"
 
 #: modules/ai-optimizer/admin/batch-page.php:41
 #: modules/ai-optimizer/admin/batch-page.php:87
 msgid "Current Slug"
-msgstr ""
+msgstr "当前 Slug"
 
 #: modules/ai-optimizer/admin/batch-page.php:42
 msgid "New Slug"
-msgstr ""
+msgstr "新 Slug"
 
 #: modules/ai-optimizer/admin/batch-page.php:43
 msgid "Current Excerpt"
-msgstr ""
+msgstr "当前摘要"
 
 #: modules/ai-optimizer/admin/batch-page.php:44
 msgid "New Excerpt"
-msgstr ""
+msgstr "新摘要"
 
 #: modules/ai-optimizer/admin/batch-page.php:45
 #: modules/ai-optimizer/admin/batch-page.php:91
 #: modules/role-manager/admin/roles-page.php:33
 msgid "Actions"
-msgstr ""
+msgstr "操作"
 
 #: modules/ai-optimizer/admin/batch-page.php:56
 msgid "Post List"
-msgstr ""
+msgstr "文章列表"
 
 #: modules/ai-optimizer/admin/batch-page.php:59
 msgid "Category Filter:"
-msgstr ""
+msgstr "分类筛选:"
 
 #: modules/ai-optimizer/admin/batch-page.php:61
 msgid "All"
-msgstr ""
+msgstr "全部"
 
 #: modules/ai-optimizer/admin/batch-page.php:70
 #: modules/ai-optimizer/admin/meta-box.php:21
 msgid "Tags"
-msgstr ""
+msgstr "标签"
 
 #: modules/ai-optimizer/admin/batch-page.php:71
 #: modules/ai-optimizer/admin/meta-box.php:27
 msgid "Slug"
-msgstr ""
+msgstr "别名"
 
 #: modules/ai-optimizer/admin/batch-page.php:72
 #: modules/ai-optimizer/admin/meta-box.php:32
 #: modules/site-enhance/site-enhance.php:713
 msgid "Excerpt"
-msgstr ""
+msgstr "摘要"
 
 #: modules/ai-optimizer/admin/batch-page.php:74
 msgid "Select All"
-msgstr ""
+msgstr "全选"
 
 #: modules/ai-optimizer/admin/batch-page.php:75
 #: modules/ai-optimizer/admin/meta-box.php:14
 msgid "Generate AI Suggestions"
-msgstr ""
+msgstr "生成 AI 建议"
 
 #: modules/ai-optimizer/admin/batch-page.php:85
 #: modules/ai-optimizer/admin/settings-page.php:95
 msgid "Title"
-msgstr ""
+msgstr "标题"
 
 #: modules/ai-optimizer/admin/batch-page.php:88
 msgid "AI Tags"
-msgstr ""
+msgstr "AI 标签"
 
 #: modules/ai-optimizer/admin/batch-page.php:89
 msgid "AI Slug"
@@ -297,46 +302,50 @@ msgstr ""
 
 #: modules/ai-optimizer/admin/batch-page.php:90
 msgid "AI Excerpt"
-msgstr ""
+msgstr "AI 摘要"
 
 #: modules/ai-optimizer/admin/meta-box.php:12
-msgid "AI automatically generates optimization suggestions based on post title and content."
-msgstr ""
+msgid ""
+"AI automatically generates optimization suggestions based on post title and "
+"content."
+msgstr "AI 根据文章标题和内容自动生成优化建议。"
 
 #: modules/ai-optimizer/admin/meta-box.php:37
 #: modules/ai-optimizer/ai-optimizer.php:336
 msgid "Apply Changes"
-msgstr ""
+msgstr "应用更改"
 
 #: modules/ai-optimizer/admin/meta-box.php:38
 #: modules/ai-optimizer/ai-optimizer.php:284
 msgid "Regenerate"
-msgstr ""
+msgstr "重新生成"
 
 #: modules/ai-optimizer/admin/settings-page.php:12
 #: modules/ai-optimizer/ai-optimizer.php:139
 msgid "AI Optimizer — Settings"
-msgstr ""
+msgstr "AI 优化 — 设置"
 
 #: modules/ai-optimizer/admin/settings-page.php:14
-msgid "Configure AI provider, model, and generation options. After saving, use the batch process page or post editor."
-msgstr ""
+msgid ""
+"Configure AI provider, model, and generation options. After saving, use the "
+"batch process page or post editor."
+msgstr "配置 AI 提供商、模型和生成选项。保存后使用批量处理页或文章编辑器。"
 
 #: modules/ai-optimizer/admin/settings-page.php:20
 msgid "AI Configuration"
-msgstr ""
+msgstr "AI 配置"
 
 #: modules/ai-optimizer/admin/settings-page.php:23
 msgid "AI Provider"
-msgstr ""
+msgstr "AI 提供商"
 
 #: modules/ai-optimizer/admin/settings-page.php:26
 msgid "DeepSeek (Recommended)"
-msgstr ""
+msgstr "DeepSeek（推荐）"
 
 #: modules/ai-optimizer/admin/settings-page.php:27
 msgid "Kimi (Moonshot)"
-msgstr ""
+msgstr "Kimi（月之暗面）"
 
 #: modules/ai-optimizer/admin/settings-page.php:28
 msgid "OpenAI"
@@ -344,283 +353,295 @@ msgstr ""
 
 #: modules/ai-optimizer/admin/settings-page.php:29
 msgid "Claude (Anthropic)"
-msgstr ""
+msgstr "Claude（Anthropic）"
 
 #: modules/ai-optimizer/admin/settings-page.php:32
-msgid "DeepSeek recommended — cost-effective with lenient content review. Switch if blocked."
-msgstr ""
+msgid ""
+"DeepSeek recommended — cost-effective with lenient content review. Switch if "
+"blocked."
+msgstr "推荐 DeepSeek —— 性价比高，审核宽松。如被拦截可切换。"
 
 #: modules/ai-optimizer/admin/settings-page.php:37
 msgid "AI Model"
-msgstr ""
+msgstr "AI 模型"
 
 #: modules/ai-optimizer/admin/settings-page.php:40
 msgid "Select AI model. Switch if blocked by content review."
-msgstr ""
+msgstr "选择 AI 模型。如被审核拦截可切换。"
 
 #: modules/ai-optimizer/admin/settings-page.php:46
 msgid "Enter API Key"
-msgstr ""
+msgstr "输入 API Key"
 
 #: modules/ai-optimizer/admin/settings-page.php:47
 msgid "API Key will be encrypted and stored in the database."
-msgstr ""
+msgstr "API Key 将加密存储于数据库。"
 
 #: modules/ai-optimizer/admin/settings-page.php:54
 msgid "Generation Options"
-msgstr ""
+msgstr "生成选项"
 
 #: modules/ai-optimizer/admin/settings-page.php:55
 #: modules/ai-optimizer/ai-optimizer.php:327
 msgid "(click to expand)"
-msgstr ""
+msgstr "（点击展开）"
 
 #: modules/ai-optimizer/admin/settings-page.php:60
 msgid "Default Toggles"
-msgstr ""
+msgstr "默认开关"
 
 #: modules/ai-optimizer/admin/settings-page.php:63
 msgid "Optimize Tags"
-msgstr ""
+msgstr "优化标签"
 
 #: modules/ai-optimizer/admin/settings-page.php:66
 msgid "Optimize Slug"
-msgstr ""
+msgstr "优化 Slug"
 
 #: modules/ai-optimizer/admin/settings-page.php:69
 msgid "Optimize Excerpt"
-msgstr ""
+msgstr "优化摘要"
 
 #: modules/ai-optimizer/admin/settings-page.php:71
-msgid "Select items for AI optimization. Recommended to enable only one at a time to reduce the risk of being blocked."
-msgstr ""
+msgid ""
+"Select items for AI optimization. Recommended to enable only one at a time "
+"to reduce the risk of being blocked."
+msgstr "选择 AI 优化的项目。建议一次只开一个，降低被审核拦截的风险。"
 
 #: modules/ai-optimizer/admin/settings-page.php:75
 msgid "Tag Count Limit"
-msgstr ""
+msgstr "标签数量上限"
 
 #: modules/ai-optimizer/admin/settings-page.php:78
 msgid "Maximum number of tags AI generates. Default 5, range 1-20."
-msgstr ""
+msgstr "AI 生成的标签最大数量。默认 5，范围 1-20。"
 
 #: modules/ai-optimizer/admin/settings-page.php:82
 #: modules/ai-optimizer/admin/settings-page.php:97
 msgid "Excerpt Length"
-msgstr ""
+msgstr "摘要长度"
 
 #: modules/ai-optimizer/admin/settings-page.php:85
 msgid "chars"
-msgstr ""
+msgstr "字"
 
 #: modules/ai-optimizer/admin/settings-page.php:86
-msgid "Control excerpt length. Default 100, range 50-500. If custom prompt is set, it takes precedence."
-msgstr ""
+msgid ""
+"Control excerpt length. Default 100, range 50-500. If custom prompt is set, "
+"it takes precedence."
+msgstr "控制摘要长度。默认 100，范围 50-500。如有自定义提示词则以提示词为准。"
 
 #: modules/ai-optimizer/admin/settings-page.php:90
 msgid "Excerpt Prompt"
-msgstr ""
+msgstr "摘要提示词"
 
 #: modules/ai-optimizer/admin/settings-page.php:94
-msgid "Custom excerpt generation prompt. Leave empty to use default (shown as placeholder text). Supported placeholders:"
-msgstr ""
+msgid ""
+"Custom excerpt generation prompt. Leave empty to use default (shown as "
+"placeholder text). Supported placeholders:"
+msgstr "自定义摘要生成提示词，留空则使用默认（见输入框灰字）。支持的占位符:"
 
 #: modules/ai-optimizer/admin/settings-page.php:96
 msgid "Content"
-msgstr ""
+msgstr "内容"
 
 #: modules/ai-optimizer/admin/settings-page.php:99
 msgid "Existing Tags"
-msgstr ""
+msgstr "已有标签"
 
 #: modules/ai-optimizer/admin/settings-page.php:107
 #: modules/search-push/admin/settings-page.php:111
 #: modules/site-enhance/admin/settings-page.php:354
 #: modules/site-optimize/admin/settings-page.php:75
 msgid "Save Settings"
-msgstr ""
+msgstr "保存设置"
 
 #: modules/ai-optimizer/ai-optimizer.php:33
 #: modules/ai-optimizer/ai-optimizer.php:130
 #: modules/ai-optimizer/ai-optimizer.php:175
 msgid "AI Optimizer"
-msgstr ""
+msgstr "AI 优化"
 
 #: modules/ai-optimizer/ai-optimizer.php:40
-msgid "AI auto-generates tags, slugs, and excerpts. Supports DeepSeek / Kimi / OpenAI / Claude."
-msgstr ""
+msgid ""
+"AI auto-generates tags, slugs, and excerpts. Supports DeepSeek / Kimi / "
+"OpenAI / Claude."
+msgstr "AI 自动生成标签、Slug、摘要，支持 DeepSeek / Kimi / OpenAI / Claude。"
 
 #: modules/ai-optimizer/ai-optimizer.php:140
 msgid "AI Settings"
-msgstr ""
+msgstr "AI 设置"
 
 #: modules/ai-optimizer/ai-optimizer.php:267
 #: modules/search-push/search-push.php:378
 msgid "Unknown error"
-msgstr ""
+msgstr "未知错误"
 
 #: modules/ai-optimizer/ai-optimizer.php:275
 msgid "Please configure API Key in settings first."
-msgstr ""
+msgstr "请先在设置中配置 API Key。"
 
 #: modules/ai-optimizer/ai-optimizer.php:276
 msgid "Failed to load settings, please refresh."
-msgstr ""
+msgstr "加载设置失败，请刷新。"
 
 #: modules/ai-optimizer/ai-optimizer.php:277
 msgid " posts loaded"
-msgstr ""
+msgstr " 篇文章已加载"
 
 #: modules/ai-optimizer/ai-optimizer.php:278
 msgid "No posts in this category."
-msgstr ""
+msgstr "该分类下无文章。"
 
 #: modules/ai-optimizer/ai-optimizer.php:279
 msgid "Load failed: "
-msgstr ""
+msgstr "加载失败: "
 
 #: modules/ai-optimizer/ai-optimizer.php:280
 msgid "No posts"
-msgstr ""
+msgstr "暂无文章"
 
 #: modules/ai-optimizer/ai-optimizer.php:281
 msgid "No tags"
-msgstr ""
+msgstr "无标签"
 
 #: modules/ai-optimizer/ai-optimizer.php:282
 #: modules/ai-optimizer/ai-optimizer.php:338
 msgid "Not generated"
-msgstr ""
+msgstr "未生成"
 
 #: modules/ai-optimizer/ai-optimizer.php:283
 msgid "Generate"
-msgstr ""
+msgstr "生成"
 
 #: modules/ai-optimizer/ai-optimizer.php:285
 msgid "Apply"
-msgstr ""
+msgstr "应用"
 
 #: modules/ai-optimizer/ai-optimizer.php:287
 msgid "Done!"
-msgstr ""
+msgstr "完成!"
 
 #: modules/ai-optimizer/ai-optimizer.php:288
 msgid "Generating..."
-msgstr ""
+msgstr "生成中..."
 
 #: modules/ai-optimizer/ai-optimizer.php:289
 msgid " generated successfully"
-msgstr ""
+msgstr " 生成成功"
 
 #: modules/ai-optimizer/ai-optimizer.php:290
 msgid " failed: "
-msgstr ""
+msgstr " 失败: "
 
 #: modules/ai-optimizer/ai-optimizer.php:291
 msgid "Retry"
-msgstr ""
+msgstr "重试"
 
 #: modules/ai-optimizer/ai-optimizer.php:292
 msgid "Failed to load existing tags, tag deduplication will not work."
-msgstr ""
+msgstr "加载已有标签失败，将无法进行标签去重。"
 
 #: modules/ai-optimizer/ai-optimizer.php:293
 msgid "Apply AI suggestions to \"{title}\"?"
-msgstr ""
+msgstr "确认将 AI 建议应用到「{title}」？"
 
 #: modules/ai-optimizer/ai-optimizer.php:294
 msgid "Tags:"
-msgstr ""
+msgstr "标签："
 
 #: modules/ai-optimizer/ai-optimizer.php:295
 msgid "Slug:"
-msgstr ""
+msgstr "Slug："
 
 #: modules/ai-optimizer/ai-optimizer.php:296
 msgid "Excerpt:"
-msgstr ""
+msgstr "摘要："
 
 #: modules/ai-optimizer/ai-optimizer.php:297
 msgid "No pending changes."
-msgstr ""
+msgstr "无待应用更改。"
 
 #: modules/ai-optimizer/ai-optimizer.php:298
 msgid "Apply AI suggestions to "
-msgstr ""
+msgstr "将 AI 建议应用到 "
 
 #: modules/ai-optimizer/ai-optimizer.php:299
 msgid " posts?"
-msgstr ""
+msgstr " 篇文章？"
 
 #: modules/ai-optimizer/ai-optimizer.php:300
-msgid "Note: Changing the Slug will cause old URLs to return 404. Ensure proper redirects are in place."
-msgstr ""
+msgid ""
+"Note: Changing the Slug will cause old URLs to return 404. Ensure proper "
+"redirects are in place."
+msgstr "注意：更改 Slug 会导致旧 URL 404，请确保有正确的重定向。"
 
 #: modules/ai-optimizer/ai-optimizer.php:301
 msgid "Excerpt changes will overwrite current content."
-msgstr ""
+msgstr "摘要更改将覆盖当前内容。"
 
 #: modules/ai-optimizer/ai-optimizer.php:302
 msgid "applying "
-msgstr ""
+msgstr "正在应用 "
 
 #: modules/ai-optimizer/ai-optimizer.php:303
 msgid "All changes applied! Refresh page to see updates."
-msgstr ""
+msgstr "所有更改已应用！刷新页面查看更新。"
 
 #: modules/ai-optimizer/ai-optimizer.php:304
 msgid " changes applied"
-msgstr ""
+msgstr " 项更改已应用"
 
 #: modules/ai-optimizer/ai-optimizer.php:305
 msgid " apply failed: "
-msgstr ""
+msgstr " 应用失败: "
 
 #: modules/ai-optimizer/ai-optimizer.php:306
 msgid " network error"
-msgstr ""
+msgstr " 网络错误"
 
 #: modules/ai-optimizer/ai-optimizer.php:307
 #: modules/ai-optimizer/ai-optimizer.php:322
 msgid "Failed to load settings, please refresh and retry."
-msgstr ""
+msgstr "加载设置失败，请刷新页面重试。"
 
 #: modules/ai-optimizer/ai-optimizer.php:308
 #: modules/ai-optimizer/ai-optimizer.php:324
 msgid "Tag count must be between 1-20."
-msgstr ""
+msgstr "标签数量必须在 1-20 之间。"
 
 #: modules/ai-optimizer/ai-optimizer.php:309
 #: modules/ai-optimizer/ai-optimizer.php:325
 msgid "Excerpt length must be between 50-500."
-msgstr ""
+msgstr "摘要长度必须在 50-500 之间。"
 
 #: modules/ai-optimizer/ai-optimizer.php:310
 msgid "Previous"
-msgstr ""
+msgstr "上一页"
 
 #: modules/ai-optimizer/ai-optimizer.php:311
 msgid "Next"
-msgstr ""
+msgstr "下一页"
 
 #: modules/ai-optimizer/ai-optimizer.php:312
 msgid "page "
-msgstr ""
+msgstr "第 "
 
 #: modules/ai-optimizer/ai-optimizer.php:313
 msgid "for selected "
-msgstr ""
+msgstr "为选中的 "
 
 #: modules/ai-optimizer/ai-optimizer.php:314
 msgid " posts to generate AI suggestions"
-msgstr ""
+msgstr " 篇生成 AI 建议"
 
 #: modules/ai-optimizer/ai-optimizer.php:315
 msgid "Succeeded {0}, failed {1}"
-msgstr ""
+msgstr "成功 {0} 篇，失败 {1} 篇"
 
 #: modules/ai-optimizer/ai-optimizer.php:316
 msgid "Some posts failed to apply, please check details above."
-msgstr ""
+msgstr "部分文章应用失败，请查看上方详情。"
 
 #: modules/ai-optimizer/ai-optimizer.php:320
 #: modules/ai-optimizer/ai-optimizer.php:665
@@ -631,39 +652,39 @@ msgstr ""
 #: modules/site-optimize/site-optimize.php:512
 #: modules/site-optimize/site-optimize.php:557
 msgid "Settings saved."
-msgstr ""
+msgstr "设置已保存。"
 
 #: modules/ai-optimizer/ai-optimizer.php:321
 msgid "Save failed: "
-msgstr ""
+msgstr "保存失败: "
 
 #: modules/ai-optimizer/ai-optimizer.php:326
 msgid "(click to collapse)"
-msgstr ""
+msgstr "（点击收起）"
 
 #: modules/ai-optimizer/ai-optimizer.php:331
 msgid "Please save the post draft first."
-msgstr ""
+msgstr "请先保存文章草稿。"
 
 #: modules/ai-optimizer/ai-optimizer.php:332
 msgid "Generation failed: "
-msgstr ""
+msgstr "生成失败: "
 
 #: modules/ai-optimizer/ai-optimizer.php:333
 msgid "No tags generated"
-msgstr ""
+msgstr "无标签生成"
 
 #: modules/ai-optimizer/ai-optimizer.php:334
 msgid "Applying..."
-msgstr ""
+msgstr "应用中..."
 
 #: modules/ai-optimizer/ai-optimizer.php:335
 msgid "Applied! Page will refresh."
-msgstr ""
+msgstr "已应用！页面将刷新。"
 
 #: modules/ai-optimizer/ai-optimizer.php:337
 msgid "Apply failed: "
-msgstr ""
+msgstr "应用失败: "
 
 #: modules/ai-optimizer/ai-optimizer.php:357
 #: modules/ai-optimizer/ai-optimizer.php:405
@@ -673,51 +694,54 @@ msgstr ""
 #: modules/ai-optimizer/ai-optimizer.php:613
 #: modules/ai-optimizer/ai-optimizer.php:675
 msgid "Insufficient permissions."
-msgstr ""
+msgstr "权限不足。"
 
 #: modules/ai-optimizer/ai-optimizer.php:425
 #: modules/ai-optimizer/ai-optimizer.php:465
 #: modules/ai-optimizer/ai-optimizer.php:522
 msgid "Invalid post ID."
-msgstr ""
+msgstr "无效的文章 ID。"
 
 #: modules/ai-optimizer/ai-optimizer.php:428
 msgid "Please enter API Key."
-msgstr ""
+msgstr "请输入 API Key。"
 
 #: modules/ai-optimizer/ai-optimizer.php:433
 #: modules/ai-optimizer/ai-optimizer.php:475
 #: modules/ai-optimizer/ai-optimizer.php:527
 msgid "Post not found."
-msgstr ""
+msgstr "文章未找到。"
 
 #: modules/ai-optimizer/ai-optimizer.php:470
 msgid "Please configure API Key in \"AI Optimizer → Settings\" first."
-msgstr ""
+msgstr "请先在\"AI 优化 → 设置\"中配置 API Key。"
 
 #: modules/ai-optimizer/ai-optimizer.php:535
 msgid "Tag save failed, please retry."
-msgstr ""
+msgstr "标签保存失败，请重试。"
 
 #: modules/ai-optimizer/ai-optimizer.php:551
 msgid "Post update failed, please retry."
-msgstr ""
+msgstr "文章更新失败，请重试。"
 
 #: modules/ai-optimizer/ai-optimizer.php:556
 msgid "Changes applied."
-msgstr ""
+msgstr "更改已应用。"
 
 #: modules/ai-optimizer/ai-optimizer.php:579
 msgid "Failed to load tag list, please retry."
-msgstr ""
+msgstr "加载标签列表失败，请重试。"
 
 #: modules/ai-optimizer/ai-optimizer.php:602
-msgid "AI processing failed, please retry later. If the issue persists, check AI Optimizer settings."
-msgstr ""
+msgid ""
+"AI processing failed, please retry later. If the issue persists, check AI "
+"Optimizer settings."
+msgstr "AI 处理失败，请稍后重试。如问题持续，请检查 AI 优化设置。"
 
 #: modules/ai-optimizer/ai-optimizer.php:629
-msgid "Unsupported AI provider, please choose DeepSeek / Kimi / OpenAI / Claude."
-msgstr ""
+msgid ""
+"Unsupported AI provider, please choose DeepSeek / Kimi / OpenAI / Claude."
+msgstr "不支持的 AI 提供商，请选择 DeepSeek / Kimi / OpenAI / Claude。"
 
 #: modules/ai-optimizer/ai-optimizer.php:654
 #: modules/content-visibility/content-visibility.php:443
@@ -731,15 +755,15 @@ msgstr ""
 #: modules/site-optimize/site-optimize.php:513
 #: modules/site-optimize/site-optimize.php:554
 msgid "Save failed, please retry."
-msgstr ""
+msgstr "保存失败，请重试。"
 
 #: modules/content-visibility/admin/settings-page.php:16
 msgid "Frontend Pages"
-msgstr ""
+msgstr "前端页面"
 
 #: modules/content-visibility/admin/settings-page.php:17
 msgid "RSS Feed"
-msgstr ""
+msgstr "RSS 订阅"
 
 #: modules/content-visibility/admin/settings-page.php:18
 msgid "REST API"
@@ -747,684 +771,756 @@ msgstr ""
 
 #: modules/content-visibility/admin/settings-page.php:19
 msgid "Site Search"
-msgstr ""
+msgstr "站内搜索"
 
 #: modules/content-visibility/admin/settings-page.php:20
 msgid "Sitemap"
-msgstr ""
+msgstr "站点地图"
 
 #: modules/content-visibility/admin/settings-page.php:25
 #: modules/content-visibility/content-visibility.php:44
 #: modules/content-visibility/content-visibility.php:389
 #: modules/content-visibility/content-visibility.php:390
 msgid "Content Visibility"
-msgstr ""
+msgstr "内容可见性"
 
 #: modules/content-visibility/admin/settings-page.php:27
-msgid "Configure display channels and visible roles per category. Uncategorized posts display normally on all channels."
-msgstr ""
+msgid ""
+"Configure display channels and visible roles per category. Uncategorized "
+"posts display normally on all channels."
+msgstr "按分类配置内容显示渠道和可见角色。未配置的分类在所有渠道正常显示。"
 
 #: modules/content-visibility/admin/settings-page.php:31
 msgid "Instructions"
-msgstr ""
+msgstr "使用说明"
 
 #: modules/content-visibility/admin/settings-page.php:33
-msgid "Channel column checked = category content shown on that channel; unchecked = hidden. All checked by default (show everywhere)."
+msgid ""
+"Channel column checked = category content shown on that channel; unchecked = "
+"hidden. All checked by default (show everywhere)."
 msgstr ""
+"渠道列勾选 = 该分类内容在此渠道显示；取消勾选 = 在此渠道隐藏。默认全勾选（全"
+"部显示）。"
 
 #: modules/content-visibility/admin/settings-page.php:34
-msgid "\"Visible After Hiding\" determines which logged-in roles can still see content when a channel is hidden. If none selected, only administrators can see it."
+msgid ""
+"\"Visible After Hiding\" determines which logged-in roles can still see "
+"content when a channel is hidden. If none selected, only administrators can "
+"see it."
 msgstr ""
+"「隐藏后仍可见角色」决定：渠道被隐藏时，哪些登录角色仍能看见。不选则仅管理员"
+"可见。"
 
 #: modules/content-visibility/admin/settings-page.php:35
 msgid "All channels checked (default) = no processing for this category."
-msgstr ""
+msgstr "所有渠道都勾选（默认状态）= 该分类不做任何处理。"
 
 #: modules/content-visibility/admin/settings-page.php:37
 #: modules/content-visibility/admin/settings-page.php:38
 msgid "Examples:"
-msgstr ""
+msgstr "示例："
 
 #: modules/content-visibility/admin/settings-page.php:37
-msgid "\"Diary\" category: uncheck all channels + set visible role to \"Administrator\" = hidden site-wide, only administrators can see (direct links also return 404)."
+msgid ""
+"\"Diary\" category: uncheck all channels + set visible role to "
+"\"Administrator\" = hidden site-wide, only administrators can see (direct "
+"links also return 404)."
 msgstr ""
+"\"日记\"分类，取消所有渠道勾选 + 可见角色选「管理员」= 全站隐藏，只有管理员能"
+"看（包括直链也会 404）。"
 
 #: modules/content-visibility/admin/settings-page.php:38
-msgid "\"Mini-Program Picks\" category: check only REST API, uncheck others + set visible role to \"Administrator\" = hidden on frontend and direct link returns 404, but mini-program can still read via API."
+msgid ""
+"\"Mini-Program Picks\" category: check only REST API, uncheck others + set "
+"visible role to \"Administrator\" = hidden on frontend and direct link "
+"returns 404, but mini-program can still read via API."
 msgstr ""
+"\"小程序精选\"分类，只勾选 REST API，其他取消 + 可见角色选「管理员」= 前台不"
+"显示且直链 404，但小程序通过 API 仍能读取。"
 
 #: modules/content-visibility/admin/settings-page.php:46
 msgid "Category Visibility Rules"
-msgstr ""
+msgstr "分类可见性规则"
 
 #: modules/content-visibility/admin/settings-page.php:47
 msgid "Save Rules"
-msgstr ""
+msgstr "保存规则"
 
 #: modules/content-visibility/admin/settings-page.php:53
 msgid "Category"
-msgstr ""
+msgstr "分类"
 
 #: modules/content-visibility/admin/settings-page.php:57
 msgid "Visible After Hiding"
-msgstr ""
+msgstr "隐藏后仍可见角色"
 
 #: modules/content-visibility/admin/settings-page.php:64
-msgid "No categories yet. Please create categories in \"Posts → Categories\" before configuring visibility rules."
-msgstr ""
+msgid ""
+"No categories yet. Please create categories in \"Posts → Categories\" before "
+"configuring visibility rules."
+msgstr "暂无分类。请先在「文章 → 分类」中创建分类后再配置可见性规则。"
 
 #: modules/content-visibility/admin/settings-page.php:106
 msgid "Post-Level Hide"
-msgstr ""
+msgstr "文章级隐藏"
 
 #: modules/content-visibility/admin/settings-page.php:107
-msgid "On the post list page, quickly hide individual posts via the \"Visibility\" column or row actions. Hidden posts won't appear in lists, and direct links return 404."
+msgid ""
+"On the post list page, quickly hide individual posts via the \"Visibility\" "
+"column or row actions. Hidden posts won't appear in lists, and direct links "
+"return 404."
 msgstr ""
+"在文章列表页，可通过\"可见性\"列或行操作快速隐藏单篇文章。隐藏的文章不会出现"
+"在列表中，直链访问也会返回 404。"
 
 #: modules/content-visibility/content-visibility.php:51
-msgid "Control content visibility by category/post, with channel- and role-level configuration."
-msgstr ""
+msgid ""
+"Control content visibility by category/post, with channel- and role-level "
+"configuration."
+msgstr "按分类/文章控制内容可见性，支持渠道和角色粒度配置。"
 
 #: modules/content-visibility/content-visibility.php:294
 msgid "Page does not exist."
-msgstr ""
+msgstr "页面不存在。"
 
 #: modules/content-visibility/content-visibility.php:442
 #: modules/content-visibility/content-visibility.php:505
 msgid "Rules saved."
-msgstr ""
+msgstr "规则已保存。"
 
 #: modules/content-visibility/content-visibility.php:444
 #: modules/search-push/search-push.php:175
 #: modules/site-enhance/site-enhance.php:270
 msgid "Operation failed, please retry later."
-msgstr ""
+msgstr "操作失败，请稍后重试。"
 
 #: modules/content-visibility/content-visibility.php:445
 msgid "Failed to toggle visibility, please retry."
-msgstr ""
+msgstr "切换可见性失败，请重试。"
 
 #: modules/content-visibility/content-visibility.php:446
-msgid "Hide this post? Hidden posts won't appear in lists, and direct links return 404."
+msgid ""
+"Hide this post? Hidden posts won't appear in lists, and direct links return "
+"404."
 msgstr ""
+"确定要隐藏这篇文章吗？隐藏后文章不会出现在列表中，直链访问也会返回 404。"
 
 #: modules/content-visibility/content-visibility.php:447
 msgid "Show this post?"
-msgstr ""
+msgstr "确定要显示这篇文章吗？"
 
 #: modules/content-visibility/content-visibility.php:448
-msgid "Warning: Some categories have hidden channels without selected visible roles. These categories will be hidden from all non-admin users (administrators may also be unable to view them on the frontend). Confirm save?"
+msgid ""
+"Warning: Some categories have hidden channels without selected visible "
+"roles. These categories will be hidden from all non-admin users "
+"(administrators may also be unable to view them on the frontend). Confirm "
+"save?"
 msgstr ""
+"警告：有分类隐藏了渠道但未选择可见角色，这些分类将对所有非管理员用户隐藏（包"
+"括管理员本人也可能无法在前台查看）。确认保存？"
 
 #: modules/content-visibility/content-visibility.php:468
 msgid "Invalid rule data format"
-msgstr ""
+msgstr "规则数据格式无效"
 
 #: modules/content-visibility/content-visibility.php:521
 msgid "Invalid post ID"
-msgstr ""
+msgstr "无效的文章 ID"
 
 #: modules/content-visibility/content-visibility.php:527
 msgid "Post does not exist or has been deleted."
-msgstr ""
+msgstr "文章不存在或已被删除。"
 
 #: modules/content-visibility/content-visibility.php:567
 msgid "All Visibility"
-msgstr ""
+msgstr "所有可见性"
 
 #: modules/content-visibility/content-visibility.php:568
 msgid "Hidden"
-msgstr ""
+msgstr "已隐藏"
 
 #: modules/content-visibility/content-visibility.php:569
 #: modules/content-visibility/content-visibility.php:635
 msgid "Visible"
-msgstr ""
+msgstr "可见"
 
 #: modules/content-visibility/content-visibility.php:607
 msgid "Show"
-msgstr ""
+msgstr "显示"
 
 #: modules/content-visibility/content-visibility.php:607
 #: modules/content-visibility/content-visibility.php:634
 msgid "Hide"
-msgstr ""
+msgstr "隐藏"
 
 #: modules/content-visibility/content-visibility.php:621
 msgid "Visibility"
-msgstr ""
+msgstr "可见性"
 
 #: modules/role-manager/admin/roles-page.php:12
 #: modules/role-manager/role-manager.php:34
 #: modules/role-manager/role-manager.php:91
 #: modules/role-manager/role-manager.php:92
 msgid "Role Manager"
-msgstr ""
+msgstr "角色管理"
 
 #: modules/role-manager/admin/roles-page.php:14
-msgid "Manage WordPress user roles and capabilities. Click a role to view details and edit capabilities."
-msgstr ""
+msgid ""
+"Manage WordPress user roles and capabilities. Click a role to view details "
+"and edit capabilities."
+msgstr "管理 WordPress 用户角色和能力。点击角色查看详情和编辑能力。"
 
 #: modules/role-manager/admin/roles-page.php:21
 #: modules/role-manager/admin/roles-page.php:45
 #: modules/role-manager/role-manager.php:158
 msgid "Add Role"
-msgstr ""
+msgstr "添加角色"
 
 #: modules/role-manager/admin/roles-page.php:29
 msgid "Role"
-msgstr ""
+msgstr "角色"
 
 #: modules/role-manager/admin/roles-page.php:30
 msgid "Key"
-msgstr ""
+msgstr "标识"
 
 #: modules/role-manager/admin/roles-page.php:31
 msgid "Users"
-msgstr ""
+msgstr "用户数"
 
 #: modules/role-manager/admin/roles-page.php:32
 msgid "Capabilities"
-msgstr ""
+msgstr "能力数"
 
 #: modules/role-manager/admin/roles-page.php:37
 msgid "Loading..."
-msgstr ""
+msgstr "加载中..."
 
 #: modules/role-manager/admin/roles-page.php:48
 msgid "Role Name"
-msgstr ""
+msgstr "角色名称"
 
 #: modules/role-manager/admin/roles-page.php:49
 msgid "e.g. Editorial Assistant"
-msgstr ""
+msgstr "如: 编辑助理"
 
 #: modules/role-manager/admin/roles-page.php:52
 msgid "Role Key"
-msgstr ""
+msgstr "角色标识"
 
 #: modules/role-manager/admin/roles-page.php:53
 msgid "e.g. editorial_assistant"
-msgstr ""
+msgstr "如: editorial_assistant"
 
 #: modules/role-manager/admin/roles-page.php:54
-msgid "Use lowercase letters and underscores. Cannot be modified after creation."
-msgstr ""
+msgid ""
+"Use lowercase letters and underscores. Cannot be modified after creation."
+msgstr "使用小写字母和下划线，不可修改。"
 
 #: modules/role-manager/admin/roles-page.php:59
 msgid "Confirm"
-msgstr ""
+msgstr "确认"
 
 #: modules/role-manager/admin/roles-page.php:60
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 #: modules/role-manager/admin/roles-page.php:69
 msgid "Close"
-msgstr ""
+msgstr "关闭"
 
 #: modules/role-manager/admin/roles-page.php:72
 msgid "Capability Matrix"
-msgstr ""
+msgstr "能力矩阵"
 
 #: modules/role-manager/admin/roles-page.php:73
 msgid "Check the capabilities this role should have."
-msgstr ""
+msgstr "勾选该角色应具备的能力。"
 
 #: modules/role-manager/admin/roles-page.php:76
 msgid "Save Capabilities"
-msgstr ""
+msgstr "保存能力"
 
 #: modules/role-manager/role-manager.php:41
-msgid "Visually manage WordPress user roles and capabilities, with role duplication and bulk editing support."
-msgstr ""
+msgid ""
+"Visually manage WordPress user roles and capabilities, with role duplication "
+"and bulk editing support."
+msgstr "可视化管理 WordPress 用户角色和能力，支持角色复制和批量编辑。"
 
 #. translators: %s: Role name
 #: modules/role-manager/role-manager.php:138
 #, php-format
 msgid "Delete role \"%s\"? This action cannot be undone."
-msgstr ""
+msgstr "确定要删除角色\"%s\"吗？此操作不可撤销。"
 
 #. translators: %d: Number of users with this role
 #: modules/role-manager/role-manager.php:140
 #, php-format
-msgid "Warning: This role has %d users. After deletion, these users will lose the role and may be unable to access the admin. Please assign them new roles before deleting."
+msgid ""
+"Warning: This role has %d users. After deletion, these users will lose the "
+"role and may be unable to access the admin. Please assign them new roles "
+"before deleting."
 msgstr ""
+"警告：该角色下有 %d 个用户，删除后这些用户将失去该角色，可能无法正常访问后"
+"台。请在删除前先为这些用户分配新角色。"
 
 #: modules/role-manager/role-manager.php:141
 msgid "Cannot delete built-in roles."
-msgstr ""
+msgstr "无法删除内置角色。"
 
 #: modules/role-manager/role-manager.php:142
 #: modules/role-manager/role-manager.php:241
 msgid "Role added."
-msgstr ""
+msgstr "角色已添加。"
 
 #: modules/role-manager/role-manager.php:143
 #: modules/role-manager/role-manager.php:276
 msgid "Role duplicated."
-msgstr ""
+msgstr "角色已复制。"
 
 #: modules/role-manager/role-manager.php:144
 #: modules/role-manager/role-manager.php:301
 msgid "Role deleted."
-msgstr ""
+msgstr "角色已删除。"
 
 #: modules/role-manager/role-manager.php:145
 #: modules/role-manager/role-manager.php:352
 msgid "Role capabilities updated."
-msgstr ""
+msgstr "角色能力已更新。"
 
 #: modules/role-manager/role-manager.php:146
 #: modules/role-manager/role-manager.php:394
 msgid "User role changed."
-msgstr ""
+msgstr "用户角色已更改。"
 
 #: modules/role-manager/role-manager.php:147
 msgid "Operation failed, please retry."
-msgstr ""
+msgstr "操作失败，请重试。"
 
 #: modules/role-manager/role-manager.php:148
 msgid "Request failed, please retry later."
-msgstr ""
+msgstr "请求失败，请稍后重试。"
 
 #: modules/role-manager/role-manager.php:149
-msgid "Failed to load role list, possibly due to network or permission issues. Please refresh and retry."
-msgstr ""
+msgid ""
+"Failed to load role list, possibly due to network or permission issues. "
+"Please refresh and retry."
+msgstr "加载角色列表失败，可能是网络问题或权限不足，请刷新页面重试。"
 
 #: modules/role-manager/role-manager.php:150
 msgid "Network error, please check connection and retry."
-msgstr ""
+msgstr "网络错误，请检查连接后重试。"
 
 #: modules/role-manager/role-manager.php:151
 msgid "Role key can only use lowercase letters, numbers, and underscores."
-msgstr ""
+msgstr "角色标识只能使用小写字母、数字和下划线。"
 
 #: modules/role-manager/role-manager.php:152
 msgid "No roles yet"
-msgstr ""
+msgstr "暂无角色"
 
 #: modules/role-manager/role-manager.php:153
 msgid "Built-in"
-msgstr ""
+msgstr "内置"
 
 #: modules/role-manager/role-manager.php:154
 msgid "Edit"
-msgstr ""
+msgstr "编辑"
 
 #: modules/role-manager/role-manager.php:155
 msgid "Duplicate"
-msgstr ""
+msgstr "复制"
 
 #: modules/role-manager/role-manager.php:156
 msgid "Delete"
-msgstr ""
+msgstr "删除"
 
 #: modules/role-manager/role-manager.php:157
 msgid "Please fill in role name and key"
-msgstr ""
+msgstr "请填写角色名称和标识"
 
 #: modules/role-manager/role-manager.php:159
 msgid "Duplicate Role"
-msgstr ""
+msgstr "复制角色"
 
 #: modules/role-manager/role-manager.php:205
 #: modules/role-manager/role-manager.php:323
 msgid "Role does not exist"
-msgstr ""
+msgstr "角色不存在"
 
 #: modules/role-manager/role-manager.php:228
 #: modules/role-manager/role-manager.php:258
 msgid "Role name and key cannot be empty"
-msgstr ""
+msgstr "角色名称和标识不能为空"
 
 #: modules/role-manager/role-manager.php:232
 #: modules/role-manager/role-manager.php:267
 msgid "Role key already exists"
-msgstr ""
+msgstr "角色标识已存在"
 
 #: modules/role-manager/role-manager.php:238
 msgid "Failed to add role, please retry."
-msgstr ""
+msgstr "角色添加失败，请重试。"
 
 #: modules/role-manager/role-manager.php:263
 msgid "Source role does not exist"
-msgstr ""
+msgstr "源角色不存在"
 
 #: modules/role-manager/role-manager.php:273
 msgid "Failed to duplicate role, please retry."
-msgstr ""
+msgstr "角色复制失败，请重试。"
 
 #: modules/role-manager/role-manager.php:291
 msgid "Cannot delete built-in protected role"
-msgstr ""
+msgstr "无法删除内置保护角色"
 
 #: modules/role-manager/role-manager.php:298
 msgid "Failed to delete role, please retry."
-msgstr ""
+msgstr "角色删除失败，请重试。"
 
 #: modules/role-manager/role-manager.php:318
 msgid "Invalid capability data format"
-msgstr ""
+msgstr "能力数据格式无效"
 
 #: modules/role-manager/role-manager.php:349
 msgid "Failed to update role capabilities, please retry."
-msgstr ""
+msgstr "角色能力更新失败，请重试。"
 
 #: modules/role-manager/role-manager.php:373
 msgid "Target role does not exist"
-msgstr ""
+msgstr "目标角色不存在"
 
 #: modules/role-manager/role-manager.php:378
 msgid "Cannot modify your own role"
-msgstr ""
+msgstr "不能修改自己的角色"
 
 #: modules/role-manager/role-manager.php:383
 msgid "User does not exist"
-msgstr ""
+msgstr "用户不存在"
 
 #: modules/role-manager/role-manager.php:391
 msgid "Failed to change user role, please retry."
-msgstr ""
+msgstr "用户角色更改失败，请重试。"
 
 #: modules/search-push/admin/settings-page.php:27
 #: modules/search-push/search-push.php:30
 #: modules/search-push/search-push.php:133
 #: modules/search-push/search-push.php:134
 msgid "Search Push"
-msgstr ""
+msgstr "搜索推送"
 
 #: modules/search-push/admin/settings-page.php:37
 msgid "Baidu Push"
-msgstr ""
+msgstr "百度推送"
 
 #: modules/search-push/admin/settings-page.php:38
 msgid "Auto-push links to Baidu Indexing on post publish"
-msgstr ""
+msgstr "文章发布时自动推送链接到百度普通收录"
 
 #: modules/search-push/admin/settings-page.php:48
 msgid "Site Domain"
-msgstr ""
+msgstr "站点域名"
 
 #: modules/search-push/admin/settings-page.php:49
-msgid "Site domain verified on Baidu Search Resource Platform. If different from current site domain, fill in manually."
-msgstr ""
+msgid ""
+"Site domain verified on Baidu Search Resource Platform. If different from "
+"current site domain, fill in manually."
+msgstr "百度搜索资源平台验证的站点域名。若与当前站点域名不同请手动填写。"
 
 #: modules/search-push/admin/settings-page.php:52
 msgid "e.g. www.example.com"
-msgstr ""
+msgstr "如 www.example.com"
 
 #: modules/search-push/admin/settings-page.php:57
 msgid "Push Token"
-msgstr ""
+msgstr "推送 Token"
 
 #: modules/search-push/admin/settings-page.php:58
-msgid "Baidu Search Resource Platform →普通收录 → API access → token parameter value."
-msgstr ""
+msgid ""
+"Baidu Search Resource Platform →普通收录 → API access → token parameter "
+"value."
+msgstr "百度搜索资源平台 → 普通收录 → 接口调用 → token 参数值。"
 
 #: modules/search-push/admin/settings-page.php:61
 msgid "Obtain from Baidu Search Resource Platform"
-msgstr ""
+msgstr "在百度搜索资源平台获取"
 
 #: modules/search-push/admin/settings-page.php:66
 #: modules/search-push/admin/settings-page.php:69
 #: modules/search-push/admin/settings-page.php:100
 #: modules/search-push/admin/settings-page.php:103
 msgid "Test Push"
-msgstr ""
+msgstr "测试推送"
 
 #: modules/search-push/admin/settings-page.php:80
 msgid "Bing Push"
-msgstr ""
+msgstr "Bing 推送"
 
 #: modules/search-push/admin/settings-page.php:81
 msgid "Auto-push links to Bing Webmaster Tools on post publish"
-msgstr ""
+msgstr "文章发布时自动推送链接到 Bing 站长平台"
 
 #: modules/search-push/admin/settings-page.php:92
 msgid "Bing Webmaster Tools → Settings → API Key."
-msgstr ""
+msgstr "Bing Webmaster Tools → Settings → API Key。"
 
 #: modules/search-push/admin/settings-page.php:95
 msgid "Obtain from Bing Webmaster Tools"
-msgstr ""
+msgstr "在 Bing Webmaster Tools 获取"
 
 #: modules/search-push/search-push.php:37
-msgid "Auto-push links to Baidu and Bing on post publish/update, improving search engine indexing efficiency."
-msgstr ""
+msgid ""
+"Auto-push links to Baidu and Bing on post publish/update, improving search "
+"engine indexing efficiency."
+msgstr "文章发布/更新时自动推送链接到百度、Bing，提升搜索引擎收录效率。"
 
 #: modules/search-push/search-push.php:176
 #: modules/search-push/search-push.php:285
-msgid "Push request sent, please check results on the search resource platform."
-msgstr ""
+msgid ""
+"Push request sent, please check results on the search resource platform."
+msgstr "推送请求已发送，请在搜索资源平台查看结果。"
 
 #: modules/search-push/search-push.php:177
 msgid "Push failed, please check configuration."
-msgstr ""
+msgstr "推送失败，请检查配置是否正确。"
 
 #: modules/search-push/search-push.php:178
 #: modules/search-push/search-push.php:203
 msgid "Baidu push enabled, please fill in push token first."
-msgstr ""
+msgstr "已启用百度推送，请先填写推送 Token。"
 
 #: modules/search-push/search-push.php:179
 #: modules/search-push/search-push.php:206
 msgid "Baidu push enabled, please fill in site domain first."
-msgstr ""
+msgstr "已启用百度推送，请先填写站点域名。"
 
 #: modules/search-push/search-push.php:180
 #: modules/search-push/search-push.php:210
 msgid "Bing push enabled, please fill in API Key first."
-msgstr ""
+msgstr "已启用 Bing 推送，请先填写 API Key。"
 
 #: modules/search-push/search-push.php:181
-msgid "Current settings may not be saved yet. Test will use the saved configuration. Continue?"
-msgstr ""
+msgid ""
+"Current settings may not be saved yet. Test will use the saved "
+"configuration. Continue?"
+msgstr "当前设置可能尚未保存，测试将使用已保存的配置。是否继续？"
 
 #: modules/search-push/search-push.php:279
 msgid "Unknown search engine."
-msgstr ""
+msgstr "未知的搜索引擎。"
 
 #: modules/search-push/search-push.php:360
 msgid "Baidu push token or site domain not configured."
-msgstr ""
+msgstr "百度推送 Token 或站点域名未配置。"
 
 #. translators: 1: HTTP status code, 2: error message from the Baidu push API
 #: modules/search-push/search-push.php:380
 #, php-format
 msgid "Baidu push failed (%1$d): %2$s"
-msgstr ""
+msgstr "百度推送失败 (%1$d): %2$s"
 
 #: modules/search-push/search-push.php:397
 msgid "Bing API Key not configured."
-msgstr ""
+msgstr "Bing API Key 未配置。"
 
 #. translators: %d: error code returned by the Bing Webmaster API
 #: modules/search-push/search-push.php:426
 #, php-format
 msgid "Bing push failed: ErrorCode %1$d"
-msgstr ""
+msgstr "Bing 推送失败: ErrorCode %1$d"
 
 #. translators: %d: HTTP status code
 #: modules/search-push/search-push.php:431
 #, php-format
 msgid "Bing push failed (HTTP %1$d)"
-msgstr ""
+msgstr "Bing 推送失败 (HTTP %1$d)"
 
 #. translators: %s: search engine name (百度/Bing)
 #: modules/search-push/search-push.php:449
 #, php-format
 msgid "%s push: request timed out, please retry later."
-msgstr ""
+msgstr "%s推送请求超时，请稍后重试。"
 
 #. translators: %s: search engine name (百度/Bing)
 #: modules/search-push/search-push.php:456
 #, php-format
 msgid "%s push: cannot connect to server, please check network connection."
-msgstr ""
+msgstr "%s推送无法连接服务器，请检查网络连接。"
 
 #. translators: %s: search engine name (百度/Bing)
 #: modules/search-push/search-push.php:460
 #, php-format
 msgid "%s push: SSL certificate verification failed."
-msgstr ""
+msgstr "%s推送 SSL 证书验证失败。"
 
 #. translators: %s: search engine name (Baidu/Bing)
 #: modules/search-push/search-push.php:467
 #, php-format
 msgid "%s push failed, please check network connection or retry later."
-msgstr ""
+msgstr "%s推送失败，请检查网络连接或稍后重试。"
 
 #: modules/site-enhance/admin/settings-page.php:51
 #: modules/site-enhance/site-enhance.php:33
 #: modules/site-enhance/site-enhance.php:209
 #: modules/site-enhance/site-enhance.php:210
 msgid "Site Enhancement"
-msgstr ""
+msgstr "站点增强"
 
 #: modules/site-enhance/admin/settings-page.php:61
 msgid "Back to Top Button"
-msgstr ""
+msgstr "回到顶部按钮"
 
 #: modules/site-enhance/admin/settings-page.php:62
 msgid "Show back-to-top button after page scroll"
-msgstr ""
+msgstr "页面滚动后显示回到顶部按钮"
 
 #: modules/site-enhance/admin/settings-page.php:71
 msgid "Position"
-msgstr ""
+msgstr "位置"
 
 #: modules/site-enhance/admin/settings-page.php:74
 msgid "Bottom Right"
-msgstr ""
+msgstr "右下角"
 
 #: modules/site-enhance/admin/settings-page.php:75
 msgid "Bottom Left"
-msgstr ""
+msgstr "左下角"
 
 #: modules/site-enhance/admin/settings-page.php:76
 msgid "Top Right"
-msgstr ""
+msgstr "右上角"
 
 #: modules/site-enhance/admin/settings-page.php:77
 msgid "Top Left"
-msgstr ""
+msgstr "左上角"
 
 #: modules/site-enhance/admin/settings-page.php:82
 msgid "Background Color"
-msgstr ""
+msgstr "背景颜色"
 
 #: modules/site-enhance/admin/settings-page.php:88
 msgid "Icon Color"
-msgstr ""
+msgstr "图标颜色"
 
 #: modules/site-enhance/admin/settings-page.php:94
 msgid "Preview"
-msgstr ""
+msgstr "预览"
 
 #: modules/site-enhance/admin/settings-page.php:110
 msgid "Maintenance Mode"
-msgstr ""
+msgstr "维护模式"
 
 #: modules/site-enhance/admin/settings-page.php:111
 msgid "Show 503 maintenance page to non-admin visitors on frontend"
-msgstr ""
+msgstr "非管理员访问前台时显示 503 维护页面"
 
 #: modules/site-enhance/admin/settings-page.php:121
 msgid "Notice Message"
-msgstr ""
+msgstr "提示信息"
 
 #: modules/site-enhance/admin/settings-page.php:122
 msgid "Leave empty to use default notice."
-msgstr ""
+msgstr "留空则使用默认提示信息。"
 
 #: modules/site-enhance/admin/settings-page.php:125
 #: modules/site-enhance/site-enhance.php:527
 msgid "Site is under maintenance, please visit later."
-msgstr ""
+msgstr "网站正在维护，请稍后访问。"
 
 #: modules/site-enhance/admin/settings-page.php:135
 msgid "Featured Image Filter"
-msgstr ""
+msgstr "特色图片筛选器"
 
 #: modules/site-enhance/admin/settings-page.php:136
 msgid "Add missing/has featured image filter dropdown to post list"
-msgstr ""
+msgstr "在文章列表添加缺失/有特色图筛选下拉框"
 
 #: modules/site-enhance/admin/settings-page.php:146
-msgid "When enabled, adds a \"Missing/Has Featured Image\" filter dropdown on the post list page, making it easy to find posts without featured images."
+msgid ""
+"When enabled, adds a \"Missing/Has Featured Image\" filter dropdown on the "
+"post list page, making it easy to find posts without featured images."
 msgstr ""
+"启用后，在文章列表页添加「缺失特色图/有特色图」筛选下拉框，方便快速找到未设置"
+"特色图片的文章。"
 
 #: modules/site-enhance/admin/settings-page.php:156
 msgid "Featured Image Column"
-msgstr ""
+msgstr "特色图片列"
 
 #: modules/site-enhance/admin/settings-page.php:157
 msgid "Show featured image thumbnail after checkbox in post list"
-msgstr ""
+msgstr "在文章列表复选框后显示特色图缩略图"
 
 #: modules/site-enhance/admin/settings-page.php:167
-msgid "When enabled, adds a featured image thumbnail column after the checkbox in the post list, visually showing each post's featured image status."
+msgid ""
+"When enabled, adds a featured image thumbnail column after the checkbox in "
+"the post list, visually showing each post's featured image status."
 msgstr ""
+"启用后，在文章列表的复选框后添加特色图片缩略图列，直观查看每篇文章的特色图片"
+"设置情况。"
 
 #: modules/site-enhance/admin/settings-page.php:177
 msgid "Default Featured Image"
-msgstr ""
+msgstr "默认特色图片"
 
 #: modules/site-enhance/admin/settings-page.php:178
 msgid "Posts without featured image automatically use this default image"
-msgstr ""
+msgstr "未设置特色图的文章自动使用此默认图片"
 
 #: modules/site-enhance/admin/settings-page.php:187
 msgid "Default Image"
-msgstr ""
+msgstr "默认图片"
 
 #: modules/site-enhance/admin/settings-page.php:193
 #: modules/site-enhance/admin/settings-page.php:342
 msgid "Not Set"
-msgstr ""
+msgstr "未设置"
 
 #: modules/site-enhance/admin/settings-page.php:197
 #: modules/site-enhance/admin/settings-page.php:346
 msgid "Select Image"
-msgstr ""
+msgstr "选择图片"
 
 #: modules/site-enhance/admin/settings-page.php:198
 #: modules/site-enhance/admin/settings-page.php:347
 msgid "Remove"
-msgstr ""
+msgstr "移除"
 
 #: modules/site-enhance/admin/settings-page.php:208
 msgid "Excerpt Quick Edit"
-msgstr ""
+msgstr "摘要快速编辑"
 
 #: modules/site-enhance/admin/settings-page.php:209
 msgid "Add excerpt edit box in post quick-edit panel"
-msgstr ""
+msgstr "在文章快速编辑面板中增加摘要编辑框"
 
 #: modules/site-enhance/admin/settings-page.php:219
-msgid "When enabled, adds an excerpt edit box in the quick-edit panel of the post list, allowing excerpt editing without entering the full edit page."
+msgid ""
+"When enabled, adds an excerpt edit box in the quick-edit panel of the post "
+"list, allowing excerpt editing without entering the full edit page."
 msgstr ""
+"启用后，在文章列表的快速编辑面板中增加摘要编辑框，无需进入编辑页面即可修改摘"
+"要。"
 
 #: modules/site-enhance/admin/settings-page.php:229
 msgid "SMTP Mail"
-msgstr ""
+msgstr "SMTP 发信"
 
 #: modules/site-enhance/admin/settings-page.php:230
 msgid "Send email via external SMTP server"
-msgstr ""
+msgstr "通过外部 SMTP 服务器发送邮件"
 
 #: modules/site-enhance/admin/settings-page.php:239
 msgid "SMTP Host"
-msgstr ""
+msgstr "SMTP 主机"
 
 #: modules/site-enhance/admin/settings-page.php:245
 msgid "Port"
-msgstr ""
+msgstr "端口"
 
 #: modules/site-enhance/admin/settings-page.php:251
 msgid "Encryption"
-msgstr ""
+msgstr "加密方式"
 
 #: modules/site-enhance/admin/settings-page.php:254
 msgid "SSL"
@@ -1436,323 +1532,351 @@ msgstr ""
 
 #: modules/site-enhance/admin/settings-page.php:256
 msgid "None"
-msgstr ""
+msgstr "无"
 
 #: modules/site-enhance/admin/settings-page.php:261
 msgid "Username"
-msgstr ""
+msgstr "用户名"
 
 #: modules/site-enhance/admin/settings-page.php:268
 msgid "Password"
-msgstr ""
+msgstr "密码"
 
 #: modules/site-enhance/admin/settings-page.php:270
 msgid "Password saved. Leave empty to keep current password."
-msgstr ""
+msgstr "已保存密码。留空则保留现有密码。"
 
 #: modules/site-enhance/admin/settings-page.php:278
 msgid "From Name"
-msgstr ""
+msgstr "发件人名称"
 
 #: modules/site-enhance/admin/settings-page.php:284
 msgid "From Email"
-msgstr ""
+msgstr "发件人邮箱"
 
 #: modules/site-enhance/admin/settings-page.php:290
 msgid "Test Mail"
-msgstr ""
+msgstr "测试发信"
 
 #: modules/site-enhance/admin/settings-page.php:293
 msgid "Recipient Email"
-msgstr ""
+msgstr "收件邮箱地址"
 
 #: modules/site-enhance/admin/settings-page.php:294
 msgid "Send Test Email"
-msgstr ""
+msgstr "发送测试邮件"
 
 #: modules/site-enhance/admin/settings-page.php:306
 msgid "Comment Avatar"
-msgstr ""
+msgstr "评论头像"
 
 #: modules/site-enhance/admin/settings-page.php:307
-msgid "Replace Gravatar with mirror source and custom default avatar for commenters"
-msgstr ""
+msgid ""
+"Replace Gravatar with mirror source and custom default avatar for commenters"
+msgstr "用镜像源替换 Gravatar 并为评论者设置自定义默认头像"
 
 #: modules/site-enhance/admin/settings-page.php:317
 msgid "Mirror Source"
-msgstr ""
+msgstr "镜像源"
 
 #: modules/site-enhance/admin/settings-page.php:318
 msgid "Replace gravatar.com domain with this mirror (no http:// prefix)"
-msgstr ""
+msgstr "用此镜像源替换 gravatar.com 域名（无需 http:// 前缀）"
 
 #: modules/site-enhance/admin/settings-page.php:326
 msgid "Replace Gravatar"
-msgstr ""
+msgstr "替换 Gravatar"
 
 #: modules/site-enhance/admin/settings-page.php:336
 msgid "Default Avatar"
-msgstr ""
+msgstr "默认头像"
 
 #: modules/site-enhance/admin/settings-page.php:355
 #: modules/site-optimize/admin/settings-page.php:76
 msgid "Some settings require page refresh to take effect"
-msgstr ""
+msgstr "部分设置保存后需刷新页面生效"
 
 #: modules/site-enhance/site-enhance.php:40
-msgid "Back-to-top button, maintenance mode, featured image management, comment avatar, SMTP mail — each with independent toggle."
+msgid ""
+"Back-to-top button, maintenance mode, featured image management, comment "
+"avatar, SMTP mail — each with independent toggle."
 msgstr ""
+"回到顶部按钮、维护模式、特色图片管理、评论头像、SMTP 邮件 — 各功能独立开关。"
 
 #: modules/site-enhance/site-enhance.php:271
 #: modules/site-enhance/site-enhance.php:815
 msgid "Please enter recipient email."
-msgstr ""
+msgstr "请输入收件邮箱地址。"
 
 #: modules/site-enhance/site-enhance.php:272
 #: modules/site-enhance/site-enhance.php:829
 msgid "Test email sent, please check the inbox."
-msgstr ""
+msgstr "测试邮件已发送，请检查收件箱。"
 
 #: modules/site-enhance/site-enhance.php:273
 msgid "Send failed, please check SMTP settings."
-msgstr ""
+msgstr "发送失败，请检查 SMTP 设置。"
 
 #: modules/site-enhance/site-enhance.php:274
 #: modules/site-enhance/site-enhance.php:344
 msgid "SMTP mail enabled, please fill in SMTP host first."
-msgstr ""
+msgstr "已启用 SMTP 发信，请先填写 SMTP 主机地址。"
 
 #: modules/site-enhance/site-enhance.php:275
 #: modules/site-enhance/site-enhance.php:347
 msgid "SMTP mail enabled, please fill in username first."
-msgstr ""
+msgstr "已启用 SMTP 发信，请先填写用户名。"
 
 #: modules/site-enhance/site-enhance.php:276
 msgid "SMTP port must be between 1-65535."
-msgstr ""
+msgstr "SMTP 端口号需在 1-65535 之间。"
 
 #: modules/site-enhance/site-enhance.php:277
 msgid "Please enable SMTP mail and save settings before testing."
-msgstr ""
+msgstr "请先启用 SMTP 发信并保存设置后再测试。"
 
 #: modules/site-enhance/site-enhance.php:278
-msgid "After enabling maintenance mode, visitors will see the maintenance page and cannot access the site normally. Confirm enabling?"
-msgstr ""
+msgid ""
+"After enabling maintenance mode, visitors will see the maintenance page and "
+"cannot access the site normally. Confirm enabling?"
+msgstr "开启维护模式后，访客将看到维护页面，无法正常访问网站。是否确认开启？"
 
 #: modules/site-enhance/site-enhance.php:471
 msgid "Back to Top"
-msgstr ""
+msgstr "回到顶部"
 
 #: modules/site-enhance/site-enhance.php:547
 #: modules/site-enhance/site-enhance.php:551
 msgid "Under Maintenance"
-msgstr ""
+msgstr "维护中"
 
 #: modules/site-enhance/site-enhance.php:576
 msgid "All Featured Images"
-msgstr ""
+msgstr "所有特色图片"
 
 #: modules/site-enhance/site-enhance.php:577
 msgid "Missing Featured Image"
-msgstr ""
+msgstr "缺失特色图"
 
 #: modules/site-enhance/site-enhance.php:578
 msgid "Has Featured Image"
-msgstr ""
+msgstr "有特色图"
 
 #: modules/site-enhance/site-enhance.php:641
 msgid "No Featured Image Set"
-msgstr ""
+msgstr "未设置特色图片"
 
 #: modules/site-enhance/site-enhance.php:811
 msgid "DM Toolkit SMTP Test"
-msgstr ""
+msgstr "DM工具箱 SMTP 测试"
 
 #: modules/site-enhance/site-enhance.php:812
 msgid "This is a test email sent by Dreamanual Toolkit SMTP feature."
-msgstr ""
+msgstr "这是一封测试邮件，由 Dreamanual Toolkit SMTP 功能发送。"
 
 #: modules/site-enhance/site-enhance.php:836
 msgid "Send failed, please verify SMTP host, port, username, and password."
-msgstr ""
+msgstr "发送失败，请检查 SMTP 主机、端口、用户名和密码是否正确。"
 
 #: modules/site-enhance/site-enhance.php:856
-msgid "Cannot connect to SMTP server, please verify host and port are correct and the server allows connections on that port."
+msgid ""
+"Cannot connect to SMTP server, please verify host and port are correct and "
+"the server allows connections on that port."
 msgstr ""
+"无法连接到 SMTP 服务器，请检查主机地址和端口是否正确，以及服务器是否允许该端"
+"口连接。"
 
 #: modules/site-enhance/site-enhance.php:866
 msgid "Authentication failed, please verify SMTP username and password."
-msgstr ""
+msgstr "认证失败，请检查 SMTP 用户名和密码是否正确。"
 
 #: modules/site-enhance/site-enhance.php:875
-msgid "Encrypted connection failed, please verify encryption method (SSL/TLS/None) is correct."
-msgstr ""
+msgid ""
+"Encrypted connection failed, please verify encryption method (SSL/TLS/None) "
+"is correct."
+msgstr "加密连接失败，请检查加密方式（SSL/TLS/无加密）设置是否正确。"
 
 #: modules/site-enhance/site-enhance.php:883
-msgid "Sender address rejected, please verify the from email matches the SMTP account."
-msgstr ""
+msgid ""
+"Sender address rejected, please verify the from email matches the SMTP "
+"account."
+msgstr "发件人地址被拒绝，请检查发件人邮箱设置是否与 SMTP 账号匹配。"
 
 #: modules/site-enhance/site-enhance.php:891
 msgid "Recipient address rejected, please verify the recipient email."
-msgstr ""
+msgstr "收件人地址被拒绝，请检查收件邮箱是否正确。"
 
 #: modules/site-enhance/site-enhance.php:899
 msgid "Send frequency limit exceeded, please retry later."
-msgstr ""
+msgstr "发送频率超限，请稍后重试。"
 
 #: modules/site-enhance/site-enhance.php:907
 msgid "Mailbox full or quota exceeded."
-msgstr ""
+msgstr "邮箱空间不足或超出配额。"
 
 #. translators: %s: original SMTP error message
 #: modules/site-enhance/site-enhance.php:912
 #, php-format
 msgid "Send failed, please verify SMTP settings. Original error: %s"
-msgstr ""
+msgstr "发送失败，请检查 SMTP 设置是否正确。原始错误：%s"
 
 #: modules/site-optimize/admin/settings-page.php:22
 #: modules/site-optimize/site-optimize.php:30
 #: modules/site-optimize/site-optimize.php:466
 #: modules/site-optimize/site-optimize.php:467
 msgid "Site Optimization"
-msgstr ""
+msgstr "站点优化"
 
 #: modules/site-optimize/admin/settings-page.php:55
 msgid "Block Rules (one CSS selector per line)"
-msgstr ""
+msgstr "拦截规则（每行一条 CSS 选择器）"
 
 #: modules/site-optimize/admin/settings-page.php:57
 msgid "Default rules are pre-filled. Empty rules fall back to defaults."
-msgstr ""
+msgstr "默认规则已预填。留空则回退到默认规则。"
 
 #: modules/site-optimize/admin/settings-page.php:66
 msgid ".example-upsell{display:none;}"
-msgstr ""
+msgstr ".example-upsell{display:none;}"
 
 #: modules/site-optimize/site-optimize.php:37
-msgid "WordPress feature slimming, Chinese typography, admin ad blocker — each with independent toggle."
-msgstr ""
+msgid ""
+"WordPress feature slimming, Chinese typography, admin ad blocker — each with "
+"independent toggle."
+msgstr "WordPress 功能精简、中文排版、后台广告拦截 — 各功能独立开关。"
 
 #: modules/site-optimize/site-optimize.php:191
 msgid "General"
-msgstr ""
+msgstr "常规功能"
 
 #: modules/site-optimize/site-optimize.php:193
 msgid "Disable post revisions, slim post table data"
-msgstr ""
+msgstr "屏蔽文章修订功能，精简文章表数据"
 
 #: modules/site-optimize/site-optimize.php:194
 msgid "Completely disable Trackback to prevent spam"
-msgstr ""
+msgstr "彻底关闭 Trackback，防止垃圾留言"
 
 #: modules/site-optimize/site-optimize.php:195
 msgid "Disable XML-RPC, only publish posts via admin"
-msgstr ""
+msgstr "关闭 XML-RPC 功能，只在后台发布文章"
 
 #: modules/site-optimize/site-optimize.php:196
 msgid "Disable site Feed to prevent content scraping"
-msgstr ""
+msgstr "屏蔽站点 Feed，防止文章被快速采集"
 
 #: modules/site-optimize/site-optimize.php:197
 msgid "Disable periodic admin email verification"
-msgstr ""
+msgstr "屏蔽站点管理员邮箱定期验证功能"
 
 #: modules/site-optimize/site-optimize.php:201
 msgid "Conversion"
-msgstr ""
+msgstr "转换功能"
 
 #: modules/site-optimize/site-optimize.php:203
 msgid "Disable Emoji-to-image conversion, use Emoji directly"
-msgstr ""
+msgstr "屏蔽 Emoji 转换成图片功能，直接使用 Emoji"
 
 #: modules/site-optimize/site-optimize.php:204
 msgid "Disable character-to-formatted HTML entity conversion"
-msgstr ""
+msgstr "屏蔽字符转换成格式化的 HTML 实体功能"
 
 #: modules/site-optimize/site-optimize.php:205
 msgid "Disable WordPress capitalization correction, write as you prefer"
-msgstr ""
+msgstr "屏蔽 WordPress 大小写修正，自行决定如何书写"
 
 #: modules/site-optimize/site-optimize.php:209
 msgid "Admin"
-msgstr ""
+msgstr "后台功能"
 
 #: modules/site-optimize/site-optimize.php:211
 msgid "Remove pages generated for European GDPR"
-msgstr ""
+msgstr "移除为欧洲通用数据保护条例生成的页面"
 
 #: modules/site-optimize/site-optimize.php:212
 msgid "Remove \"WordPress Events and News\" from dashboard"
-msgstr ""
+msgstr "移除仪表盘的「WordPress 活动及新闻」"
 
 #: modules/site-optimize/site-optimize.php:213
 msgid "Remove \"Help\" tab in top-right of admin"
-msgstr ""
+msgstr "移除后台界面右上角的「帮助」标签"
 
 #: modules/site-optimize/site-optimize.php:214
 msgid "Remove \"Screen Options\" tab in top-right of admin"
-msgstr ""
+msgstr "移除后台界面右上角的「选项」标签"
 
 #: modules/site-optimize/site-optimize.php:218
 msgid "Page"
-msgstr ""
+msgstr "页面功能"
 
 #: modules/site-optimize/site-optimize.php:220
 msgid "Remove version number and service discovery tags from page head"
-msgstr ""
+msgstr "移除页面头部版本号和服务发现标签代码"
 
 #: modules/site-optimize/site-optimize.php:221
 msgid "Remove toolbar-related options from admin bar and profile"
-msgstr ""
+msgstr "移除工具栏和后台个人资料中工具栏相关选项"
 
 #: modules/site-optimize/site-optimize.php:225
 msgid "Embeds"
-msgstr ""
+msgstr "嵌入功能"
 
 #: modules/site-optimize/site-optimize.php:227
 msgid "Disable Auto Embeds to speed up page parsing"
-msgstr ""
+msgstr "禁用 Auto Embeds 功能，加快页面解析速度"
 
 #: modules/site-optimize/site-optimize.php:228
 msgid "Disable Embed for other WordPress posts"
-msgstr ""
+msgstr "屏蔽嵌入其他 WordPress 文章的 Embed 功能"
 
 #: modules/site-optimize/site-optimize.php:232
 msgid "Performance"
-msgstr ""
+msgstr "性能优化"
 
 #: modules/site-optimize/site-optimize.php:234
-msgid "Enable speculative loading, browser pre-renders linked pages (Chrome 121+)"
-msgstr ""
+msgid ""
+"Enable speculative loading, browser pre-renders linked pages (Chrome 121+)"
+msgstr "启用推测加载，浏览器预渲染链接页面（Chrome 121+）"
 
 #: modules/site-optimize/site-optimize.php:238
 msgid "Chinese Typography"
-msgstr ""
+msgstr "中文排版"
 
 #: modules/site-optimize/site-optimize.php:240
 msgid "Insert space between Chinese and Latin/digits for better readability"
-msgstr ""
+msgstr "在中英文/数字之间插入空格，提升可读性"
 
 #: modules/site-optimize/site-optimize.php:241
 msgid "Justify text in single posts (text-align: justify)"
-msgstr ""
+msgstr "单篇文章两端对齐（text-align: justify）"
 
 #: modules/site-optimize/site-optimize.php:242
 msgid "Convert straight quotes to Chinese corner brackets 「」『』"
-msgstr ""
+msgstr "将直引号转换为中文弯引号 「」『』"
 
 #: modules/site-optimize/site-optimize.php:243
 msgid "Indent first line of paragraphs by 2em"
-msgstr ""
+msgstr "段落首行缩进 2em"
 
 #: modules/site-optimize/site-optimize.php:247
 msgid "Admin Ad Blocker"
-msgstr ""
+msgstr "后台广告拦截"
 
 #: modules/site-optimize/site-optimize.php:249
 msgid "Hide third-party plugin advertisement banners in admin"
-msgstr ""
+msgstr "隐藏后台第三方插件广告横幅"
 
 #: modules/site-optimize/site-optimize.php:514
 msgid "Operation failed."
-msgstr ""
+msgstr "操作失败。"
+
+#~ msgid ""
+#~ "Back-to-top button, maintenance mode, featured image management — each "
+#~ "with independent toggle."
+#~ msgstr "回到顶部按钮、维护模式、特色图片管理，每个功能独立开关。"
+
+#~ msgid ""
+#~ "WordPress feature slimming: disable Emoji, revisions, trim head code, "
+#~ "etc. Each with independent toggle."
+#~ msgstr ""
+#~ "WordPress 功能精简：屏蔽 Emoji、关闭修订、精简头部代码等，每项独立开关。"

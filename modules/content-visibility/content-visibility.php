@@ -41,14 +41,14 @@ class Content_Visibility extends Module_Base {
      * {@inheritdoc}
      */
     public function get_name(): string {
-        return __( '内容可见性', 'dreamanual-toolkit' );
+        return __('Content Visibility', 'dreamanual-toolkit' );
     }
 
     /**
      * {@inheritdoc}
      */
     public function get_description(): string {
-        return __( '按分类/文章控制内容可见性，支持渠道和角色粒度配置。', 'dreamanual-toolkit' );
+        return __('Control content visibility by category/post, with channel- and role-level configuration.', 'dreamanual-toolkit' );
     }
 
     /**
@@ -291,7 +291,7 @@ class Content_Visibility extends Module_Base {
             include $template;
         } else {
             // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- 纯文本 404 提示
-            echo '<p>' . esc_html__( '页面不存在。', 'dreamanual-toolkit' ) . '</p>';
+            echo '<p>' . esc_html__('Page does not exist.', 'dreamanual-toolkit' ) . '</p>';
         }
         exit;
     }
@@ -386,8 +386,8 @@ class Content_Visibility extends Module_Base {
     public function add_admin_menu(): void {
         add_submenu_page(
             'dreamanual-toolkit',
-            __( '内容可见性', 'dreamanual-toolkit' ),
-            __( '内容可见性', 'dreamanual-toolkit' ),
+            __('Content Visibility', 'dreamanual-toolkit' ),
+            __('Content Visibility', 'dreamanual-toolkit' ),
             'manage_options',
             'drea-cv-settings',
             [ $this, 'render_settings_page' ]
@@ -399,7 +399,7 @@ class Content_Visibility extends Module_Base {
      */
     public function render_settings_page(): void {
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_die( esc_html__( '您没有权限访问此页面。', 'dreamanual-toolkit' ) );
+            wp_die( esc_html__('You do not have permission to access this page.', 'dreamanual-toolkit' ) );
         }
         include __DIR__ . '/admin/settings-page.php';
     }
@@ -439,13 +439,13 @@ class Content_Visibility extends Module_Base {
             'ajaxUrl' => admin_url( 'admin-ajax.php' ),
             'nonce'   => wp_create_nonce( 'drea_cv_nonce' ),
             'i18n'    => [
-                'saved'         => __( '规则已保存。', 'dreamanual-toolkit' ),
-                'failed'        => __( '保存失败，请重试。', 'dreamanual-toolkit' ),
-                'error'         => __( '操作失败，请稍后重试。', 'dreamanual-toolkit' ),
-                'toggleError'   => __( '切换可见性失败，请重试。', 'dreamanual-toolkit' ),
-                'confirmHide'   => __( '确定要隐藏这篇文章吗？隐藏后文章不会出现在列表中，直链访问也会返回 404。', 'dreamanual-toolkit' ),
-                'confirmShow'   => __( '确定要显示这篇文章吗？', 'dreamanual-toolkit' ),
-                'noRolesWarning'=> __( '警告：有分类隐藏了渠道但未选择可见角色，这些分类将对所有非管理员用户隐藏（包括管理员本人也可能无法在前台查看）。确认保存？', 'dreamanual-toolkit' ),
+                'saved'         => __('Rules saved.', 'dreamanual-toolkit' ),
+                'failed'        => __('Save failed, please retry.', 'dreamanual-toolkit' ),
+                'error'         => __('Operation failed, please retry later.', 'dreamanual-toolkit' ),
+                'toggleError'   => __('Failed to toggle visibility, please retry.', 'dreamanual-toolkit' ),
+                'confirmHide'   => __('Hide this post? Hidden posts won\'t appear in lists, and direct links return 404.', 'dreamanual-toolkit' ),
+                'confirmShow'   => __('Show this post?', 'dreamanual-toolkit' ),
+                'noRolesWarning'=> __('Warning: Some categories have hidden channels without selected visible roles. These categories will be hidden from all non-admin users (administrators may also be unable to view them on the frontend). Confirm save?', 'dreamanual-toolkit' ),
             ],
         ] );
     }
@@ -458,14 +458,14 @@ class Content_Visibility extends Module_Base {
     public function ajax_save_rules(): void {
         check_ajax_referer( 'drea_cv_nonce', 'nonce' );
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_send_json_error( [ 'message' => __( '权限不足', 'dreamanual-toolkit' ) ] );
+            wp_send_json_error( [ 'message' => __('Insufficient permissions', 'dreamanual-toolkit' ) ] );
         }
 
         $raw = isset( $_POST['rules'] ) ? sanitize_text_field( wp_unslash( $_POST['rules'] ) ) : '[]';
         $rules = json_decode( $raw, true );
 
         if ( ! is_array( $rules ) ) {
-            wp_send_json_error( [ 'message' => __( '规则数据格式无效', 'dreamanual-toolkit' ) ] );
+            wp_send_json_error( [ 'message' => __('Invalid rule data format', 'dreamanual-toolkit' ) ] );
         }
 
         // 清洗规则
@@ -491,7 +491,7 @@ class Content_Visibility extends Module_Base {
 
         $result = update_option( self::RULES_OPTION, $clean );
         if ( false === $result && get_option( self::RULES_OPTION ) != $clean ) {
-            wp_send_json_error( [ 'message' => __( '保存失败，请重试。', 'dreamanual-toolkit' ) ] );
+            wp_send_json_error( [ 'message' => __('Save failed, please retry.', 'dreamanual-toolkit' ) ] );
         }
         $this->rules_cache = $clean; // 更新缓存
 
@@ -502,7 +502,7 @@ class Content_Visibility extends Module_Base {
             wp_cache_clear_cache();
         }
 
-        wp_send_json_success( [ 'message' => __( '规则已保存。', 'dreamanual-toolkit' ) ] );
+        wp_send_json_success( [ 'message' => __('Rules saved.', 'dreamanual-toolkit' ) ] );
     }
 
     /**
@@ -511,31 +511,31 @@ class Content_Visibility extends Module_Base {
     public function ajax_toggle_post(): void {
         check_ajax_referer( 'drea_cv_nonce', 'nonce' );
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_send_json_error( [ 'message' => __( '权限不足', 'dreamanual-toolkit' ) ] );
+            wp_send_json_error( [ 'message' => __('Insufficient permissions', 'dreamanual-toolkit' ) ] );
         }
 
         $post_id = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : 0;
         $hidden  = isset( $_POST['hidden'] ) ? boolval( $_POST['hidden'] ) : false;
 
         if ( ! $post_id ) {
-            wp_send_json_error( [ 'message' => __( '无效的文章 ID', 'dreamanual-toolkit' ) ] );
+            wp_send_json_error( [ 'message' => __('Invalid post ID', 'dreamanual-toolkit' ) ] );
         }
 
         // 校验文章存在 (F-14)
         $post = get_post( $post_id );
         if ( ! $post || 'post' !== $post->post_type ) {
-            wp_send_json_error( [ 'message' => __( '文章不存在或已被删除。', 'dreamanual-toolkit' ) ] );
+            wp_send_json_error( [ 'message' => __('Post does not exist or has been deleted.', 'dreamanual-toolkit' ) ] );
         }
 
         if ( $hidden ) {
             $result = update_post_meta( $post_id, self::POST_HIDDEN_META, 1 );
             if ( false === $result ) {
-                wp_send_json_error( [ 'message' => __( '保存失败，请重试。', 'dreamanual-toolkit' ) ] );
+                wp_send_json_error( [ 'message' => __('Save failed, please retry.', 'dreamanual-toolkit' ) ] );
             }
         } else {
             $result = delete_post_meta( $post_id, self::POST_HIDDEN_META );
             if ( false === $result ) {
-                wp_send_json_error( [ 'message' => __( '保存失败，请重试。', 'dreamanual-toolkit' ) ] );
+                wp_send_json_error( [ 'message' => __('Save failed, please retry.', 'dreamanual-toolkit' ) ] );
             }
         }
 
@@ -564,9 +564,9 @@ class Content_Visibility extends Module_Base {
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- 文章列表只读筛选参数，不修改数据
         $current = isset( $_GET['drea_cv_visibility'] ) ? sanitize_text_field( wp_unslash( $_GET['drea_cv_visibility'] ) ) : '';
         echo '<select name="drea_cv_visibility">';
-        echo '<option value="">' . esc_html__( '所有可见性', 'dreamanual-toolkit' ) . '</option>';
-        echo '<option value="hidden"' . selected( $current, 'hidden', false ) . '>' . esc_html__( '已隐藏', 'dreamanual-toolkit' ) . '</option>';
-        echo '<option value="visible"' . selected( $current, 'visible', false ) . '>' . esc_html__( '可见', 'dreamanual-toolkit' ) . '</option>';
+        echo '<option value="">' . esc_html__('All Visibility', 'dreamanual-toolkit' ) . '</option>';
+        echo '<option value="hidden"' . selected( $current, 'hidden', false ) . '>' . esc_html__('Hidden', 'dreamanual-toolkit' ) . '</option>';
+        echo '<option value="visible"' . selected( $current, 'visible', false ) . '>' . esc_html__('Visible', 'dreamanual-toolkit' ) . '</option>';
         echo '</select>';
     }
 
@@ -604,7 +604,7 @@ class Content_Visibility extends Module_Base {
         if ( ! current_user_can( 'manage_options' ) ) return $actions;
 
         $is_hidden = get_post_meta( $post->ID, self::POST_HIDDEN_META, true );
-        $label     = $is_hidden ? __( '显示', 'dreamanual-toolkit' ) : __( '隐藏', 'dreamanual-toolkit' );
+        $label     = $is_hidden ? __('Show', 'dreamanual-toolkit' ) : __('Hide', 'dreamanual-toolkit' );
 
         $actions['drea_cv_toggle'] = '<a href="#" class="drea-cv-toggle-link" data-post-id="' . esc_attr( $post->ID ) . '" data-hidden="' . esc_attr( $is_hidden ? 0 : 1 ) . '">' . esc_html( $label ) . '</a>';
         return $actions;
@@ -618,7 +618,7 @@ class Content_Visibility extends Module_Base {
         foreach ( $columns as $k => $v ) {
             $new[ $k ] = $v;
             if ( 'title' === $k ) {
-                $new['drea_cv'] = __( '可见性', 'dreamanual-toolkit' );
+                $new['drea_cv'] = __('Visibility', 'dreamanual-toolkit' );
             }
         }
         return $new;
@@ -631,8 +631,8 @@ class Content_Visibility extends Module_Base {
         if ( 'drea_cv' !== $column ) return;
         $is_hidden = get_post_meta( $post_id, self::POST_HIDDEN_META, true );
         echo $is_hidden
-            ? '<span class="drea-cv-badge drea-cv-badge--hidden">' . esc_html__( '隐藏', 'dreamanual-toolkit' ) . '</span>'
-            : '<span class="drea-cv-badge drea-cv-badge--visible">' . esc_html__( '可见', 'dreamanual-toolkit' ) . '</span>';
+            ? '<span class="drea-cv-badge drea-cv-badge--hidden">' . esc_html__('Hide', 'dreamanual-toolkit' ) . '</span>'
+            : '<span class="drea-cv-badge drea-cv-badge--visible">' . esc_html__('Visible', 'dreamanual-toolkit' ) . '</span>';
     }
 }
 

@@ -2,9 +2,9 @@
 Contributors: wuyifa001
 Tags: toolbox, modules, ai-optimizer, seo, smtp
 Requires at least: 6.4
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.2.2
+Stable tag: 1.4.0
 License: GPL-2.0+
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,8 +19,8 @@ Modules included:
 * AI Optimizer - AI-powered tag generation with batch processing and multiple AI model support
 * Content Visibility - per-category content visibility with per-channel hiding and role bypass
 * Role Manager - fine-grained WordPress role and capability editing
-* Site Enhance - back-to-top button, maintenance mode, featured image filters, default featured image, quick-edit excerpt, SMTP mail
-* Site Optimize - 16 site optimization toggles plus Speculative Loading
+* Site Enhance - back-to-top button, maintenance mode, featured image filters, default featured image, quick-edit excerpt, comment avatar optimization, SMTP mail
+* Site Optimize - 16 site optimization toggles, Chinese typography, admin ad blocker, plus Speculative Loading
 * Search Push - auto-submits post links to Baidu and Bing on publish/update
 
 Security features:
@@ -86,6 +86,22 @@ Yes. API keys and SMTP passwords are encrypted with AES-256-CBC using a key deri
 
 == Changelog ==
 
+= 1.4.0 =
+* Site Optimize: added Chinese Typography group (auto-spacing, text justify, smart quotes, paragraph indent)
+* Site Optimize: added Admin Ad Blocker group with editable CSS selector rules
+* Site Enhance: added Comment Avatar optimization (Gravatar mirror, custom default avatar)
+* Fixed missing drea-toggle__input class on Site Optimize settings page checkboxes
+* Fixed AI Optimizer save settings error response format (prevented [object Object] display)
+* Fixed Plugin Check warnings for SMTP password and dynamic field sanitization in Site Enhance
+* Refreshed translation template: 21 missing strings added to .pot and zh_CN.po
+
+= 1.3.0 =
+* Full internationalization: all user-facing PHP strings converted to English source
+* Added zh_CN.po translation file (364 translated entries)
+* Refreshed .pot translation template (369 unique entries)
+* Translated JavaScript hardcoded strings and error log messages
+* Plugin defaults to English; Chinese users receive translations via GlotPress or .po file
+
 = 1.2.2 =
 * Fixed invalid Terms of Service and Privacy Policy URLs in readme
 * Fixed update_option return value check in AI Optimizer module
@@ -109,6 +125,12 @@ Yes. API keys and SMTP passwords are encrypted with AES-256-CBC using a key deri
 * Initial release with 6 modules
 
 == Upgrade Notice ==
+
+= 1.4.0 =
+New Chinese typography, admin ad blocker, and comment avatar features. Also includes AI Optimizer error display fix, Plugin Check compliance, and translation template refresh. Existing settings preserved.
+
+= 1.3.0 =
+Full i18n refactoring: English source strings with zh_CN.po translation. Plugin now supports WordPress.org translation system (GlotPress).
 
 = 1.2.2 =
 Fixed broken external service documentation links and update_option check.

@@ -94,7 +94,7 @@ class Core {
     public function activate_module( string $id ) {
         $module = $this->get_module( $id );
         if ( ! $module ) {
-            return new \WP_Error( 'drea_unknown_module', __( '未知模块', 'dreamanual-toolkit' ) );
+            return new \WP_Error( 'drea_unknown_module', __('Unknown module', 'dreamanual-toolkit' ) );
         }
 
         if ( $this->is_module_active( $id ) ) {
@@ -123,7 +123,7 @@ class Core {
     public function deactivate_module( string $id ) {
         $module = $this->get_module( $id );
         if ( ! $module ) {
-            return new \WP_Error( 'drea_unknown_module', __( '未知模块', 'dreamanual-toolkit' ) );
+            return new \WP_Error( 'drea_unknown_module', __('Unknown module', 'dreamanual-toolkit' ) );
         }
 
         if ( ! $this->is_module_active( $id ) ) {
@@ -209,8 +209,8 @@ class Core {
     public function add_admin_menu(): void {
         // 顶级菜单：模块管理
         add_menu_page(
-            __( 'DM工具箱', 'dreamanual-toolkit' ),
-            __( 'DM工具箱', 'dreamanual-toolkit' ),
+            __('DM Toolkit', 'dreamanual-toolkit' ),
+            __('DM Toolkit', 'dreamanual-toolkit' ),
             'manage_options',
             'dreamanual-toolkit',
             [ $this, 'render_modules_page' ],
@@ -221,8 +221,8 @@ class Core {
         // 模块管理子菜单（与顶级菜单同页面，避免重复项）
         add_submenu_page(
             'dreamanual-toolkit',
-            __( '模块管理', 'dreamanual-toolkit' ),
-            __( '模块管理', 'dreamanual-toolkit' ),
+            __('Modules', 'dreamanual-toolkit' ),
+            __('Modules', 'dreamanual-toolkit' ),
             'manage_options',
             'dreamanual-toolkit',
             [ $this, 'render_modules_page' ]
@@ -236,7 +236,7 @@ class Core {
      */
     public function render_modules_page(): void {
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_die( esc_html__( '您没有权限访问此页面。', 'dreamanual-toolkit' ) );
+            wp_die( esc_html__('You do not have permission to access this page.', 'dreamanual-toolkit' ) );
         }
 
         $modules = $this->get_modules();
@@ -279,11 +279,11 @@ class Core {
             'ajaxUrl' => admin_url( 'admin-ajax.php' ),
             'nonce'   => wp_create_nonce( 'drea_toolkit_nonce' ),
             'i18n'    => [
-                'activating'   => __( '启用中…', 'dreamanual-toolkit' ),
-                'deactivating' => __( '停用中…', 'dreamanual-toolkit' ),
-                'activated'    => __( '已启用', 'dreamanual-toolkit' ),
-                'deactivated'  => __( '已停用', 'dreamanual-toolkit' ),
-                'error'        => __( '操作失败，请重试', 'dreamanual-toolkit' ),
+                'activating'   => __('Enabling…', 'dreamanual-toolkit' ),
+                'deactivating' => __('Disabling…', 'dreamanual-toolkit' ),
+                'activated'    => __('Enabled', 'dreamanual-toolkit' ),
+                'deactivated'  => __('Disabled', 'dreamanual-toolkit' ),
+                'error'        => __('Operation failed, please retry', 'dreamanual-toolkit' ),
             ],
         ] );
     }
@@ -308,14 +308,14 @@ class Core {
         check_ajax_referer( 'drea_toolkit_nonce', 'nonce' );
 
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_send_json_error( [ 'message' => __( '权限不足', 'dreamanual-toolkit' ) ] );
+            wp_send_json_error( [ 'message' => __('Insufficient permissions', 'dreamanual-toolkit' ) ] );
         }
 
         $module_id = sanitize_text_field( wp_unslash( $_POST['module_id'] ?? '' ) );
         $action    = sanitize_text_field( wp_unslash( $_POST['action_type'] ?? '' ) );
 
         if ( ! $module_id || ! in_array( $action, [ 'activate', 'deactivate' ], true ) ) {
-            wp_send_json_error( [ 'message' => __( '参数无效', 'dreamanual-toolkit' ) ] );
+            wp_send_json_error( [ 'message' => __('Invalid parameter', 'dreamanual-toolkit' ) ] );
         }
 
         if ( 'activate' === $action ) {
@@ -344,7 +344,7 @@ class Core {
         $settings_link = sprintf(
             '<a href="%s">%s</a>',
             admin_url( 'admin.php?page=dreamanual-toolkit' ),
-            __( '设置', 'dreamanual-toolkit' )
+            __('Settings', 'dreamanual-toolkit' )
         );
         array_unshift( $links, $settings_link );
         return $links;

@@ -9,9 +9,9 @@ defined( 'ABSPATH' ) || exit;
 ?>
 <div class="wrap drea-wrap drea-ai-wrap">
     <h1 class="drea-wrap__title">
-        <?php echo esc_html__( 'AI 优化 — 批量处理', 'dreamanual-toolkit' ); ?>
+        <?php echo esc_html__('AI Optimizer — Batch Process', 'dreamanual-toolkit' ); ?>
     </h1>
-    <p class="description"><?php echo esc_html__( '选择文章自动生成标签、Slug 和摘要。请先在设置中配置 API Key。', 'dreamanual-toolkit' ); ?></p>
+    <p class="description"><?php echo esc_html__('Select posts to auto-generate tags, slug, and excerpt. Please configure API Key in settings first.', 'dreamanual-toolkit' ); ?></p>
 
     <!-- Toast 容器 -->
     <div class="drea-toast-container" id="drea-ai-toast-container"></div>
@@ -21,28 +21,28 @@ defined( 'ABSPATH' ) || exit;
         <div class="drea-ai-progress-bar">
             <div class="drea-ai-progress-fill" style="width:0%"></div>
         </div>
-        <p class="drea-ai-progress-text"><?php echo esc_html__( '处理中...', 'dreamanual-toolkit' ); ?></p>
+        <p class="drea-ai-progress-text"><?php echo esc_html__('Processing...', 'dreamanual-toolkit' ); ?></p>
     </div>
 
     <!-- 待应用面板 -->
     <div class="drea-ai-apply-panel" style="display:none;">
         <div class="drea-ai-apply-header">
-            <h3><?php echo esc_html__( '待应用更改', 'dreamanual-toolkit' ); ?> (<span id="pending-count">0</span>)</h3>
-            <button type="button" class="drea-btn drea-btn--primary" id="apply-all-btn"><?php echo esc_html__( '应用所有更改', 'dreamanual-toolkit' ); ?></button>
+            <h3><?php echo esc_html__('Pending Changes', 'dreamanual-toolkit' ); ?> (<span id="pending-count">0</span>)</h3>
+            <button type="button" class="drea-btn drea-btn--primary" id="apply-all-btn"><?php echo esc_html__('Apply All Changes', 'dreamanual-toolkit' ); ?></button>
             <span class="spinner"></span>
         </div>
         <div class="drea-ai-apply-table-wrap">
             <table class="wp-list-table widefat fixed striped">
                 <thead>
                     <tr>
-                        <th><?php echo esc_html__( '文章标题', 'dreamanual-toolkit' ); ?></th>
-                        <th><?php echo esc_html__( '当前标签', 'dreamanual-toolkit' ); ?></th>
-                        <th><?php echo esc_html__( '新标签', 'dreamanual-toolkit' ); ?></th>
-                        <th><?php echo esc_html__( '当前 Slug', 'dreamanual-toolkit' ); ?></th>
-                        <th><?php echo esc_html__( '新 Slug', 'dreamanual-toolkit' ); ?></th>
-                        <th><?php echo esc_html__( '当前摘要', 'dreamanual-toolkit' ); ?></th>
-                        <th><?php echo esc_html__( '新摘要', 'dreamanual-toolkit' ); ?></th>
-                        <th><?php echo esc_html__( '操作', 'dreamanual-toolkit' ); ?></th>
+                        <th><?php echo esc_html__('Post Title', 'dreamanual-toolkit' ); ?></th>
+                        <th><?php echo esc_html__('Current Tags', 'dreamanual-toolkit' ); ?></th>
+                        <th><?php echo esc_html__('New Tags', 'dreamanual-toolkit' ); ?></th>
+                        <th><?php echo esc_html__('Current Slug', 'dreamanual-toolkit' ); ?></th>
+                        <th><?php echo esc_html__('New Slug', 'dreamanual-toolkit' ); ?></th>
+                        <th><?php echo esc_html__('Current Excerpt', 'dreamanual-toolkit' ); ?></th>
+                        <th><?php echo esc_html__('New Excerpt', 'dreamanual-toolkit' ); ?></th>
+                        <th><?php echo esc_html__('Actions', 'dreamanual-toolkit' ); ?></th>
                     </tr>
                 </thead>
                 <tbody id="drea-ai-apply-tbody"></tbody>
@@ -53,12 +53,12 @@ defined( 'ABSPATH' ) || exit;
     <!-- 文章列表 -->
     <div class="drea-ai-posts-panel">
         <div class="drea-ai-posts-header">
-            <h2><?php echo esc_html__( '文章列表', 'dreamanual-toolkit' ); ?></h2>
+            <h2><?php echo esc_html__('Post List', 'dreamanual-toolkit' ); ?></h2>
             <div class="drea-ai-posts-actions">
                 <label class="drea-cb-label">
-                    <?php echo esc_html__( '分类筛选:', 'dreamanual-toolkit' ); ?>
+                    <?php echo esc_html__('Category Filter:', 'dreamanual-toolkit' ); ?>
                     <select id="category-filter">
-                        <option value=""><?php echo esc_html__( '全部', 'dreamanual-toolkit' ); ?></option>
+                        <option value=""><?php echo esc_html__('All', 'dreamanual-toolkit' ); ?></option>
                         <?php
                         $drea_categories = get_categories( [ 'hide_empty' => false ] );
                         foreach ( $drea_categories as $cat ) {
@@ -67,12 +67,12 @@ defined( 'ABSPATH' ) || exit;
                         ?>
                     </select>
                 </label>
-                <label class="drea-cb-label"><input type="checkbox" id="drea-toggle-tags" checked> <?php echo esc_html__( '标签', 'dreamanual-toolkit' ); ?></label>
-                <label class="drea-cb-label"><input type="checkbox" id="drea-toggle-slug" checked> <?php echo esc_html__( '别名', 'dreamanual-toolkit' ); ?></label>
-                <label class="drea-cb-label"><input type="checkbox" id="drea-toggle-excerpt"> <?php echo esc_html__( '摘要', 'dreamanual-toolkit' ); ?></label>
+                <label class="drea-cb-label"><input type="checkbox" id="drea-toggle-tags" checked> <?php echo esc_html__('Tags', 'dreamanual-toolkit' ); ?></label>
+                <label class="drea-cb-label"><input type="checkbox" id="drea-toggle-slug" checked> <?php echo esc_html__('Slug', 'dreamanual-toolkit' ); ?></label>
+                <label class="drea-cb-label"><input type="checkbox" id="drea-toggle-excerpt"> <?php echo esc_html__('Excerpt', 'dreamanual-toolkit' ); ?></label>
                 <span class="drea-ai-separator">|</span>
-                <label class="drea-cb-label"><input type="checkbox" id="select-all"> <?php echo esc_html__( '全选', 'dreamanual-toolkit' ); ?></label>
-                <button type="button" class="drea-btn drea-btn--secondary" id="generate-selected-btn" disabled><?php echo esc_html__( '生成 AI 建议', 'dreamanual-toolkit' ); ?></button>
+                <label class="drea-cb-label"><input type="checkbox" id="select-all"> <?php echo esc_html__('Select All', 'dreamanual-toolkit' ); ?></label>
+                <button type="button" class="drea-btn drea-btn--secondary" id="generate-selected-btn" disabled><?php echo esc_html__('Generate AI Suggestions', 'dreamanual-toolkit' ); ?></button>
                 <span class="spinner"></span>
             </div>
         </div>
@@ -82,13 +82,13 @@ defined( 'ABSPATH' ) || exit;
                 <thead>
                     <tr>
                         <th class="column-cb"><input type="checkbox" id="select-all-header"></th>
-                        <th><?php echo esc_html__( '标题', 'dreamanual-toolkit' ); ?></th>
-                        <th><?php echo esc_html__( '当前标签', 'dreamanual-toolkit' ); ?></th>
-                        <th><?php echo esc_html__( '当前 Slug', 'dreamanual-toolkit' ); ?></th>
-                        <th><?php echo esc_html__( 'AI 标签', 'dreamanual-toolkit' ); ?></th>
+                        <th><?php echo esc_html__('Title', 'dreamanual-toolkit' ); ?></th>
+                        <th><?php echo esc_html__('Current Tags', 'dreamanual-toolkit' ); ?></th>
+                        <th><?php echo esc_html__('Current Slug', 'dreamanual-toolkit' ); ?></th>
+                        <th><?php echo esc_html__('AI Tags', 'dreamanual-toolkit' ); ?></th>
                         <th><?php echo esc_html__( 'AI Slug', 'dreamanual-toolkit' ); ?></th>
-                        <th><?php echo esc_html__( 'AI 摘要', 'dreamanual-toolkit' ); ?></th>
-                        <th><?php echo esc_html__( '操作', 'dreamanual-toolkit' ); ?></th>
+                        <th><?php echo esc_html__('AI Excerpt', 'dreamanual-toolkit' ); ?></th>
+                        <th><?php echo esc_html__('Actions', 'dreamanual-toolkit' ); ?></th>
                     </tr>
                 </thead>
                 <tbody id="drea-ai-posts-tbody"></tbody>

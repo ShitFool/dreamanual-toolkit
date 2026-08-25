@@ -19,7 +19,7 @@ $drea_modules = $drea_core->get_modules();
 
     <?php if ( empty( $drea_modules ) ) : ?>
         <div class="drea-notice drea-notice--info">
-            <p><?php esc_html_e( '未发现可用模块。', 'dreamanual-toolkit' ); ?></p>
+            <p><?php esc_html_e('No available modules found.', 'dreamanual-toolkit' ); ?></p>
         </div>
     <?php else : ?>
         <div class="drea-modules">
@@ -42,13 +42,13 @@ $drea_modules = $drea_core->get_modules();
                     <div class="drea-module-card__footer">
                         <span class="drea-module-card__status">
                             <?php echo $drea_is_active
-                                ? esc_html__( '已启用', 'dreamanual-toolkit' )
-                                : esc_html__( '未启用', 'dreamanual-toolkit' ); ?>
+                                ? esc_html__('Enabled', 'dreamanual-toolkit' )
+                                : esc_html__('Inactive', 'dreamanual-toolkit' ); ?>
                         </span>
                         <?php if ( $drea_is_active && method_exists( $drea_module, 'get_settings_url' ) ) : ?>
                             <a href="<?php echo esc_url( $drea_module->get_settings_url() ); ?>"
                                class="drea-module-card__link">
-                                <?php esc_html_e( '设置', 'dreamanual-toolkit' ); ?>
+                                <?php esc_html_e('Settings', 'dreamanual-toolkit' ); ?>
                             </a>
                         <?php endif; ?>
                     </div>

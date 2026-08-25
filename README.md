@@ -1,14 +1,3 @@
----
-AIGC:
-  ContentProducer: '001191110102MAD55U9H0F10002'
-  ContentPropagator: '001191110102MAD55U9H0F10002'
-  Label: '1'
-  ProduceID: '519011ad-ab2d-464f-9cb5-7748c5e9bbdf'
-  PropagateID: '519011ad-ab2d-464f-9cb5-7748c5e9bbdf'
-  ReservedCode1: 'f814b15c-9db5-4d49-9077-8ce570d0d29e'
-  ReservedCode2: 'f814b15c-9db5-4d49-9077-8ce570d0d29e'
----
-
 # Dreamanual Toolkit
 
 Modular WordPress toolbox that consolidates scattered micro-plugins into one plugin. Every module can be toggled independently; disabled modules add zero overhead.
@@ -24,8 +13,8 @@ WordPress sites end up with too many tiny plugins: back-to-top buttons, maintena
 | AI Optimizer | AI-powered tag generation with batch processing and multiple AI model support | WPJAM tag optimization |
 | Content Visibility | Per-category content visibility with per-channel hiding and role bypass | WPJAM content restriction |
 | Role Manager | Fine-grained WordPress role & capability editing | WPJAM user management |
-| Site Enhance | Back-to-top button, maintenance mode, featured image filters, default featured image, quick-edit excerpt, SMTP mail | Various single-purpose plugins |
-| Site Optimize | 16 site optimization toggles plus Speculative Loading | WPJAM feature blocking |
+| Site Enhance | Back-to-top button, maintenance mode, featured image filters, default featured image, quick-edit excerpt, comment avatar, SMTP mail | Various single-purpose plugins |
+| Site Optimize | 16 site optimization toggles, Chinese typography, admin ad blocker, plus Speculative Loading | WPJAM feature blocking |
 | Search Push | Auto-submits post links to Baidu and Bing on publish/update | baidu-submit-link |
 
 ## Design principles
@@ -92,11 +81,12 @@ Practical front-end and admin enhancements, each sub-feature independently toggl
 - **Featured image filter**: filter posts by has/missing featured image
 - **Default featured image**: fallback image for posts without one
 - **Quick-edit excerpt**: excerpt field inside the posts list quick-edit panel
+- **Comment avatar**: replace Gravatar with mirror source (e.g. cn.cravatar.com) for faster loading; set custom default avatar for unregistered commenters
 - **SMTP mail**: configurable SMTP server, SSL/TLS support, encrypted password, one-click test email
 
 ### Site Optimize
 
-16 optimization toggles, no code changes needed.
+16 optimization toggles plus Chinese typography and admin ad blocker, no code changes needed.
 
 - Disable Emoji, Embed, XML-RPC, REST API, etc.
 - Disable post revisions and autosave
@@ -104,6 +94,8 @@ Practical front-end and admin enhancements, each sub-feature independently toggl
 - Disable the block widget editor
 - Disable admin email verification
 - Speculative Loading: preload link targets using the browser Speculation Rules API
+- **Chinese Typography**: auto-spacing between Chinese and Latin/digits, text justify, smart quotes, paragraph indent
+- **Admin Ad Blocker**: hide third-party plugin upsell and ad banners with editable CSS selector rules
 
 ### Search Push
 
@@ -140,6 +132,19 @@ dreamanual-toolkit/
 ```
 
 ## Changelog
+
+### 1.4.0
+* Site Optimize: added Chinese Typography group (auto-spacing, text justify, smart quotes, paragraph indent)
+* Site Optimize: added Admin Ad Blocker group with editable CSS selector rules
+* Site Enhance: added Comment Avatar optimization (Gravatar mirror, custom default avatar)
+* Fixed missing `drea-toggle__input` class on Site Optimize settings page checkboxes
+
+### 1.3.0
+* Full internationalization: all user-facing PHP strings converted to English source
+* Added `zh_CN.po` translation file (364 translated entries)
+* Refreshed `.pot` translation template (369 unique entries)
+* Translated JavaScript hardcoded strings and error log messages
+* Plugin defaults to English; Chinese users receive translations via GlotPress or `.po` file
 
 ### 1.2.2
 * Fixed invalid Terms of Service and Privacy Policy URLs in readme.txt

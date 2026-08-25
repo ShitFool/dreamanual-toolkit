@@ -30,14 +30,14 @@ class Site_Enhance extends Module_Base {
      * {@inheritdoc}
      */
     public function get_name(): string {
-        return __( '站点增强', 'dreamanual-toolkit' );
+        return __('Site Enhancement', 'dreamanual-toolkit' );
     }
 
     /**
      * {@inheritdoc}
      */
     public function get_description(): string {
-        return __( '回到顶部按钮、维护模式、特色图片管理，每个功能独立开关。', 'dreamanual-toolkit' );
+        return __('Back-to-top button, maintenance mode, featured image management, comment avatar, SMTP mail — each with independent toggle.', 'dreamanual-toolkit' );
     }
 
     /**
@@ -102,6 +102,11 @@ class Site_Enhance extends Module_Base {
             add_filter( 'wp_mail_from_name', [ $this, 'smtp_mail_from_name' ] );
         }
 
+        // ─── 评论头像优化 ───
+        if ( $this->get_option( 'avatar_fallback_enabled', false ) ) {
+            add_filter( 'get_avatar_url', [ $this, 'avatar_optimize_url' ], 10, 3 );
+        }
+
         // ─── SMTP 测试发信 AJAX ───
         add_action( 'wp_ajax_drea_se_smtp_test', [ $this, 'ajax_smtp_test' ] );
     }
@@ -143,6 +148,20 @@ class Site_Enhance extends Module_Base {
         if ( false === get_option( 'drea_site_enhance_btt_position' ) ) {
             update_option( 'drea_site_enhance_btt_position', 'right-bottom' );
         }
+
+        // 评论头像优化默认值
+        if ( false === get_option( 'drea_site_enhance_avatar_fallback_enabled' ) ) {
+            update_option( 'drea_site_enhance_avatar_fallback_enabled', false );
+        }
+        if ( false === get_option( 'drea_site_enhance_avatar_fallback_url' ) ) {
+            update_option( 'drea_site_enhance_avatar_fallback_url', '' );
+        }
+        if ( false === get_option( 'drea_site_enhance_avatar_mirror' ) ) {
+            update_option( 'drea_site_enhance_avatar_mirror', 'cn.cravatar.com' );
+        }
+        if ( false === get_option( 'drea_site_enhance_avatar_replace_gravatar' ) ) {
+            update_option( 'drea_site_enhance_avatar_replace_gravatar', true );
+        }
     }
 
     /**
@@ -169,6 +188,10 @@ class Site_Enhance extends Module_Base {
             'drea_site_enhance_smtp_pass',
             'drea_site_enhance_smtp_from_name',
             'drea_site_enhance_smtp_from_email',
+            'drea_site_enhance_avatar_fallback_enabled',
+            'drea_site_enhance_avatar_fallback_url',
+            'drea_site_enhance_avatar_mirror',
+            'drea_site_enhance_avatar_replace_gravatar',
         ];
         foreach ( $options as $opt ) {
             delete_option( $opt );
@@ -183,8 +206,8 @@ class Site_Enhance extends Module_Base {
     public function add_admin_menu(): void {
         add_submenu_page(
             'dreamanual-toolkit',
-            __( '站点增强', 'dreamanual-toolkit' ),
-            __( '站点增强', 'dreamanual-toolkit' ),
+            __('Site Enhancement', 'dreamanual-toolkit' ),
+            __('Site Enhancement', 'dreamanual-toolkit' ),
             'manage_options',
             'drea-se',
             [ $this, 'render_page' ]
@@ -196,7 +219,7 @@ class Site_Enhance extends Module_Base {
      */
     public function render_page(): void {
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_die( esc_html__( '您没有权限访问此页面。', 'dreamanual-toolkit' ) );
+            wp_die( esc_html__('You do not have permission to access this page.', 'dreamanual-toolkit' ) );
         }
         include __DIR__ . '/admin/settings-page.php';
     }
@@ -242,17 +265,17 @@ class Site_Enhance extends Module_Base {
             'ajaxUrl' => admin_url( 'admin-ajax.php' ),
             'nonce'   => wp_create_nonce( 'drea_se_nonce' ),
             'i18n'    => [
-                'saved'               => __( '设置已保存。', 'dreamanual-toolkit' ),
-                'failed'              => __( '保存失败，请重试。', 'dreamanual-toolkit' ),
-                'error'               => __( '操作失败，请稍后重试。', 'dreamanual-toolkit' ),
-                'smtpTestNoTo'        => __( '请输入收件邮箱地址。', 'dreamanual-toolkit' ),
-                'smtpTestSuccess'     => __( '测试邮件已发送，请检查收件箱。', 'dreamanual-toolkit' ),
-                'smtpTestFail'        => __( '发送失败，请检查 SMTP 设置。', 'dreamanual-toolkit' ),
-                'smtpHostRequired'    => __( '已启用 SMTP 发信，请先填写 SMTP 主机地址。', 'dreamanual-toolkit' ),
-                'smtpUserRequired'    => __( '已启用 SMTP 发信，请先填写用户名。', 'dreamanual-toolkit' ),
-                'smtpPortRange'       => __( 'SMTP 端口号需在 1-65535 之间。', 'dreamanual-toolkit' ),
-                'smtpNotEnabled'      => __( '请先启用 SMTP 发信并保存设置后再测试。', 'dreamanual-toolkit' ),
-                'maintenanceConfirm'  => __( '开启维护模式后，访客将看到维护页面，无法正常访问网站。是否确认开启？', 'dreamanual-toolkit' ),
+                'saved'               => __('Settings saved.', 'dreamanual-toolkit' ),
+                'failed'              => __('Save failed, please retry.', 'dreamanual-toolkit' ),
+                'error'               => __('Operation failed, please retry later.', 'dreamanual-toolkit' ),
+                'smtpTestNoTo'        => __('Please enter recipient email.', 'dreamanual-toolkit' ),
+                'smtpTestSuccess'     => __('Test email sent, please check the inbox.', 'dreamanual-toolkit' ),
+                'smtpTestFail'        => __('Send failed, please check SMTP settings.', 'dreamanual-toolkit' ),
+                'smtpHostRequired'    => __('SMTP mail enabled, please fill in SMTP host first.', 'dreamanual-toolkit' ),
+                'smtpUserRequired'    => __('SMTP mail enabled, please fill in username first.', 'dreamanual-toolkit' ),
+                'smtpPortRange'       => __('SMTP port must be between 1-65535.', 'dreamanual-toolkit' ),
+                'smtpNotEnabled'      => __('Please enable SMTP mail and save settings before testing.', 'dreamanual-toolkit' ),
+                'maintenanceConfirm'  => __('After enabling maintenance mode, visitors will see the maintenance page and cannot access the site normally. Confirm enabling?', 'dreamanual-toolkit' ),
             ],
         ] );
     }
@@ -265,87 +288,121 @@ class Site_Enhance extends Module_Base {
     public function ajax_save_settings(): void {
         check_ajax_referer( 'drea_se_nonce', 'nonce' );
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_send_json_error( [ 'message' => __( '权限不足', 'dreamanual-toolkit' ) ] );
+            wp_send_json_error( [ 'message' => __('Insufficient permissions', 'dreamanual-toolkit' ) ] );
         }
 
-        $btt_enabled        = isset( $_POST['btt_enabled'] ) ? boolval( $_POST['btt_enabled'] ) : false;
-        $btt_color          = isset( $_POST['btt_color'] ) ? sanitize_hex_color( wp_unslash( $_POST['btt_color'] ) ) : '#2271b1';
-        $btt_icon_color     = isset( $_POST['btt_icon_color'] ) ? sanitize_hex_color( wp_unslash( $_POST['btt_icon_color'] ) ) : '#ffffff';
-        $btt_position       = isset( $_POST['btt_position'] ) ? sanitize_text_field( wp_unslash( $_POST['btt_position'] ) ) : 'right-bottom';
-        $maintenance_enabled = isset( $_POST['maintenance_enabled'] ) ? boolval( $_POST['maintenance_enabled'] ) : false;
-        $maintenance_msg    = isset( $_POST['maintenance_msg'] ) ? sanitize_textarea_field( wp_unslash( $_POST['maintenance_msg'] ) ) : '';
-        $feat_img_enabled      = isset( $_POST['feat_img_enabled'] ) ? boolval( $_POST['feat_img_enabled'] ) : false;
-        $feat_img_col_enabled  = isset( $_POST['feat_img_col_enabled'] ) ? boolval( $_POST['feat_img_col_enabled'] ) : false;
-        $default_feat_img_enabled = isset( $_POST['default_feat_img_enabled'] ) ? boolval( $_POST['default_feat_img_enabled'] ) : false;
-        $default_feat_img_id   = isset( $_POST['default_feat_img_id'] ) ? absint( $_POST['default_feat_img_id'] ) : 0;
-        $quickedit_excerpt_enabled = isset( $_POST['quickedit_excerpt_enabled'] ) ? boolval( $_POST['quickedit_excerpt_enabled'] ) : false;
-
-        // SMTP 设置
-        $smtp_enabled    = isset( $_POST['smtp_enabled'] ) ? boolval( $_POST['smtp_enabled'] ) : false;
-        $smtp_host       = isset( $_POST['smtp_host'] ) ? sanitize_text_field( wp_unslash( $_POST['smtp_host'] ) ) : '';
-        $smtp_port       = isset( $_POST['smtp_port'] ) ? absint( $_POST['smtp_port'] ) : 465;
-        $smtp_encryption = isset( $_POST['smtp_encryption'] ) ? sanitize_text_field( wp_unslash( $_POST['smtp_encryption'] ) ) : 'ssl';
-        $smtp_user       = isset( $_POST['smtp_user'] ) ? sanitize_email( wp_unslash( $_POST['smtp_user'] ) ) : '';
-        // 密码不可用通用 sanitize（会破坏特殊字符），但必须 wp_unslash 处理再加密存储
-        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- 密码需保留原始字符用于 AES 加密，sanitize 会破坏特殊字符
-        $smtp_pass       = isset( $_POST['smtp_pass'] ) ? (string) wp_unslash( $_POST['smtp_pass'] ) : ''; // 后续加密
-        $smtp_from_name  = isset( $_POST['smtp_from_name'] ) ? sanitize_text_field( wp_unslash( $_POST['smtp_from_name'] ) ) : '';
-        $smtp_from_email = isset( $_POST['smtp_from_email'] ) ? sanitize_email( wp_unslash( $_POST['smtp_from_email'] ) ) : '';
-
-        // SMTP 完整性校验 (F-04)
-        if ( $smtp_enabled ) {
-            if ( '' === $smtp_host ) {
-                wp_send_json_error( [ 'message' => __( '已启用 SMTP 发信，请先填写 SMTP 主机地址。', 'dreamanual-toolkit' ) ] );
-            }
-            if ( '' === $smtp_user ) {
-                wp_send_json_error( [ 'message' => __( '已启用 SMTP 发信，请先填写用户名。', 'dreamanual-toolkit' ) ] );
-            }
-        }
-
-        // 端口范围校验 (F-12)
-        $smtp_port = max( 1, min( 65535, $smtp_port ) );
-
-        // 保存所有设置 (F-07: 检查返回值)
-        $settings_to_save = [
-            'drea_site_enhance_btt_enabled'               => $btt_enabled,
-            'drea_site_enhance_btt_color'                 => $btt_color ?: '#2271b1',
-            'drea_site_enhance_btt_icon_color'            => $btt_icon_color ?: '#ffffff',
-            'drea_site_enhance_btt_position'              => $btt_position,
-            'drea_site_enhance_maintenance_enabled'       => $maintenance_enabled,
-            'drea_site_enhance_maintenance_msg'           => $maintenance_msg,
-            'drea_site_enhance_feat_img_enabled'          => $feat_img_enabled,
-            'drea_site_enhance_feat_img_col_enabled'      => $feat_img_col_enabled,
-            'drea_site_enhance_default_feat_img_enabled'  => $default_feat_img_enabled,
-            'drea_site_enhance_default_feat_img_id'       => $default_feat_img_id,
-            'drea_site_enhance_quickedit_excerpt_enabled' => $quickedit_excerpt_enabled,
-            'drea_site_enhance_smtp_enabled'              => $smtp_enabled,
-            'drea_site_enhance_smtp_host'                 => $smtp_host,
-            'drea_site_enhance_smtp_port'                 => $smtp_port,
-            'drea_site_enhance_smtp_encryption'           => $smtp_encryption,
-            'drea_site_enhance_smtp_user'                 => $smtp_user,
-            'drea_site_enhance_smtp_from_name'            => $smtp_from_name,
-            'drea_site_enhance_smtp_from_email'           => $smtp_from_email,
+        // 只更新表单中明确提交的字段，缺失字段不覆盖（与 site-optimize 逻辑对齐）
+        $field_map = [
+            // BTT
+            'btt_enabled'              => ['key' => 'drea_site_enhance_btt_enabled',              'type' => 'bool'],
+            'btt_color'                => ['key' => 'drea_site_enhance_btt_color',                'type' => 'hex_color',  'default' => '#2271b1'],
+            'btt_icon_color'           => ['key' => 'drea_site_enhance_btt_icon_color',           'type' => 'hex_color',  'default' => '#ffffff'],
+            'btt_position'             => ['key' => 'drea_site_enhance_btt_position',             'type' => 'text',       'default' => 'right-bottom'],
+            // 维护模式
+            'maintenance_enabled'      => ['key' => 'drea_site_enhance_maintenance_enabled',      'type' => 'bool'],
+            'maintenance_msg'          => ['key' => 'drea_site_enhance_maintenance_msg',          'type' => 'textarea',   'default' => ''],
+            // 特色图片
+            'feat_img_enabled'         => ['key' => 'drea_site_enhance_feat_img_enabled',         'type' => 'bool'],
+            'feat_img_col_enabled'     => ['key' => 'drea_site_enhance_feat_img_col_enabled',     'type' => 'bool'],
+            'default_feat_img_enabled' => ['key' => 'drea_site_enhance_default_feat_img_enabled', 'type' => 'bool'],
+            'default_feat_img_id'      => ['key' => 'drea_site_enhance_default_feat_img_id',      'type' => 'absint',     'default' => 0],
+            'quickedit_excerpt_enabled'=> ['key' => 'drea_site_enhance_quickedit_excerpt_enabled','type' => 'bool'],
+            // SMTP
+            'smtp_enabled'             => ['key' => 'drea_site_enhance_smtp_enabled',             'type' => 'bool'],
+            'smtp_host'                => ['key' => 'drea_site_enhance_smtp_host',                'type' => 'text',       'default' => ''],
+            'smtp_port'                => ['key' => 'drea_site_enhance_smtp_port',                'type' => 'absint',     'default' => 465],
+            'smtp_encryption'          => ['key' => 'drea_site_enhance_smtp_encryption',          'type' => 'text',       'default' => 'ssl'],
+            'smtp_user'                => ['key' => 'drea_site_enhance_smtp_user',                'type' => 'email',      'default' => ''],
+            'smtp_from_name'           => ['key' => 'drea_site_enhance_smtp_from_name',           'type' => 'text',       'default' => ''],
+            'smtp_from_email'          => ['key' => 'drea_site_enhance_smtp_from_email',          'type' => 'email',      'default' => ''],
+            // 评论头像
+            'avatar_fallback_enabled'  => ['key' => 'drea_site_enhance_avatar_fallback_enabled', 'type' => 'bool'],
+            'avatar_fallback_url'      => ['key' => 'drea_site_enhance_avatar_fallback_url',     'type' => 'url',        'default' => ''],
+            'avatar_mirror'            => ['key' => 'drea_site_enhance_avatar_mirror',            'type' => 'text',       'default' => 'cn.cravatar.com'],
+            'avatar_replace_gravatar'  => ['key' => 'drea_site_enhance_avatar_replace_gravatar', 'type' => 'bool'],
         ];
 
         $save_failed = false;
-        foreach ( $settings_to_save as $key => $value ) {
-            $result = update_option( $key, $value );
-            // update_option 返回 false 可能是值未变或真正失败，二次验证
-            if ( false === $result && get_option( $key ) != $value ) {
+
+        // --- 先处理 SMTP 密码（单独处理，不进 $field_map 因为有加密逻辑） ---
+        // 密码不可用通用 sanitize（会破坏特殊字符），但必须 wp_unslash 处理再加密存储
+        // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- 密码需保留原始字符用于 AES 加密，sanitize 会破坏特殊字符
+        if ( isset( $_POST['smtp_pass'] ) && '' !== $_POST['smtp_pass']
+            && '\xe2\x80\xa2\xe2\x80\xa2\xe2\x80\xa2\xe2\x80\xa2\xe2\x80\xa2\xe2\x80\xa2\xe2\x80\xa2\xe2\x80\xa2' !== $_POST['smtp_pass']
+        ) {
+            $smtp_pass = (string) wp_unslash( $_POST['smtp_pass'] );
+            update_option( 'drea_site_enhance_smtp_pass', AI_Client::encrypt( $smtp_pass ) );
+        }
+        // phpcs:enable
+
+        // --- SMTP 完整性校验（仅当 smtp_enabled 在本次提交中存在且为 true 时触发） ---
+        $smtp_enabled = isset( $_POST['smtp_enabled'] ) ? boolval( $_POST['smtp_enabled'] ) : null;
+        if ( true === $smtp_enabled ) {
+            $smtp_host = isset( $_POST['smtp_host'] ) ? sanitize_text_field( wp_unslash( $_POST['smtp_host'] ) ) : '';
+            $smtp_user = isset( $_POST['smtp_user'] ) ? sanitize_email( wp_unslash( $_POST['smtp_user'] ) ) : '';
+            if ( '' === $smtp_host ) {
+                wp_send_json_error( [ 'message' => __('SMTP mail enabled, please fill in SMTP host first.', 'dreamanual-toolkit' ) ] );
+            }
+            if ( '' === $smtp_user ) {
+                wp_send_json_error( [ 'message' => __('SMTP mail enabled, please fill in username first.', 'dreamanual-toolkit' ) ] );
+            }
+        }
+
+        // --- 遍历字段表，只保存本次提交中存在的字段 ---
+        foreach ( $field_map as $post_key => $spec ) {
+            if ( ! isset( $_POST[ $post_key ] ) ) {
+                continue;
+            }
+
+            // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- 动态字段按 type 分支 sanitize，PHPCS 无法静态追踪
+            $raw = wp_unslash( $_POST[ $post_key ] );
+            // phpcs:enable
+            switch ( $spec['type'] ) {
+                case 'bool':
+                    $value = boolval( $raw );
+                    break;
+                case 'hex_color':
+                    $value = sanitize_hex_color( $raw );
+                    if ( empty( $value ) ) {
+                        $value = $spec['default'] ?? '';
+                    }
+                    break;
+                case 'text':
+                    $value = sanitize_text_field( $raw );
+                    break;
+                case 'textarea':
+                    $value = sanitize_textarea_field( $raw );
+                    break;
+                case 'absint':
+                    $value = absint( $raw );
+                    break;
+                case 'email':
+                    $value = sanitize_email( $raw );
+                    break;
+                case 'url':
+                    $value = esc_url_raw( $raw );
+                    break;
+                default:
+                    $value = sanitize_text_field( $raw );
+                    break;
+            }
+
+            // 端口范围校验 (F-12)
+            if ( 'smtp_port' === $post_key ) {
+                $value = max( 1, min( 65535, $value ) );
+            }
+
+            $result = update_option( $spec['key'], $value );
+            if ( false === $result && get_option( $spec['key'] ) != $value ) {
                 $save_failed = true;
             }
         }
 
-        // SMTP 密码：非空则加密存储
-        if ( '' !== $smtp_pass && '\xe2\x80\xa2\xe2\x80\xa2\xe2\x80\xa2\xe2\x80\xa2\xe2\x80\xa2\xe2\x80\xa2\xe2\x80\xa2\xe2\x80\xa2' !== $smtp_pass ) {
-            update_option( 'drea_site_enhance_smtp_pass', AI_Client::encrypt( $smtp_pass ) );
-        }
-
         if ( $save_failed ) {
-            wp_send_json_error( [ 'message' => __( '保存失败，请重试。', 'dreamanual-toolkit' ) ] );
+            wp_send_json_error( [ 'message' => __('Save failed, please retry.', 'dreamanual-toolkit' ) ] );
         }
 
-        wp_send_json_success( [ 'message' => __( '设置已保存。', 'dreamanual-toolkit' ) ] );
+        wp_send_json_success( [ 'message' => __('Settings saved.', 'dreamanual-toolkit' ) ] );
     }
 
     /**
@@ -354,7 +411,7 @@ class Site_Enhance extends Module_Base {
     public function ajax_get_settings(): void {
         check_ajax_referer( 'drea_se_nonce', 'nonce' );
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_send_json_error( [ 'message' => __( '权限不足', 'dreamanual-toolkit' ) ] );
+            wp_send_json_error( [ 'message' => __('Insufficient permissions', 'dreamanual-toolkit' ) ] );
         }
 
         wp_send_json_success( [
@@ -376,6 +433,10 @@ class Site_Enhance extends Module_Base {
             'smtp_user'           => $this->get_option( 'smtp_user', '' ),
             'smtp_from_name'      => $this->get_option( 'smtp_from_name', '' ),
             'smtp_from_email'     => $this->get_option( 'smtp_from_email', '' ),
+            'avatar_fallback_enabled' => (bool) $this->get_option( 'avatar_fallback_enabled', false ),
+            'avatar_fallback_url' => $this->get_option( 'avatar_fallback_url', '' ),
+            'avatar_mirror'       => $this->get_option( 'avatar_mirror', 'cn.cravatar.com' ),
+            'avatar_replace_gravatar' => (bool) $this->get_option( 'avatar_replace_gravatar', true ),
         ] );
     }
 
@@ -387,15 +448,31 @@ class Site_Enhance extends Module_Base {
     public function render_back_to_top(): void {
         $bg_color   = $this->get_option( 'btt_color', '#2271b1' );
         $icon_color = $this->get_option( 'btt_icon_color', '#ffffff' );
+        $position   = $this->get_option( 'btt_position', 'right-bottom' );
+
+        // 白名单校验位置值
+        $allowed_positions = [ 'right-bottom', 'left-bottom', 'right-top', 'left-top' ];
+        if ( ! in_array( $position, $allowed_positions, true ) ) {
+            $position = 'right-bottom';
+        }
+
+        // noscript 降级用的内联定位样式
+        $pos_styles = [
+            'right-bottom' => 'right:24px;bottom:24px;',
+            'left-bottom'  => 'left:24px;bottom:24px;',
+            'right-top'    => 'right:24px;top:24px;',
+            'left-top'     => 'left:24px;top:24px;',
+        ];
+        $pos_style = $pos_styles[ $position ];
 
         $svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>';
 
         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $svg is static safe SVG markup
-        echo '<button id="drea-btt" style="background:' . esc_attr( $bg_color ) . ';color:' . esc_attr( $icon_color ) . ';" aria-label="' . esc_attr__( '回到顶部', 'dreamanual-toolkit' ) . '">' . $svg . '</button>';
+        echo '<button id="drea-btt" data-position="' . esc_attr( $position ) . '" style="background:' . esc_attr( $bg_color ) . ';color:' . esc_attr( $icon_color ) . ';" aria-label="' . esc_attr__('Back to Top', 'dreamanual-toolkit' ) . '">' . $svg . '</button>';
 
         // JS 禁用时提供降级锚链接 (F-26)
         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $svg is static safe SVG markup
-        echo '<noscript><a href="#top" style="position:fixed;right:24px;bottom:24px;z-index:9999;width:44px;height:44px;border:none;border-radius:50%;background:' . esc_attr( $bg_color ) . ';color:' . esc_attr( $icon_color ) . ';text-decoration:none;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.2);">' . $svg . '</a></noscript>';
+        echo '<noscript><a href="#top" style="position:fixed;' . $pos_style . 'z-index:9999;width:44px;height:44px;border:none;border-radius:50%;background:' . esc_attr( $bg_color ) . ';color:' . esc_attr( $icon_color ) . ';text-decoration:none;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.2);">' . $svg . '</a></noscript>';
     }
 
     /**
@@ -447,7 +524,7 @@ JS;
 
         $msg  = $this->get_option( 'maintenance_msg', '' );
         $site_name = get_bloginfo( 'name' );
-        $default_msg = __( '网站正在维护，请稍后访问。', 'dreamanual-toolkit' );
+        $default_msg = __('Site is under maintenance, please visit later.', 'dreamanual-toolkit' );
 
         // 维护页为独立 503 页面，样式通过 WordPress 样式 API 输出（Plugin Check 合规）
         $body_classes    = implode( ' ', get_body_class( [ 'drea-maintenance' ] ) );
@@ -467,11 +544,11 @@ JS;
         wp_print_styles( [ 'drea-maintenance' ] );
         $style_tags = ob_get_clean();
 
-        $html = '<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' . esc_html__( '维护中', 'dreamanual-toolkit' ) . ' — ' . esc_html( $site_name ) . '</title>';
+        $html = '<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' . esc_html__('Under Maintenance', 'dreamanual-toolkit' ) . ' — ' . esc_html( $site_name ) . '</title>';
         $html .= $style_tags;
         $html .= '</head><body class="' . esc_attr( $body_classes ) . '">';
         $html .= '<div class="drea-maintenance__card">';
-        $html .= '<div class="drea-maintenance__title">' . esc_html__( '维护中', 'dreamanual-toolkit' ) . '</div>';
+        $html .= '<div class="drea-maintenance__title">' . esc_html__('Under Maintenance', 'dreamanual-toolkit' ) . '</div>';
         $html .= '<div class="drea-maintenance__divider"></div>';
         $html .= '<div class="drea-maintenance__msg">' . esc_html( $msg ?: $default_msg ) . '</div>';
         $html .= '<div class="drea-maintenance__footer">' . esc_html( $site_name ) . '</div>';
@@ -496,9 +573,9 @@ JS;
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- 文章列表只读筛选参数，不修改数据
         $current = isset( $_GET['drea_feat_img'] ) ? sanitize_text_field( wp_unslash( $_GET['drea_feat_img'] ) ) : '';
         echo '<select name="drea_feat_img">';
-        echo '<option value="">' . esc_html__( '所有特色图片', 'dreamanual-toolkit' ) . '</option>';
-        echo '<option value="missing"' . selected( $current, 'missing', false ) . '>' . esc_html__( '缺失特色图', 'dreamanual-toolkit' ) . '</option>';
-        echo '<option value="has"' . selected( $current, 'has', false ) . '>' . esc_html__( '有特色图', 'dreamanual-toolkit' ) . '</option>';
+        echo '<option value="">' . esc_html__('All Featured Images', 'dreamanual-toolkit' ) . '</option>';
+        echo '<option value="missing"' . selected( $current, 'missing', false ) . '>' . esc_html__('Missing Featured Image', 'dreamanual-toolkit' ) . '</option>';
+        echo '<option value="has"' . selected( $current, 'has', false ) . '>' . esc_html__('Has Featured Image', 'dreamanual-toolkit' ) . '</option>';
         echo '</select>';
     }
 
@@ -561,7 +638,7 @@ JS;
                 'class' => 'drea-se-feat-img__thumb',
             ] );
         } else {
-            echo '<span class="drea-se-feat-img__missing" title="' . esc_attr__( '未设置特色图片', 'dreamanual-toolkit' ) . '"></span>';
+            echo '<span class="drea-se-feat-img__missing" title="' . esc_attr__('No Featured Image Set', 'dreamanual-toolkit' ) . '"></span>';
         }
     }
 
@@ -633,7 +710,7 @@ JS;
         <fieldset class="inline-edit-col-right">
             <div class="inline-edit-col">
                 <label>
-                    <span class="title"><?php esc_html_e( '摘要', 'dreamanual-toolkit' ); ?></span>
+                    <span class="title"><?php esc_html_e('Excerpt', 'dreamanual-toolkit' ); ?></span>
                     <textarea cols="22" rows="3" name="excerpt" class="drea-quickedit-excerpt-field"></textarea>
                 </label>
             </div>
@@ -727,15 +804,15 @@ JS;
     public function ajax_smtp_test(): void {
         check_ajax_referer( 'drea_se_nonce', 'nonce' );
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_send_json_error( [ 'message' => __( '权限不足', 'dreamanual-toolkit' ) ] );
+            wp_send_json_error( [ 'message' => __('Insufficient permissions', 'dreamanual-toolkit' ) ] );
         }
 
         $to      = sanitize_email( wp_unslash( $_POST['to'] ?? '' ) );
-        $subject = __( 'DM工具箱 SMTP 测试', 'dreamanual-toolkit' );
-        $body    = __( '这是一封测试邮件，由 Dreamanual Toolkit SMTP 功能发送。', 'dreamanual-toolkit' );
+        $subject = __('DM Toolkit SMTP Test', 'dreamanual-toolkit' );
+        $body    = __('This is a test email sent by Dreamanual Toolkit SMTP feature.', 'dreamanual-toolkit' );
 
         if ( ! $to ) {
-            wp_send_json_error( [ 'message' => __( '请输入收件邮箱地址。', 'dreamanual-toolkit' ) ] );
+            wp_send_json_error( [ 'message' => __('Please enter recipient email.', 'dreamanual-toolkit' ) ] );
         }
 
         // 捕获 PHPMailer 异常以返回具体错误信息
@@ -749,14 +826,14 @@ JS;
         remove_action( 'wp_mail_failed', [ $this, 'capture_mail_error' ] );
 
         if ( $result ) {
-            wp_send_json_success( [ 'message' => __( '测试邮件已发送，请检查收件箱。', 'dreamanual-toolkit' ) ] );
+            wp_send_json_success( [ 'message' => __('Test email sent, please check the inbox.', 'dreamanual-toolkit' ) ] );
         } else {
             $error_detail = $this->_smtp_test_error;
             if ( $error_detail ) {
                 $friendly = $this->translate_smtp_error( $error_detail );
                 wp_send_json_error( [ 'message' => $friendly ] );
             } else {
-                wp_send_json_error( [ 'message' => __( '发送失败，请检查 SMTP 主机、端口、用户名和密码是否正确。', 'dreamanual-toolkit' ) ] );
+                wp_send_json_error( [ 'message' => __('Send failed, please verify SMTP host, port, username, and password.', 'dreamanual-toolkit' ) ] );
             }
         }
     }
@@ -776,7 +853,7 @@ JS;
             || false !== strpos( $error_lower, 'connection timed out' )
             || false !== strpos( $error_lower, 'network is unreachable' )
         ) {
-            return __( '无法连接到 SMTP 服务器，请检查主机地址和端口是否正确，以及服务器是否允许该端口连接。', 'dreamanual-toolkit' );
+            return __('Cannot connect to SMTP server, please verify host and port are correct and the server allows connections on that port.', 'dreamanual-toolkit' );
         }
 
         // 认证类错误
@@ -786,7 +863,7 @@ JS;
             || false !== strpos( $error_lower, '530' )
             || false !== strpos( $error_lower, 'invalid credentials' )
         ) {
-            return __( '认证失败，请检查 SMTP 用户名和密码是否正确。', 'dreamanual-toolkit' );
+            return __('Authentication failed, please verify SMTP username and password.', 'dreamanual-toolkit' );
         }
 
         // 加密/SSL/TLS 类错误
@@ -795,7 +872,7 @@ JS;
             || false !== strpos( $error_lower, 'certificate' )
             || false !== strpos( $error_lower, 'encryption' )
         ) {
-            return __( '加密连接失败，请检查加密方式（SSL/TLS/无加密）设置是否正确。', 'dreamanual-toolkit' );
+            return __('Encrypted connection failed, please verify encryption method (SSL/TLS/None) is correct.', 'dreamanual-toolkit' );
         }
 
         // 发件人地址被拒绝
@@ -803,7 +880,7 @@ JS;
             || false !== strpos( $error_lower, 'sender not allowed' )
             || ( false !== strpos( $error_lower, 'from' ) && false !== strpos( $error_lower, 'rejected' ) )
         ) {
-            return __( '发件人地址被拒绝，请检查发件人邮箱设置是否与 SMTP 账号匹配。', 'dreamanual-toolkit' );
+            return __('Sender address rejected, please verify the from email matches the SMTP account.', 'dreamanual-toolkit' );
         }
 
         // 收件人地址被拒绝
@@ -811,7 +888,7 @@ JS;
             || false !== strpos( $error_lower, 'user unknown' )
             || false !== strpos( $error_lower, 'no such user' )
         ) {
-            return __( '收件人地址被拒绝，请检查收件邮箱是否正确。', 'dreamanual-toolkit' );
+            return __('Recipient address rejected, please verify the recipient email.', 'dreamanual-toolkit' );
         }
 
         // 发送频率限制
@@ -819,7 +896,7 @@ JS;
             || false !== strpos( $error_lower, 'too many' )
             || false !== strpos( $error_lower, 'exceed' )
         ) {
-            return __( '发送频率超限，请稍后重试。', 'dreamanual-toolkit' );
+            return __('Send frequency limit exceeded, please retry later.', 'dreamanual-toolkit' );
         }
 
         // 邮箱容量满
@@ -827,12 +904,12 @@ JS;
             || false !== strpos( $error_lower, 'mailbox full' )
             || false !== strpos( $error_lower, 'insufficient' )
         ) {
-            return __( '邮箱空间不足或超出配额。', 'dreamanual-toolkit' );
+            return __('Mailbox full or quota exceeded.', 'dreamanual-toolkit' );
         }
 
         // 兜底：友好中文 + 简略原始错误
         /* translators: %s: original SMTP error message */
-        return sprintf( __( '发送失败，请检查 SMTP 设置是否正确。原始错误：%s', 'dreamanual-toolkit' ), $error );
+        return sprintf( __('Send failed, please verify SMTP settings. Original error: %s', 'dreamanual-toolkit' ), $error );
     }
 
     /**
@@ -853,6 +930,87 @@ JS;
      */
     public function capture_mail_error( \WP_Error $error ): void {
         $this->_smtp_test_error = $error->get_error_message();
+    }
+
+    // ─── 评论头像优化 ─────────────────────────────────
+
+    /**
+     * 评论头像优化：gravatar 源替换镜像 + 自定义默认头像
+     *
+     * 处理两个独立诉求：
+     * 1. 服务器访问 gravatar.com 超时 → 替换为镜像源（默认 cn.cravatar.com）。
+     * 2. 未注册用户（无自定义头像）→ 显示后台配置的默认头像。
+     *
+     * 实现原理：gravatar/cravatar 镜像源的 URL 中 d= 参数指定「无头像时的回退图」。
+     * 当用户在 gravatar 注册了头像，镜像源返回该头像；未注册时镜像源返回 d= 指向的图片。
+     * 因此把 d= 参数设置为自定义默认头像 URL，即可让镜像源自行决定返回哪张图，
+     * 无需本地判断用户是否有头像——完美匹配「先显示默认头像，有注册头像再替换」的需求。
+     * 注意：d= 参数需要 urlencode，且镜像源必须支持 404/redirect 回退模式。
+     *
+     * @param string         $url         头像 URL。
+     * @param int|string|object $id_or_email 用户 ID / 邮箱 / 对象。
+     * @param array          $args        头像参数。
+     * @return string
+     */
+    public function avatar_optimize_url( string $url, $id_or_email, array $args ): string {
+        // ① gravatar 系域名 → 镜像源
+        if ( $this->get_option( 'avatar_replace_gravatar', true ) ) {
+            $mirror = trim( $this->get_option( 'avatar_mirror', 'cn.cravatar.com' ) );
+            $mirror = preg_replace( '#^https?://#i', '', $mirror );
+            $mirror = rtrim( $mirror, '/' );
+            if ( $mirror ) {
+                $url = preg_replace(
+                    '#^https?://(?:[0-9]\.)?(?:secure\.)?gravatar\.com#i',
+                    'https://' . $mirror,
+                    $url
+                );
+            }
+        }
+
+        // ② 自定义默认头像：将 URL 中 d= 参数替换为后台配置的默认头像 URL
+        //    镜像源在用户无注册头像时返回 d= 指向的图片，有则返回真实头像
+        $fallback = trim( $this->get_option( 'avatar_fallback_url', '' ) );
+        if ( $fallback ) {
+            $url = $this->replace_avatar_default_param( $url, $fallback );
+        }
+
+        return $url;
+    }
+
+    /**
+     * 替换头像 URL 中的 d= 参数为自定义默认头像
+     *
+     * Gravatar/Cravatar URL 格式：?s=96&d=mm&r=g
+     * d= 参数支持：mm(mystery) / identicon / monsterid / retrowave / 404 / URL
+     * 当 d= 为 URL 时，镜像源在无头像时 302 重定向到该 URL。
+     * 当用户有 gravatar 头像时，镜像源忽略 d= 直接返回真实头像。
+     *
+     * @param string $url      完整头像 URL。
+     * @param string $fallback 自定义默认头像 URL。
+     * @return string
+     */
+    private function replace_avatar_default_param( string $url, string $fallback ): string {
+        $parsed = wp_parse_url( $url );
+        if ( ! isset( $parsed['query'] ) ) {
+            // 无 query string，追加 d= 参数
+            $separator = isset( $parsed['fragment'] ) ? '&#' : '?';
+            return $url . $separator . 'd=' . rawurlencode( $fallback );
+        }
+
+        parse_str( $parsed['query'], $params );
+        $params['d'] = $fallback; // rawurlencode 由 build_query 处理
+
+        $new_query = http_build_query( $params, '', '&', PHP_QUERY_RFC3986 );
+        $path = isset( $parsed['path'] ) ? $parsed['path'] : '';
+        $host = isset( $parsed['host'] ) ? $parsed['host'] : '';
+        $scheme = isset( $parsed['scheme'] ) ? $parsed['scheme'] : 'https';
+        $result = $scheme . '://' . $host . $path . '?' . $new_query;
+
+        if ( isset( $parsed['fragment'] ) ) {
+            $result .= '#' . $parsed['fragment'];
+        }
+
+        return $result;
     }
 }
 

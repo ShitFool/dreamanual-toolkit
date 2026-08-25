@@ -6,6 +6,8 @@
 
     var i18n, ajaxUrl, nonce;
 
+    function $(sel) { return document.querySelector(sel); }
+
     function showToast(message, type) {
         // 动态创建 toast 容器（此页面模板未内嵌容器）
         var container = document.querySelector('.drea-toast-container');
@@ -33,6 +35,12 @@
         toggles.forEach(function (cb) {
             formData.append(cb.dataset.key, cb.checked ? 1 : 0);
         });
+
+        // 广告拦截规则 textarea
+        var rulesEl = $('#drea-so-adblock-rules');
+        if (rulesEl) {
+            formData.append('adblock_rules', rulesEl.value || '');
+        }
 
         fetch(ajaxUrl, { method: 'POST', body: formData, credentials: 'same-origin' })
             .then(function (r) {
@@ -65,13 +73,13 @@
         ajaxUrl = dreaSo.ajaxUrl;
         nonce   = dreaSo.nonce;
 
-        var saveBtn = document.getElementById('drea-so-save-btn');
+        var saveBtn = $('#drea-so-save-btn');
         if (saveBtn) {
             saveBtn.addEventListener('click', saveSettings);
         }
 
-        // dirty-state 跟踪
-        var soInputs = document.querySelectorAll('.drea-toggle__input[data-key]');
+        // dirty-state 跟踪：开关 + 规则 textarea
+        var soInputs = document.querySelectorAll('.drea-toggle__input[data-key], #drea-so-adblock-rules');
         dirtyCtrl = DreaFormDirty.watch(soInputs, saveBtn);
     }
 

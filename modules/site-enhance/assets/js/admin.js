@@ -50,6 +50,12 @@
         formData.append('smtp_from_name', ($('#smtp-from-name').value || '').trim());
         formData.append('smtp_from_email', ($('#smtp-from-email').value || '').trim());
 
+        // 评论头像优化
+        formData.append('avatar_fallback_enabled', $('#avatar-fallback-enabled') ? ($('#avatar-fallback-enabled').checked ? 1 : 0) : 0);
+        formData.append('avatar_fallback_url', ($('#avatar-fallback-url').value || ''));
+        formData.append('avatar_mirror', ($('#avatar-mirror').value || 'cn.cravatar.com').trim());
+        formData.append('avatar_replace_gravatar', $('#avatar-replace-gravatar') ? ($('#avatar-replace-gravatar').checked ? 1 : 0) : 1);
+
         // SMTP 完整性校验 (F-04)
         if ($('#smtp-enabled').checked) {
             var smtpHost = ($('#smtp-host').value || '').trim();
@@ -104,10 +110,11 @@
 
         // dirty-state 跟踪：无修改时按钮禁用，修改后启用，保存成功后禁用
         var seInputs = document.querySelectorAll(
-            '#btt-enabled,#btt-color,#btt-icon-color,#maintenance-enabled,#maintenance-msg,' +
+            '#btt-enabled,#btt-color,#btt-icon-color,#btt-position,#maintenance-enabled,#maintenance-msg,' +
             '#feat-img-enabled,#feat-img-col-enabled,#default-feat-img-enabled,#default-feat-img-id,' +
             '#quickedit-excerpt-enabled,#smtp-enabled,#smtp-host,#smtp-port,#smtp-encryption,' +
-            '#smtp-user,#smtp-pass,#smtp-from-name,#smtp-from-email'
+            '#smtp-user,#smtp-pass,#smtp-from-name,#smtp-from-email,' +
+            '#avatar-fallback-enabled,#avatar-fallback-url,#avatar-mirror,#avatar-replace-gravatar'
         );
         dirtyCtrl = DreaFormDirty.watch(seInputs, saveBtn);
 
@@ -135,6 +142,7 @@
             { checkbox: '#default-feat-img-enabled', body: 'default-feat-img-settings' },
             { checkbox: '#quickedit-excerpt-enabled', body: 'quickedit-excerpt-settings' },
             { checkbox: '#smtp-enabled', body: 'smtp-settings' },
+            { checkbox: '#avatar-fallback-enabled', body: 'avatar-settings' },
         ];
 
         toggles.forEach(function (t) {
@@ -181,8 +189,8 @@
         if (selectBtn && typeof wp !== 'undefined' && wp.media) {
             selectBtn.addEventListener('click', function () {
                 var frame = wp.media({
-                    title: '选择默认特色图片',
-                    button: { text: '设为默认' },
+                    title: 'Select Default Featured Image',
+                    button: { text: 'Set as Default' },
                     multiple: false,
                     library: { type: 'image' }
                 });
@@ -199,13 +207,47 @@
         if (removeBtn) {
             removeBtn.addEventListener('click', function () {
                 imgIdInput.value = 0;
-                previewDiv.innerHTML = '<span>未设置</span>';
+                previewDiv.innerHTML = '<span>Not Set</span>';
                 removeBtn.style.display = 'none';
             });
         }
 
         // SMTP 测试发信
         var smtpTestBtn = $('#smtp-test-btn');
+
+        // 评论头像 — 媒体库选择器
+        var avatarSelectBtn = $('#avatar-fallback-select');
+        var avatarRemoveBtn = $('#avatar-fallback-remove');
+        var avatarUrlInput  = $('#avatar-fallback-url');
+        var avatarPreview   = $('#avatar-fallback-preview');
+
+        if (avatarSelectBtn && typeof wp !== 'undefined' && wp.media) {
+            avatarSelectBtn.addEventListener('click', function () {
+                var frame = wp.media({
+                    title: 'Select Default Avatar',
+                    button: { text: 'Set as Default Avatar' },
+                    multiple: false,
+                    library: { type: 'image' }
+                });
+                frame.on('select', function () {
+                    var attachment = frame.state().get('selection').first().toJSON();
+                    avatarUrlInput.value = attachment.url;
+                    avatarPreview.innerHTML = '<img src="' + DreaToast._escapeHtml(attachment.url) + '">';
+                    avatarRemoveBtn.style.display = '';
+                });
+                frame.open();
+            });
+        }
+
+        if (avatarRemoveBtn) {
+            avatarRemoveBtn.addEventListener('click', function () {
+                avatarUrlInput.value = '';
+                avatarPreview.innerHTML = '<span>Not Set</span>';
+                avatarRemoveBtn.style.display = 'none';
+            });
+        }
+
+        // SMTP 测试发信
         if (smtpTestBtn) {
             smtpTestBtn.addEventListener('click', function () {
                 var to = ($('#smtp-test-to').value || '').trim();

@@ -305,7 +305,7 @@
             btn = e.target.closest('.drea-rm-copy-btn');
             if (btn) {
                 showDialog(i18n.copyRole, btn.dataset.role);
-                $('#drea-rm-dialog-name').value = btn.dataset.display + ' (副本)';
+                $('#drea-rm-dialog-name').value = btn.dataset.display + ' (Copy)';
                 $('#drea-rm-dialog-slug').value = btn.dataset.role + '_copy';
                 return;
             }

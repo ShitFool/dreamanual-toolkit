@@ -23,12 +23,14 @@ class AI_Client {
     private $model;
 
     /** @var array 提供商 API 地址 */
+    // phpcs:disable PluginCheck.CodeAnalysis.AIProvider.DirectIntegration -- Multi-provider support is a core design decision; WP 7.0 AI Client is too new and lacks multi-provider support.
     private $api_urls = [
         'kimi'     => 'https://api.moonshot.cn/v1/chat/completions',
         'openai'   => 'https://api.openai.com/v1/chat/completions',
         'claude'   => 'https://api.anthropic.com/v1/messages',
         'deepseek' => 'https://api.deepseek.com/v1/chat/completions',
     ];
+    // phpcs:enable
 
     /** @var array 提供商默认模型 */
     private $default_models = [
@@ -87,7 +89,7 @@ class AI_Client {
             case 'claude':
                 return $this->call_claude( $prompt );
             default:
-                return new \WP_Error( 'invalid_provider', __( '不支持的 AI 提供商。', 'dreamanual-toolkit' ) );
+                return new \WP_Error( 'invalid_provider', __('Unsupported AI provider.', 'dreamanual-toolkit' ) );
         }
     }
 
@@ -261,7 +263,7 @@ class AI_Client {
         $data = json_decode( $body, true );
 
         if ( ! isset( $data['choices'][0]['message']['content'] ) ) {
-            return new \WP_Error( 'invalid_response', __( 'API 响应格式无效。', 'dreamanual-toolkit' ) );
+            return new \WP_Error( 'invalid_response', __('Invalid API response format.', 'dreamanual-toolkit' ) );
         }
 
         return $this->parse_ai_response( $data['choices'][0]['message']['content'] );
@@ -309,7 +311,7 @@ class AI_Client {
         $data = json_decode( $body, true );
 
         if ( ! isset( $data['content'][0]['text'] ) ) {
-            return new \WP_Error( 'invalid_response', __( 'API 响应格式无效。', 'dreamanual-toolkit' ) );
+            return new \WP_Error( 'invalid_response', __('Invalid API response format.', 'dreamanual-toolkit' ) );
         }
 
         return $this->parse_ai_response( $data['content'][0]['text'] );
@@ -335,12 +337,12 @@ class AI_Client {
             $cleaned = preg_replace( '/[^}]*$/', '', $cleaned );
             $data    = json_decode( $cleaned, true );
             if ( JSON_ERROR_NONE !== json_last_error() ) {
-                return new \WP_Error( 'parse_error', __( 'AI 返回的内容格式异常，无法解析。请重试或更换 AI 模型。', 'dreamanual-toolkit' ) );
+                return new \WP_Error( 'parse_error', __('AI response format abnormal, cannot parse. Please retry or switch AI model.', 'dreamanual-toolkit' ) );
             }
         }
 
         if ( ! isset( $data['tags'] ) && ! isset( $data['slug'] ) && ! isset( $data['excerpt'] ) ) {
-            return new \WP_Error( 'invalid_data', __( 'AI 响应中无有效字段。', 'dreamanual-toolkit' ) );
+            return new \WP_Error( 'invalid_data', __('No valid fields in AI response.', 'dreamanual-toolkit' ) );
         }
 
         // 规范化
@@ -365,27 +367,27 @@ class AI_Client {
         $lower = strtolower( $error_message );
 
         if ( 401 === $status || false !== stripos( $lower, 'authentication' ) || false !== stripos( $lower, 'invalid api key' ) || false !== stripos( $lower, 'incorrect api key' ) ) {
-            return __( 'API Key 无效或已过期，请检查 AI 优化设置。', 'dreamanual-toolkit' );
+            return __('API Key invalid or expired, please check AI Optimizer settings.', 'dreamanual-toolkit' );
         }
 
         if ( 429 === $status || false !== stripos( $lower, 'quota' ) || false !== stripos( $lower, 'insufficient' ) || false !== stripos( $lower, 'rate limit' ) || false !== stripos( $lower, 'too many requests' ) || false !== stripos( $lower, '余额' ) || false !== stripos( $lower, '额度' ) ) {
-            return __( 'AI API 配额不足、余额不够或触发限流，请检查账户或稍后重试。', 'dreamanual-toolkit' );
+            return __('AI API quota insufficient, balance too low, or rate limited. Please check your account or retry later.', 'dreamanual-toolkit' );
         }
 
         if ( preg_match( '/content.?filter|safety|moderation|policy|blocked|violates|harm|敏感|审核|content_policy/i', $lower ) ) {
-            return __( '内容被 AI 提供商安全策略拦截，请修改内容或更换提供商。', 'dreamanual-toolkit' );
+            return __('Content blocked by AI provider\'s safety policy, please modify content or switch provider.', 'dreamanual-toolkit' );
         }
 
         if ( $status >= 500 ) {
-            return __( 'AI 服务暂时不可用，请稍后重试。', 'dreamanual-toolkit' );
+            return __('AI service temporarily unavailable, please retry later.', 'dreamanual-toolkit' );
         }
 
         if ( 400 === $status ) {
-            return __( 'AI 请求参数有误，请检查模型名称和请求设置是否正确。', 'dreamanual-toolkit' );
+            return __('AI request parameters invalid, please check model name and request settings.', 'dreamanual-toolkit' );
         }
 
         /* translators: %d: HTTP status code */
-        return sprintf( __( 'AI 请求失败（HTTP %1$d），请稍后重试。', 'dreamanual-toolkit' ), $status );
+        return sprintf( __('AI request failed (HTTP %1$d), please retry later.', 'dreamanual-toolkit' ), $status );
     }
 
     /**
@@ -397,14 +399,14 @@ class AI_Client {
 
         if ( 'http_request_failed' === $code ) {
             if ( false !== stripos( $msg, 'cURL error 28' ) || false !== stripos( $msg, 'timed out' ) ) {
-                return new \WP_Error( 'request_timeout', __( 'AI 请求超时，请稍后重试。', 'dreamanual-toolkit' ) );
+                return new \WP_Error( 'request_timeout', __('AI request timed out, please retry later.', 'dreamanual-toolkit' ) );
             }
             if ( false !== stripos( $msg, 'Could not resolve host' ) || false !== stripos( $msg, 'Connection refused' ) || false !== stripos( $msg, 'Network is unreachable' ) ) {
-                return new \WP_Error( 'connection_failed', __( '无法连接 AI 服务，请检查网络。', 'dreamanual-toolkit' ) );
+                return new \WP_Error( 'connection_failed', __('Cannot connect to AI service, please check network.', 'dreamanual-toolkit' ) );
             }
-            return new \WP_Error( 'network_error', __( '网络错误，请检查连接。', 'dreamanual-toolkit' ) );
+            return new \WP_Error( 'network_error', __('Network error, please check connection.', 'dreamanual-toolkit' ) );
         }
 
-        return new \WP_Error( 'request_failed', __( '请求失败，请检查网络连接或稍后重试。', 'dreamanual-toolkit' ) );
+        return new \WP_Error( 'request_failed', __('Request failed, please check network connection or retry later.', 'dreamanual-toolkit' ) );
     }
 }

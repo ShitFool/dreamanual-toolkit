@@ -24,7 +24,7 @@ function drea_sp_body_class( bool $enabled ): void {
 ?>
 <div class="wrap drea-wrap drea-sp-wrap">
     <h1 class="drea-wrap__title">
-        <?php echo esc_html__( '搜索推送', 'dreamanual-toolkit' ); ?>
+        <?php echo esc_html__('Search Push', 'dreamanual-toolkit' ); ?>
     </h1>
 
     <!-- Toast -->
@@ -34,8 +34,8 @@ function drea_sp_body_class( bool $enabled ): void {
     <div class="drea-section<?php echo $drea_settings['baidu_enabled'] ? '' : ' drea-section--collapsed'; ?>">
         <div class="drea-section__header">
             <div class="drea-section__title">
-                <h2><?php echo esc_html__( '百度推送', 'dreamanual-toolkit' ); ?></h2>
-                <span class="drea-section__desc"><?php echo esc_html__( '文章发布时自动推送链接到百度普通收录', 'dreamanual-toolkit' ); ?></span>
+                <h2><?php echo esc_html__('Baidu Push', 'dreamanual-toolkit' ); ?></h2>
+                <span class="drea-section__desc"><?php echo esc_html__('Auto-push links to Baidu Indexing on post publish', 'dreamanual-toolkit' ); ?></span>
             </div>
             <label class="drea-toggle">
                 <input type="checkbox" id="baidu-enabled" <?php checked( $drea_settings['baidu_enabled'] ); ?>>
@@ -45,28 +45,28 @@ function drea_sp_body_class( bool $enabled ): void {
         <div class="drea-section__body<?php drea_sp_body_class( $drea_settings['baidu_enabled'] ); ?>" id="baidu-settings">
             <div class="drea-settings-row">
                 <div class="drea-settings-row__label">
-                    <?php echo esc_html__( '站点域名', 'dreamanual-toolkit' ); ?>
-                    <small><?php echo esc_html__( '百度搜索资源平台验证的站点域名。若与当前站点域名不同请手动填写。', 'dreamanual-toolkit' ); ?></small>
+                    <?php echo esc_html__('Site Domain', 'dreamanual-toolkit' ); ?>
+                    <small><?php echo esc_html__('Site domain verified on Baidu Search Resource Platform. If different from current site domain, fill in manually.', 'dreamanual-toolkit' ); ?></small>
                 </div>
                 <div class="drea-settings-row__action">
-                    <input type="text" id="baidu-site" value="<?php echo esc_attr( $drea_settings['baidu_site'] ); ?>" class="drea-form-group__input" placeholder="<?php echo esc_attr__( '如 www.example.com', 'dreamanual-toolkit' ); ?>" style="max-width:300px;">
+                    <input type="text" id="baidu-site" value="<?php echo esc_attr( $drea_settings['baidu_site'] ); ?>" class="drea-form-group__input" placeholder="<?php echo esc_attr__('e.g. www.example.com', 'dreamanual-toolkit' ); ?>" style="max-width:300px;">
                 </div>
             </div>
             <div class="drea-settings-row">
                 <div class="drea-settings-row__label">
-                    <?php echo esc_html__( '推送 Token', 'dreamanual-toolkit' ); ?>
-                    <small><?php echo esc_html__( '百度搜索资源平台 → 普通收录 → 接口调用 → token 参数值。', 'dreamanual-toolkit' ); ?></small>
+                    <?php echo esc_html__('Push Token', 'dreamanual-toolkit' ); ?>
+                    <small><?php echo esc_html__('Baidu Search Resource Platform →普通收录 → API access → token parameter value.', 'dreamanual-toolkit' ); ?></small>
                 </div>
                 <div class="drea-settings-row__action">
-                    <input type="text" id="baidu-token" value="<?php echo esc_attr( $drea_settings['baidu_token'] ); ?>" class="drea-form-group__input" placeholder="<?php echo esc_attr__( '在百度搜索资源平台获取', 'dreamanual-toolkit' ); ?>" style="max-width:300px;">
+                    <input type="text" id="baidu-token" value="<?php echo esc_attr( $drea_settings['baidu_token'] ); ?>" class="drea-form-group__input" placeholder="<?php echo esc_attr__('Obtain from Baidu Search Resource Platform', 'dreamanual-toolkit' ); ?>" style="max-width:300px;">
                 </div>
             </div>
             <div class="drea-settings-row">
                 <div class="drea-settings-row__label">
-                    <?php echo esc_html__( '测试推送', 'dreamanual-toolkit' ); ?>
+                    <?php echo esc_html__('Test Push', 'dreamanual-toolkit' ); ?>
                 </div>
                 <div class="drea-settings-row__action">
-                    <button type="button" class="drea-btn drea-btn--secondary" id="baidu-test-btn" data-engine="baidu"><?php echo esc_html__( '测试推送', 'dreamanual-toolkit' ); ?></button>
+                    <button type="button" class="drea-btn drea-btn--secondary" id="baidu-test-btn" data-engine="baidu"><?php echo esc_html__('Test Push', 'dreamanual-toolkit' ); ?></button>
                     <span class="drea-sp-test-status" id="baidu-test-status"></span>
                 </div>
             </div>
@@ -77,8 +77,8 @@ function drea_sp_body_class( bool $enabled ): void {
     <div class="drea-section<?php echo $drea_settings['bing_enabled'] ? '' : ' drea-section--collapsed'; ?>">
         <div class="drea-section__header">
             <div class="drea-section__title">
-                <h2><?php echo esc_html__( 'Bing 推送', 'dreamanual-toolkit' ); ?></h2>
-                <span class="drea-section__desc"><?php echo esc_html__( '文章发布时自动推送链接到 Bing 站长平台', 'dreamanual-toolkit' ); ?></span>
+                <h2><?php echo esc_html__('Bing Push', 'dreamanual-toolkit' ); ?></h2>
+                <span class="drea-section__desc"><?php echo esc_html__('Auto-push links to Bing Webmaster Tools on post publish', 'dreamanual-toolkit' ); ?></span>
             </div>
             <label class="drea-toggle">
                 <input type="checkbox" id="bing-enabled" <?php checked( $drea_settings['bing_enabled'] ); ?>>
@@ -89,18 +89,18 @@ function drea_sp_body_class( bool $enabled ): void {
             <div class="drea-settings-row">
                 <div class="drea-settings-row__label">
                     API Key
-                    <small><?php echo esc_html__( 'Bing Webmaster Tools → Settings → API Key。', 'dreamanual-toolkit' ); ?></small>
+                    <small><?php echo esc_html__('Bing Webmaster Tools → Settings → API Key.', 'dreamanual-toolkit' ); ?></small>
                 </div>
                 <div class="drea-settings-row__action">
-                    <input type="text" id="bing-key" value="<?php echo esc_attr( $drea_settings['bing_key'] ); ?>" class="drea-form-group__input" placeholder="<?php echo esc_attr__( '在 Bing Webmaster Tools 获取', 'dreamanual-toolkit' ); ?>" style="max-width:300px;">
+                    <input type="text" id="bing-key" value="<?php echo esc_attr( $drea_settings['bing_key'] ); ?>" class="drea-form-group__input" placeholder="<?php echo esc_attr__('Obtain from Bing Webmaster Tools', 'dreamanual-toolkit' ); ?>" style="max-width:300px;">
                 </div>
             </div>
             <div class="drea-settings-row">
                 <div class="drea-settings-row__label">
-                    <?php echo esc_html__( '测试推送', 'dreamanual-toolkit' ); ?>
+                    <?php echo esc_html__('Test Push', 'dreamanual-toolkit' ); ?>
                 </div>
                 <div class="drea-settings-row__action">
-                    <button type="button" class="drea-btn drea-btn--secondary" id="bing-test-btn" data-engine="bing"><?php echo esc_html__( '测试推送', 'dreamanual-toolkit' ); ?></button>
+                    <button type="button" class="drea-btn drea-btn--secondary" id="bing-test-btn" data-engine="bing"><?php echo esc_html__('Test Push', 'dreamanual-toolkit' ); ?></button>
                     <span class="drea-sp-test-status" id="bing-test-status"></span>
                 </div>
             </div>
@@ -108,6 +108,6 @@ function drea_sp_body_class( bool $enabled ): void {
     </div>
 
     <p class="submit">
-        <button type="button" class="drea-btn drea-btn--primary" id="drea-sp-save-btn" disabled><?php echo esc_html__( '保存设置', 'dreamanual-toolkit' ); ?></button>
+        <button type="button" class="drea-btn drea-btn--primary" id="drea-sp-save-btn" disabled><?php echo esc_html__('Save Settings', 'dreamanual-toolkit' ); ?></button>
     </p>
 </div>
