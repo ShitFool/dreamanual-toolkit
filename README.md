@@ -13,14 +13,63 @@
 
 ### 模块列表
 
-| 模块 | 功能 | 替代的插件 |
-|------|------|-----------|
-| AI Optimizer | AI 批量生成标签，支持多模型 | WPJAM 标签优化 |
-| Content Visibility | 按分类控制内容可见性，支持渠道隐藏与角色绕过 | WPJAM 内容限制 |
-| Role Manager | 精细的 WordPress 角色与权限编辑 | WPJAM 用户管理 |
-| Site Enhance | 返回顶部、维护模式、特色图筛选、默认特色图、快速编辑摘要、评论头像、SMTP 邮件 | 各类单功能插件 |
-| Site Optimize | 16 项站点优化开关、中文排版、后台广告拦截、Speculative Loading | WPJAM 功能屏蔽 |
-| Search Push | 发布/更新时自动向百度、必应提交文章链接 | baidu-submit-link |
+| 模块 | 功能 |
+|------|------|
+| AI Optimizer | AI 批量生成标签、Slug、摘要，支持多模型 |
+| Content Visibility | 按分类控制内容可见性，支持渠道隐藏与角色绕过 |
+| Role Manager | 精细的 WordPress 角色与权限编辑 |
+| Site Enhance | 返回顶部、维护模式、特色图、评论头像、SMTP 邮件等增强 |
+| Site Optimize | 16 项站点优化开关、中文排版、后台广告拦截 |
+| Search Push | 发布/更新时自动向百度、必应提交文章链接 |
+
+
+## 截图
+
+### 模块管理
+
+![模块管理](assets/screenshot-1.png)
+
+六个模块的启用与开关总览，每个模块可独立启用/停用。
+
+### AI 优化
+
+![AI 优化设置](assets/screenshot-2.png)
+
+配置 AI 提供商（DeepSeek / OpenAI / Claude 等）、模型与 API Key，密钥加密存储。
+
+![AI 优化批量处理](assets/screenshot-3.png)
+
+批量选择文章，自动生成标签、Slug 与摘要。
+
+### 内容可见性
+
+![内容可见性](assets/screenshot-4.png)
+
+按分类配置前端 / RSS / REST API / 搜索 / 站点地图等渠道的可见性，支持角色绕过与单篇隐藏。
+
+### 角色管理
+
+![角色管理](assets/screenshot-5.png)
+
+可视化查看与编辑角色权限，支持添加、复制、删除自定义角色。
+
+### 站点增强
+
+![站点增强](assets/screenshot-6.png)
+
+回到顶部、维护模式、特色图管理、SMTP 邮件等子功能独立开关。
+
+### 搜索推送
+
+![搜索推送](assets/screenshot-7.png)
+
+配置百度与 Bing 推送，发布文章后自动提交链接。
+
+### 站点优化
+
+![站点优化](assets/screenshot-8.png)
+
+16 项优化开关，屏蔽冗余功能、提升站点性能与安全。
 
 ## 系统要求
 
