@@ -1,125 +1,132 @@
+---
+AIGC:
+  ContentProducer: '001191110102MAD55U9H0F10002'
+  ContentPropagator: '001191110102MAD55U9H0F10002'
+  Label: '1'
+  ProduceID: '10655194-d60c-4e61-b388-37cca7dd8633'
+  PropagateID: '10655194-d60c-4e61-b388-37cca7dd8633'
+  ReservedCode1: 'cee938b2-c184-45fd-b6ed-c97be5655091'
+  ReservedCode2: 'cee938b2-c184-45fd-b6ed-c97be5655091'
+---
+
 # Dreamanual Toolkit
 
-Modular WordPress toolbox that consolidates scattered micro-plugins into one plugin. Every module can be toggled independently; disabled modules add zero overhead.
+模块化 WordPress 工具箱，将零散的小插件整合为一个插件。每个模块可独立开关，未启用的模块零开销加载。
 
-## Why this plugin exists
+## 功能特性
 
-WordPress sites end up with too many tiny plugins: back-to-top buttons, maintenance mode, featured image management... Each does one thing, yet registers its own hooks, loads its own assets, and clutters the plugins list. Dreamanual Toolkit gathers these small features into standalone modules under a single plugin, greatly reducing the number of active plugins.
+- **独立模块**：未启用的模块不加载任何代码、不注册任何 Hook
+- **加密存储**：API Key 与 SMTP 密码使用 AES-256-CBC 加密，密钥由 `AUTH_KEY` + `SECURE_AUTH_KEY` 派生，数据库泄露也无法还原明文
+- **原生 JS**：前端使用 Vanilla JS + CSS BEM 命名，仅 WordPress 核心要求处使用 jQuery
+- **安全校验**：每个 AJAX 端点都经过 `check_ajax_referer` + `current_user_can` 双重验证
+- **国际化**：文本域 `dreamanual-toolkit`，完整可翻译
+- **缓存刷新**：前端资源版本使用 `filemtime()` 自动管理
 
-## Modules
+### 模块列表
 
-| Module | What it does | Replaces |
-| ------ | ------------- | -------- |
-| AI Optimizer | AI-powered tag generation with batch processing and multiple AI model support | WPJAM tag optimization |
-| Content Visibility | Per-category content visibility with per-channel hiding and role bypass | WPJAM content restriction |
-| Role Manager | Fine-grained WordPress role & capability editing | WPJAM user management |
-| Site Enhance | Back-to-top button, maintenance mode, featured image filters, default featured image, quick-edit excerpt, comment avatar, SMTP mail | Various single-purpose plugins |
-| Site Optimize | 16 site optimization toggles, Chinese typography, admin ad blocker, plus Speculative Loading | WPJAM feature blocking |
-| Search Push | Auto-submits post links to Baidu and Bing on publish/update | baidu-submit-link |
+| 模块 | 功能 | 替代的插件 |
+|------|------|-----------|
+| AI Optimizer | AI 批量生成标签，支持多模型 | WPJAM 标签优化 |
+| Content Visibility | 按分类控制内容可见性，支持渠道隐藏与角色绕过 | WPJAM 内容限制 |
+| Role Manager | 精细的 WordPress 角色与权限编辑 | WPJAM 用户管理 |
+| Site Enhance | 返回顶部、维护模式、特色图筛选、默认特色图、快速编辑摘要、评论头像、SMTP 邮件 | 各类单功能插件 |
+| Site Optimize | 16 项站点优化开关、中文排版、后台广告拦截、Speculative Loading | WPJAM 功能屏蔽 |
+| Search Push | 发布/更新时自动向百度、必应提交文章链接 | baidu-submit-link |
 
-## Design principles
-
-- **Independent modules**: inactive modules load no code and register no hooks
-- **Encrypted storage**: API keys and SMTP passwords are AES-256-CBC encrypted with a key derived from `AUTH_KEY` + `SECURE_AUTH_KEY`; leaked databases cannot reveal plaintext
-- **Vanilla JS**: front-end uses Vanilla JS + CSS BEM naming; jQuery is only used where WordPress core requires it (e.g., quick edit)
-- **Security**: every AJAX endpoint goes through `check_ajax_referer` + `current_user_can` double verification
-- **i18n**: text domain `dreamanual-toolkit`, fully translatable
-- **Cache busting**: front-end asset versions are managed automatically with `filemtime()`
-
-## Requirements
+## 系统要求
 
 - PHP 7.4+
 - WordPress 6.4+
 
-## Installation
+## 安装方式
 
-1. Download the [latest release](https://github.com/ShitFool/dreamanual-toolkit/archive/refs/heads/main.zip) or clone the repository.
-2. Upload the `dreamanual-toolkit` folder to `/wp-content/plugins/`.
-3. Activate Dreamanual Toolkit on the Plugins page.
-4. Go to "DM Toolkit → Module Management" and enable the modules you need.
+1. 下载[最新版本](https://github.com/lantian-dreamanual/dreamanual-toolkit/archive/refs/heads/main.zip)或克隆仓库
+2. 将 `dreamanual-toolkit` 文件夹上传至 `/wp-content/plugins/`
+3. 在插件页激活 Dreamanual Toolkit
+4. 进入「DM Toolkit → 模块管理」启用需要的模块
 
-Or via WP-CLI:
+或使用 WP-CLI：
 
 ```bash
-wp plugin install https://github.com/ShitFool/dreamanual-toolkit/archive/refs/heads/main.zip
+wp plugin install https://github.com/lantian-dreamanual/dreamanual-toolkit/archive/refs/heads/main.zip
 ```
 
-## Module Details
+## 模块详情
 
 ### AI Optimizer
 
-Automatically generates tags for posts using AI models. Supports DeepSeek, OpenAI and other providers, single-post and batch processing.
+使用 AI 模型自动为文章生成标签，支持 DeepSeek、OpenAI 等提供商，支持单篇与批量处理。
 
-- Auto-analysis of post content with tag suggestions
-- Custom AI model and API endpoint configuration
-- Batch processing queue to avoid timeouts
-- Encrypted API key storage
+- 自动分析文章内容并给出标签建议
+- 自定义 AI 模型与 API 端点配置
+- 批量处理队列，避免超时
+- API Key 加密存储
 
 ### Content Visibility
 
-Controls which content is visible to which audience.
+控制哪些内容对哪些受众可见。
 
-- Per-category access control with hidden channels (frontend/RSS/REST API/search/sitemap)
-- Role bypass: specified logged-in roles can still view restricted content
-- Per-post hiding: hide a single post with one click; direct links return 404
+- 按分类访问控制，隐藏渠道（前台/RSS/REST API/搜索/站点地图）
+- 角色绕过：指定的登录角色仍可查看受限内容
+- 单篇隐藏：一键隐藏单篇文章，直接链接返回 404
 
 ### Role Manager
 
-Fine-grained WordPress role and capability management.
+精细的 WordPress 角色与权限管理。
 
-- Visual capability matrix
-- Create, edit, delete custom roles
-- Toggle individual capabilities
-- Clone roles with one click
+- 可视化权限矩阵
+- 创建、编辑、删除自定义角色
+- 单权限开关
+- 一键克隆角色
 
 ### Site Enhance
 
-Practical front-end and admin enhancements, each sub-feature independently toggled.
+实用的前端与后台增强，每个子功能独立开关。
 
-- **Back-to-top button**: custom background and icon colors with live preview
-- **Maintenance mode**: 503 page, admins unaffected
-- **Featured image filter**: filter posts by has/missing featured image
-- **Default featured image**: fallback image for posts without one
-- **Quick-edit excerpt**: excerpt field inside the posts list quick-edit panel
-- **Comment avatar**: replace Gravatar with mirror source (e.g. cn.cravatar.com) for faster loading; set custom default avatar for unregistered commenters
-- **SMTP mail**: configurable SMTP server, SSL/TLS support, encrypted password, one-click test email
+- **返回顶部**：自定义背景与图标颜色，实时预览
+- **维护模式**：503 页面，管理员不受影响
+- **特色图筛选**：按有/无特色图筛选文章
+- **默认特色图**：无特色图文章的回退图片
+- **快速编辑摘要**：文章列表快速编辑面板中的摘要字段
+- **评论头像**：Gravatar 镜像源替换（如 cn.cravatar.com）加速加载；为未注册评论者设置自定义默认头像
+- **SMTP 邮件**：可配置 SMTP 服务器，SSL/TLS 支持，密码加密，一键测试邮件
 
 ### Site Optimize
 
-16 optimization toggles plus Chinese typography and admin ad blocker, no code changes needed.
+16 个优化开关 + 中文排版 + 后台广告拦截器，无需改代码。
 
-- Disable Emoji, Embed, XML-RPC, REST API, etc.
-- Disable post revisions and autosave
-- Remove the WordPress version number and redundant head tags
-- Disable the block widget editor
-- Disable admin email verification
-- Speculative Loading: preload link targets using the browser Speculation Rules API
-- **Chinese Typography**: auto-spacing between Chinese and Latin/digits, text justify, smart quotes, paragraph indent
-- **Admin Ad Blocker**: hide third-party plugin upsell and ad banners with editable CSS selector rules
+- 禁用 Emoji、Embed、XML-RPC、REST API 等
+- 禁用文章修订与自动保存
+- 移除 WordPress 版本号与冗余 head 标签
+- 禁用区块编辑器小工具
+- 禁用后台邮箱验证
+- Speculative Loading：使用浏览器 Speculation Rules API 预加载链接
+- **中文排版**：中英文自动间距、两端对齐、智能引号、段落首行缩进
+- **后台广告拦截器**：隐藏第三方插件推广与广告横幅，可编辑 CSS 选择器规则
 
 ### Search Push
 
-Automatically submits post links to search engines at publish/update for better indexing.
+发布/更新时自动向搜索引擎提交文章链接。
 
-- **Baidu push**: Baidu's regular submission API, with configurable site domain and token (from Baidu Search Resource Platform)
-- **Bing push**: Bing Webmaster API, supports single and batch submission
-- 30-second delayed push after publishing, so publishing is never blocked
-- Auto-migrates settings from the legacy `baidu-submit-link` plugin on first activation
+- **百度推送**：百度普通提交 API，可配置站点域名与 token
+- **Bing 推送**：Bing Webmaster API，支持单条与批量提交
+- 发布后延迟 30 秒推送，不阻塞发布
+- 首次激活时自动迁移旧 `baidu-submit-link` 插件的设置
 
-## Uninstall
+## 卸载
 
-Deactivating and deleting the plugin runs `uninstall.php`, which cleans up all module options from the database - no residue left behind.
+停用并删除插件会执行 `uninstall.php`，从数据库清理所有模块选项，不留残留。
 
-## Directory Structure
+## 项目结构
 
 ```
 dreamanual-toolkit/
-├── dreamanual-toolkit.php    # Plugin entry
-├── uninstall.php             # Cleanup on uninstall
+├── dreamanual-toolkit.php    # 插件入口
+├── uninstall.php             # 卸载时清理
 ├── includes/
-│   ├── class-core.php        # Core module scheduler
-│   ├── class-module.php      # Module base class
-│   └── class-ai-client.php   # AI client + encryption tools
+│   ├── class-core.php        # 核心模块调度器
+│   ├── class-module.php      # 模块基类
+│   └── class-ai-client.php   # AI 客户端 + 加密工具
 ├── modules/
 │   ├── ai-optimizer/
 │   ├── content-visibility/
@@ -127,47 +134,16 @@ dreamanual-toolkit/
 │   ├── site-enhance/
 │   ├── site-optimize/
 │   └── search-push/
-├── assets/                   # Global assets
-└── languages/                # Translation files
+├── assets/                   # 全局资源
+└── languages/                # 翻译文件
 ```
 
-## Changelog
+## 开发者
 
-### 1.4.0
-* Site Optimize: added Chinese Typography group (auto-spacing, text justify, smart quotes, paragraph indent)
-* Site Optimize: added Admin Ad Blocker group with editable CSS selector rules
-* Site Enhance: added Comment Avatar optimization (Gravatar mirror, custom default avatar)
-* Fixed missing `drea-toggle__input` class on Site Optimize settings page checkboxes
+蓝添 (Dreamanual)
 
-### 1.3.0
-* Full internationalization: all user-facing PHP strings converted to English source
-* Added `zh_CN.po` translation file (364 translated entries)
-* Refreshed `.pot` translation template (369 unique entries)
-* Translated JavaScript hardcoded strings and error log messages
-* Plugin defaults to English; Chinese users receive translations via GlotPress or `.po` file
-
-### 1.2.2
-* Fixed invalid Terms of Service and Privacy Policy URLs in readme.txt
-* Fixed `update_option()` return value check in AI Optimizer module
-
-### 1.2.1
-* Replaced inline `<style>` and `<script>` with proper `wp_enqueue` calls
-* Added Terms of Service and Privacy Policy links for all external services in readme.txt
-* Removed unnecessary `load_plugin_textdomain()` call (auto-loaded since WP 4.6)
-
-### 1.2.0
-* Back-to-top button: replaced solid triangle with SVG arrow icon, added icon color customization with live preview
-* All module settings pages: save button disabled until form is modified, re-disabled on successful save
-* Plugin prepared for WordPress.org submission: .pot translation template, external service declarations, English plugin description
-
-### 1.1.0
-* Site Enhance: SMTP password sanitization hardening
-* Plugin Check compliance fixes across all modules
-* Minor asset and styling refinements
-
-### 1.0.0
-* Initial release with 6 modules
-
-## License
+## 许可证
 
 GPL-2.0+
+
+> AI生成
